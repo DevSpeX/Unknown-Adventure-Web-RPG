@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7. Core Systems — State &amp; Database - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="7-core-systems--state--database">7. Core Systems — State &amp; Database</h2>
+            <h3>State (<code>js/core/State.js</code>)</h3>
+<p>The central data store for the game. Contains the player object, world flags, and quest storage.</p>
+<h4>Player Object Structure</h4>
+<pre><code class="language-javascript">{
+    id: null,                       // Firestore document ID
+    name: &quot;Unknown&quot;,                // Character name
+    origin: &quot;Peasant&quot;,              // Origin class
+    level: 1,
+    exp: 0,
+    expNext: 100,                   // EXP needed for next level
+    hp: 20,
+    maxHp: 20,                      // 20 + (STR × 2) + equipment bonuses
+    mp: 10,
+    maxMp: 10,                      // 10 + (INT × 5) + equipment bonuses
+    statPoints: 0,                  // Unspent stat points (3 per level)
+    skills: [&#39;heavy_slash&#39;],        // Array of skill IDs the player knows
+    attributes: {                   // TOTAL stats (base + equipment)
+        str: 0, agi: 0, int: 0
+    },
+    baseAttributes: {               // NATURAL stats (no equipment)
+        str: 0, agi: 0, int: 0
+    },
+    wallet: {                       // Currency
+        copper: 0, silver: 0, gold: 0
+    },
+    currentLocation: &quot;cellar&quot;,      // Current location ID
+    equipment: {                    // Equipped gear
+        head: null, chest: null,
+        main_hand: null, off_hand: null,
+        legs: null, feet: null, accessory: null
+    },
+    activeQuests: {},               // { questId: questTrackingData }
+    completedQuests: [],            // Array of completed quest IDs
+    professions: {                  // Crafting professions
+        smithing: 1, alchemy: 1
+    },
+    inventory: []                   // Saved with character for persistence
+}
+</code></pre>
+<h4>State Methods</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>updatePlayer</code></td>
+<td><code>(data: Object)</code></td>
+<td>Merges partial data into player. Recalculates HP/MP if <code>baseAttributes</code> changes.</td>
+</tr>
+<tr>
+<td><code>addCurrency</code></td>
+<td><code>(id: string, amount: number)</code></td>
+<td>Adds currency with auto-rollover (100 copper → 1 silver → 1 gold). Caps gold at 999.</td>
+</tr>
+<tr>
+<td><code>payCopper</code></td>
+<td><code>(amount: number) → boolean</code></td>
+<td>Deducts copper with auto-conversion from silver/gold. Returns false if too poor.</td>
+</tr>
+<tr>
+<td><code>gainExp</code></td>
+<td><code>(amount: number) → boolean</code></td>
+<td>Adds EXP, handles leveling. Grants 3 stat points and full heal per level. EXP scaling: <code>expNext × 1.5</code>.</td>
+</tr>
+<tr>
+<td><code>setFlag</code></td>
+<td><code>(key: string, value: any)</code></td>
+<td>Sets a world flag (for narrative branching).</td>
+</tr>
+<tr>
+<td><code>getFlag</code></td>
+<td><code>(key: string) → any</code></td>
+<td>Gets a world flag value.</td>
+</tr>
+</tbody></table>
+<h4>EXP Scaling Formula</h4>
+<pre><code>Level 1 → 2:  100 EXP
+Level 2 → 3:  150 EXP
+Level 3 → 4:  225 EXP
+Level 4 → 5:  337 EXP
+...
+Formula: expNext = floor(expNext × 1.5)
+</code></pre>
+<h3>Database (<code>js/core/database.js</code>)</h3>
+<p>A Firestore ORM wrapping all CRUD operations. Exported as <code>mockDatabase</code>.</p>
+<h4>Generic Methods</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>_getColl(collName)</code></td>
+<td>Reads all documents from a Firestore collection</td>
+</tr>
+<tr>
+<td><code>_setDoc(collName, data)</code></td>
+<td>Creates or updates a document (auto-generates ID if missing)</td>
+</tr>
+<tr>
+<td><code>deleteEntity(collName, id)</code></td>
+<td>Deletes a document by collection name and document ID</td>
+</tr>
+</tbody></table>
+<h4>Collection-Specific Methods</h4>
+<table>
+<thead>
+<tr>
+<th>Collection</th>
+<th>Get Method</th>
+<th>Save Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>users/{uid}/characters</code></td>
+<td><code>getCharacters(uid)</code></td>
+<td><code>saveCharacter(uid, data)</code></td>
+</tr>
+<tr>
+<td><code>recipes</code></td>
+<td><code>getRecipes()</code></td>
+<td><code>saveRecipe(data)</code></td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td><code>getItems()</code></td>
+<td><code>saveItem(data)</code></td>
+</tr>
+<tr>
+<td><code>currencies</code></td>
+<td><code>getCurrencies()</code></td>
+<td><code>saveCurrency(data)</code></td>
+</tr>
+<tr>
+<td><code>quests</code></td>
+<td><code>getQuests()</code></td>
+<td><code>saveQuest(data)</code></td>
+</tr>
+<tr>
+<td><code>dialogues</code></td>
+<td><code>getDialogues()</code></td>
+<td><code>saveDialogue(data)</code></td>
+</tr>
+<tr>
+<td><code>npcs</code></td>
+<td><code>getNPCs()</code></td>
+<td><code>saveNPC(data)</code></td>
+</tr>
+<tr>
+<td><code>locations</code></td>
+<td><code>getLocations()</code></td>
+<td><code>saveLocation(data)</code></td>
+</tr>
+<tr>
+<td><code>enemies</code></td>
+<td><code>getEnemies()</code></td>
+<td><code>saveEnemy(data)</code></td>
+</tr>
+<tr>
+<td><code>skills</code></td>
+<td><code>getSkills()</code></td>
+<td><code>saveSkill(data)</code></td>
+</tr>
+</tbody></table>
+<h4>Auto-Save System</h4>
+<p>The Engine runs a debounced cloud save (<code>triggerCloudSave()</code>) 1.5 seconds after any state change. It saves the full player object + inventory to Firestore under <code>users/{uid}/characters/{charId}</code>.</p>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/6-authentication-system" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">6. Authentication System</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/8-character-creation" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">8. Character Creation</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

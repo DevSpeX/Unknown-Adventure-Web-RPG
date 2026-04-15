@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. Technology Stack - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="2-technology-stack">2. Technology Stack</h2>
+            <table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Markup</strong></td>
+<td>HTML5</td>
+<td>Single-page application (<code>index.html</code>)</td>
+</tr>
+<tr>
+<td><strong>Styling</strong></td>
+<td>Vanilla CSS</td>
+<td><code>css/main.css</code>, medieval dark theme</td>
+</tr>
+<tr>
+<td><strong>Logic</strong></td>
+<td>JavaScript (ES Modules)</td>
+<td>No build tools, native <code>import/export</code></td>
+</tr>
+<tr>
+<td><strong>Authentication</strong></td>
+<td>Firebase Auth v9 (Modular)</td>
+<td>Email/Password, Custom Claims for admin</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Cloud Firestore v9 (Modular)</td>
+<td>Real-time document store</td>
+</tr>
+<tr>
+<td><strong>Hosting</strong></td>
+<td>Firebase Hosting</td>
+<td>Static file hosting with SPA rewrite</td>
+</tr>
+<tr>
+<td><strong>Admin Scripts</strong></td>
+<td>Node.js</td>
+<td><code>scripts/setAdmin.js</code> for Custom Claims</td>
+</tr>
+</tbody></table>
+<h3>Firebase SDK Version</h3>
+<ul>
+<li>Firebase JS SDK: <code>9.22.1</code> (loaded via CDN from <code>gstatic.com</code>)</li>
+<li>Firebase Admin SDK: <code>^13.8.0</code> (Node.js, for admin scripts)</li>
+</ul>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/1-project-overview" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">1. Project Overview</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/3-project-structure" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">3. Project Structure</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

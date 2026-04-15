@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12. Dialogue System - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="12-dialogue-system">12. Dialogue System</h2>
+            <h3>Files</h3>
+<ul>
+<li><code>js/modules/narrative/DialogueEngine.js</code> — Dialogue tree evaluation + action execution</li>
+<li><code>js/ui/DialogueUI.js</code> — Visual Novel-style dialogue bar</li>
+</ul>
+<h3 id="dialogue-node-schema">Dialogue Node Schema</h3>
+<pre><code class="language-javascript">{
+    id: &quot;mayor_intro&quot;,
+    npc: &quot;Mayor Thomas&quot;,
+    text: &quot;Welcome to our village, traveler. We have a rat problem in the cellar...&quot;,
+    responses: [
+        {
+            text: &quot;I&#39;ll help.&quot;,                  // Button label
+            nextNodeId: &quot;mayor_thanks&quot;,          // Next dialogue node (null = close)
+            conditions: null,                    // Access conditions (optional)
+            actions: [                           // Side effects (optional)
+                { type: &quot;START_QUEST&quot;, target: &quot;rat_problem&quot; }
+            ]
+        },
+        {
+            text: &quot;Not my problem.&quot;,
+            nextNodeId: null,                    // Ends dialogue
+            conditions: null,
+            actions: null
+        },
+        {
+            text: &quot;[Requires Level 5] Intimidate&quot;,
+            nextNodeId: &quot;mayor_scared&quot;,
+            conditions: { minLevel: 5 },         // Locked if level &lt; 5
+            actions: [
+                { type: &quot;GIVE_EXP&quot;, amount: 50 }
+            ]
+        }
+    ]
+}
+</code></pre>
+<h3>Condition Types</h3>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Schema</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level Check</td>
+<td><code>{ minLevel: number }</code></td>
+<td>Requires minimum player level</td>
+</tr>
+<tr>
+<td>Item Check</td>
+<td><code>{ requiredItem: { id: string, qty: number } }</code></td>
+<td>Requires item in inventory</td>
+</tr>
+</tbody></table>
+<p>Locked options are displayed grayed out with a tooltip showing the reason.</p>
+<h3>Action Types</h3>
+<table>
+<thead>
+<tr>
+<th>Action Type</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>START_QUEST</code></td>
+<td><code>{ target: questId }</code></td>
+<td>Starts a quest</td>
+</tr>
+<tr>
+<td><code>CANCEL_QUEST</code></td>
+<td><code>{ target: questId }</code></td>
+<td>Cancels an active quest</td>
+</tr>
+<tr>
+<td><code>ADVANCE_OBJECTIVE</code></td>
+<td><code>{ target: &quot;questId:objId&quot;, amount: number }</code></td>
+<td>Increments a quest objective</td>
+</tr>
+<tr>
+<td><code>GIVE_ITEM</code></td>
+<td><code>{ item: itemObj, qty: number }</code></td>
+<td>Gives item to player</td>
+</tr>
+<tr>
+<td><code>GIVE_EXP</code></td>
+<td><code>{ amount: number }</code></td>
+<td>Grants EXP</td>
+</tr>
+<tr>
+<td><code>SET_FLAG</code></td>
+<td><code>{ target: flagKey, value: any }</code></td>
+<td>Sets a world flag</td>
+</tr>
+</tbody></table>
+<h3>DialogueEngine Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>init()</code></td>
+<td>Loads all dialogue nodes from Firestore</td>
+</tr>
+<tr>
+<td><code>getNode(nodeId)</code></td>
+<td>Returns a cached dialogue node</td>
+</tr>
+<tr>
+<td><code>evaluateCondition(response)</code></td>
+<td>Returns <code>{ valid, reason }</code> for a response option</td>
+</tr>
+<tr>
+<td><code>executeActions(response)</code></td>
+<td>Runs all actions attached to a response</td>
+</tr>
+</tbody></table>
+<h3>Creating Dialogue Trees</h3>
+<ol>
+<li><strong>Create Dialogue Nodes</strong>: Each node is a single &quot;screen&quot; of dialogue.</li>
+<li><strong>Chain Nodes</strong>: Use <code>nextNodeId</code> in responses to link nodes together.</li>
+<li><strong>Add Actions</strong>: Attach quest starts, item rewards, etc. to response buttons.</li>
+<li><strong>Link to NPC</strong>: Use The Linker to bind the root node to an NPC.</li>
+</ol>
+<h4>Example Dialogue Tree</h4>
+<pre><code>mayor_intro (root)
+├── [Response: &quot;I&#39;ll help&quot;] → START_QUEST:rat_problem → mayor_thanks
+│                                                         └── [Response: &quot;Farewell&quot;] → null (close)
+├── [Response: &quot;Not interested&quot;] → null (close)
+└── [Response: &quot;[Lvl 5] Intimidate&quot;] → mayor_scared
+                                         └── [Response: &quot;Leave&quot;] → null (close)
+</code></pre>
+<h3>Creating a New Dialogue Node</h3>
+<ol>
+<li>Open Dev Tools → &quot;Create Dialogue Node&quot;</li>
+<li>Fill in:<ul>
+<li><strong>Node ID</strong>: Unique identifier (e.g., <code>blacksmith_greeting</code>)</li>
+<li><strong>NPC Name</strong>: Display name above the dialogue</li>
+<li><strong>Speech Text</strong>: The NPC&#39;s dialogue text</li>
+<li><strong>Responses JSON</strong>: Array of response objects (see schema above)</li>
+</ul>
+</li>
+<li>Click &quot;Save Node&quot;</li>
+</ol>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/11-quest-system" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">11. Quest System</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/13-inventory-system" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">13. Inventory System</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

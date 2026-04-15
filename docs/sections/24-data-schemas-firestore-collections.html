@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24. Data Schemas (Firestore Collections) - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="24-data-schemas-firestore-collections">24. Data Schemas (Firestore Collections)</h2>
+            <h3>Collection: <code>users/{uid}/characters</code></h3>
+<pre><code class="language-javascript">{
+    id: &quot;abc123&quot;,
+    name: &quot;Aldric&quot;,
+    origin: &quot;Fallen Knight&quot;,
+    level: 5,
+    exp: 120,
+    expNext: 759,
+    hp: 34,
+    maxHp: 34,
+    mp: 35,
+    maxMp: 35,
+    statPoints: 0,
+    skills: [&quot;heavy_slash&quot;, &quot;fire_ball&quot;],
+    attributes: { str: 12, agi: 8, int: 7 },
+    baseAttributes: { str: 10, agi: 8, int: 7 },
+    wallet: { copper: 45, silver: 3, gold: 0 },
+    currentLocation: &quot;town_square&quot;,
+    equipment: {
+        head: null,
+        chest: { id: &quot;iron_plate&quot;, name: &quot;Iron Plate&quot;, ... },
+        main_hand: { id: &quot;iron_sword&quot;, ... },
+        off_hand: null,
+        legs: null,
+        feet: null,
+        accessory: null
+    },
+    activeQuests: { ... },
+    completedQuests: [&quot;rat_problem&quot;],
+    professions: { smithing: 1, alchemy: 1 },
+    inventory: [ { id: &quot;health_potion&quot;, name: &quot;Health Potion&quot;, quantity: 5, ... } ]
+}
+</code></pre>
+<h3>Collection: <code>npcs</code></h3>
+<pre><code class="language-javascript">{
+    id: &quot;blacksmith&quot;,
+    name: &quot;Brom the Smith&quot;,
+    spriteIcon: &quot;icon-smith.png&quot;,
+    isVendor: true,
+    vendorItems: [&quot;iron_sword&quot;, &quot;iron_shield&quot;],
+    defaultDialogueId: &quot;smith_greeting&quot;
+}
+</code></pre>
+<h3>Collection: <code>quests</code></h3>
+<p>See <a href="#quest-data-schema">Quest Data Schema</a> above.</p>
+<h3>Collection: <code>dialogues</code></h3>
+<p>See <a href="#dialogue-node-schema">Dialogue Node Schema</a> above.</p>
+<h3>Collection: <code>locations</code></h3>
+<p>See <a href="#location-data-schema">Location Data Schema</a> above.</p>
+<h3>Collection: <code>enemies</code></h3>
+<pre><code class="language-javascript">{
+    id: &quot;giant_spider&quot;,
+    name: &quot;Giant Cave Spider&quot;,
+    hp: 25,
+    str: 4,
+    exp: 30,
+    drops: [
+        { id: &quot;spider_silk&quot;, name: &quot;Spider Silk&quot;, chance: 50, qty: 2 },
+        { id: &quot;spider_fang&quot;, name: &quot;Spider Fang&quot;, chance: 25, qty: 1, 
+          type: &quot;accessory&quot;, stats: { agi: 1 } }
+    ]
+}
+</code></pre>
+<h3>Collection: <code>items</code></h3>
+<pre><code class="language-javascript">{
+    id: &quot;iron_sword&quot;,
+    name: &quot;Iron Sword&quot;,
+    weight: 5,
+    value: 50,
+    rarity: &quot;uncommon&quot;,
+    stats: {
+        str: 2,
+        maxHp: 5
+    }
+}
+</code></pre>
+<h3>Collection: <code>skills</code></h3>
+<p>See <a href="#skill-data-schema">Skill Data Schema</a> above.</p>
+<h3>Collection: <code>recipes</code></h3>
+<p>See <a href="#recipe-schema">Recipe Schema</a> above.</p>
+<h3>Collection: <code>currencies</code></h3>
+<pre><code class="language-javascript">{
+    id: &quot;halloween_token&quot;,
+    name: &quot;Spooky Token&quot;,
+    icon: &quot;🎃&quot;,
+    color: &quot;#ff6600&quot;
+}
+</code></pre>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/23-admin-console-commands" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">23. Admin Console Commands</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/25-how-to-guides" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">25. How-To Guides</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Engine - Phase 1</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script type="module" src="js/app.js"></script>
+</head>
+
+<body>
+
+    <div class="engine-container">
+
+        <!-- Main View (Story, Combat, Character Creator) -->
+        <main id="main-view" class="panel">
+            <div class="panel-header" id="main-view-header">Character Creation</div>
+            <div id="main-content">
+                <!-- Dynamic content injected here -->
+            </div>
+            <!-- Choices injected here -->
+            <div id="choices-container" class="choice-container" style="flex: none;"></div>
+
+            <!-- Visual Novel Dialogue Bar -->
+            <div id="vn-dialogue" class="vn-dialogue-overlay hidden">
+                <h3 id="vn-npc-name"
+                    style="color: var(--text-highlight); margin-bottom: 5px; font-variant: small-caps; letter-spacing: 1px;">
+                    NPC Name</h3>
+                <p id="vn-text"
+                    style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 15px; border-bottom: 1px dashed var(--border-dim); padding-bottom: 15px;">
+                    "Lorem ipsum dolor sit amet, dialog goes here."
+                </p>
+                <div id="vn-choices" class="choice-container"
+                    style="flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 0;">
+                    <!-- Buttons injected by DialogueUI -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Sidebar (Stats & Attributes) -->
+        <aside id="sidebar" class="panel">
+            <div class="panel-header">Character</div>
+            <button id="btn-dev-area" class="btn hidden">Enter Dev Area</button>
+            <div id="player-stats">
+                <p class="text-dim">Name: <span id="stat-name">???</span></p>
+                <p class="text-dim">Origin: <span id="stat-origin">???</span></p>
+                <p class="text-highlight">Level: <span id="stat-level">1</span> (<span id="stat-exp">0</span> / <span
+                        id="stat-expnext">100</span> EXP)</p>
+                <div
+                    style="margin: 8px 0; background-color: rgba(0,0,0,0.3); padding: 5px; border-radius: 4px; border: 1px solid var(--border-dim);">
+                    <p style="margin:0; font-size: 0.9rem;">HP: <span id="stat-hp"
+                            style="color:var(--crimson-red); font-weight:bold;">20</span> / <span id="stat-maxhp"
+                            style="color:var(--crimson-red);">20</span></p>
+                    <p style="margin:0; font-size: 0.9rem;">MP: <span id="stat-mp"
+                            style="color:#66b3ff; font-weight:bold;">10</span> / <span id="stat-maxmp"
+                            style="color:#66b3ff;">10</span></p>
+                </div>
+                <hr style="border-color: var(--border-dim); margin: 10px 0;">
+                <p><strong>Attributes</strong></p>
+                <p>Str: <span id="stat-str">---</span> &nbsp;|&nbsp; Agi: <span id="stat-agi">---</span> &nbsp;|&nbsp;
+                    Int: <span id="stat-int">---</span></p>
+                <button id="btn-upgrade-stats" class="btn hidden"
+                    style="border-color: #4CAF50; color: #4CAF50; text-align:center; margin-top:10px; font-weight:bold; box-shadow: 0 0 10px rgba(76,175,80,0.2);">⇧
+                    UPGRADE STATS ⇧</button>
+            </div>
+            <div style="flex: 1;"></div> <!-- Spacer -->
+            <button id="btn-open-char" class="btn text-highlight">Character</button>
+            <button id="btn-open-inventory" class="btn">Inventory</button>
+            <button id="btn-open-crafting" class="btn">Crafting</button>
+            <button id="btn-logout" class="btn hidden"
+                style="margin-top: 10px; border-color: var(--crimson-red); color: var(--crimson-red);">Logout</button>
+        </aside>
+
+        <!-- Bottom Bar (Log / Quest Tracker) -->
+        <footer id="bottom-bar" class="panel">
+            <div style="flex: 1; padding-right: 15px; border-right: 1px solid var(--border-dim);">
+                <div class="panel-header" style="text-align: left; font-size: 1rem;">Action Log</div>
+                <div id="action-log"
+                    style="font-family: var(--font-terminal); font-size: 0.9rem; color: var(--text-dim);">
+                    <!-- Logs go here -->
+                    <p>> Engine Initialized...</p>
+                </div>
+            </div>
+            <div style="flex: 1; padding-left: 15px;">
+                <div class="panel-header" style="text-align: left; font-size: 1rem;">Quest Quick View <button
+                        id="btn-open-quests" class="btn"
+                        style="float: right; padding: 2px 10px; width: auto; font-size: 0.8rem;">Open Journal</button>
+                </div>
+                <div id="quest-tracker" style="font-size: 0.9rem;">
+                    <!-- Quests go here -->
+                    <p class="text-dim">No active quests.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Inventory Overlay -->
+    <div id="inventory-overlay" class="overlay panel hidden">
+        <div class="panel-header">Inventory</div>
+        <button id="btn-close-inventory" class="btn"
+            style="width: auto; position: absolute; right: 10px; top: 10px;">X</button>
+        <div id="inventory-list" class="choice-container" style="flex: 1; overflow-y: auto;">
+            <!-- Inventory items go here -->
+        </div>
+    </div>
+
+    <!-- Character Equipment Overlay -->
+    <div id="char-overlay" class="overlay panel hidden">
+        <div class="panel-header">Character Equipment</div>
+        <button id="btn-close-char" class="btn"
+            style="width: auto; position: absolute; right: 10px; top: 10px;">X</button>
+        <div id="equipment-slots"
+            style="flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <!-- Equipment slots injected by JS -->
+        </div>
+        <div id="equipment-stats" style="margin-top: 15px; border-top: 1px solid var(--border-dim); padding-top: 10px;">
+            <!-- Bonus stats summary injected by JS -->
+        </div>
+    </div>
+
+    <!-- Auth Overlay -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-panel">
+            <div class="auth-header">
+                <h2>Welcome</h2>
+                <p>Enter the realm to begin your journey</p>
+            </div>
+
+            <div id="auth-error-msg" class="auth-error"></div>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="auth-form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="auth-form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="auth-btn">Log In</button>
+                <div class="auth-toggle">
+                    New here? <a id="toggle-to-register">Register an account</a>
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="hidden">
+                <div class="auth-form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="auth-form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required minlength="6">
+                </div>
+                <button type="submit" class="auth-btn">Register</button>
+                <div class="auth-toggle">
+                    Already have an account? <a id="toggle-to-login">Log in here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Character Select Overlay -->
+    <div id="char-select-overlay" class="auth-overlay hidden">
+        <div class="auth-panel" style="max-width: 500px;">
+            <div class="auth-header">
+                <h2>Select Character</h2>
+                <p>Choose your destiny or create a new path</p>
+            </div>
+
+            <div id="char-list-container" class="char-list">
+                <!-- Javascript will inject characters here -->
+            </div>
+
+            <button id="btn-create-new-char" class="auth-btn">Create New Character</button>
+        </div>
+    </div>
+
+    <!-- Level Up Stats Overlay -->
+    <div id="levelup-overlay" class="overlay hidden" style="z-index: 2500;">
+        <div class="panel" style="width: 350px; border-color: #4CAF50; box-shadow: 0 0 25px rgba(76,175,80,0.3);">
+            <div class="panel-header" style="color: #4CAF50; border-bottom: 1px solid rgba(76,175,80,0.3);">Level Up!
+            </div>
+            <p style="text-align:center; margin-bottom:20px;">You reached a new height of power!</p>
+            <div style="text-align:center; font-size:1.2rem; color:var(--text-highlight); margin-bottom:15px;">
+                Unspent Points: <span id="levelup-points" style="font-weight:bold; font-size:1.5rem;">0</span>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:1.1rem; width:50px;">STR</span>
+                <span id="levelup-val-str"
+                    style="font-size:1.2rem; font-weight:bold; width:30px; text-align:center;">0</span>
+                <div>
+                    <button class="btn" id="levelup-sub-str"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">-</button>
+                    <button class="btn" id="levelup-add-str"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">+</button>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:1.1rem; width:50px;">AGI</span>
+                <span id="levelup-val-agi"
+                    style="font-size:1.2rem; font-weight:bold; width:30px; text-align:center;">0</span>
+                <div>
+                    <button class="btn" id="levelup-sub-agi"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">-</button>
+                    <button class="btn" id="levelup-add-agi"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">+</button>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                <span style="font-size:1.1rem; width:50px;">INT</span>
+                <span id="levelup-val-int"
+                    style="font-size:1.2rem; font-weight:bold; width:30px; text-align:center;">0</span>
+                <div>
+                    <button class="btn" id="levelup-sub-int"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">-</button>
+                    <button class="btn" id="levelup-add-int"
+                        style="width:30px; padding:5px; margin:0; text-align:center;">+</button>
+                </div>
+            </div>
+
+            <button id="btn-levelup-confirm" class="btn"
+                style="background-color: rgba(76,175,80,0.2); border-color:#4CAF50; color:#4CAF50; font-weight:bold; width:100%; text-align:center;">Finalize
+                Upgrades</button>
+        </div>
+    </div>
+
+    <!-- Crafting Overlay -->
+    <div id="crafting-overlay" class="overlay panel hidden">
+        <div class="panel-header">Crafting Bench</div>
+        <button id="btn-close-crafting" class="btn"
+            style="width: auto; position: absolute; right: 10px; top: 10px;">X</button>
+        <div id="crafting-list" class="choice-container" style="flex: 1; overflow-y: auto;">
+            <p class="text-dim text-center">Loading recipes...</p>
+        </div>
+    </div>
+
+    <!-- Quest Log Overlay -->
+    <div id="quest-overlay" class="overlay panel hidden">
+        <div class="panel-header" style="color: var(--text-main);">Quest Journal</div>
+        <button id="btn-close-quests" class="btn"
+            style="width: auto; position: absolute; right: 10px; top: 10px;">X</button>
+        <div id="quest-list-area" style="flex: 1; overflow-y: auto;">
+        </div>
+    </div>
+
+    <!-- Masterpiece Combat Overlay -->
+    <div id="combat-overlay" class="combat-fullscreen hidden">
+        <div class="combat-header">
+            <h1 id="combat-title">Battle Engaged!</h1>
+        </div>
+
+        <div class="combat-arena">
+            <!-- Player Side -->
+            <div class="combat-entity player-entity">
+                <h2 id="combat-player-name">Player</h2>
+                <div class="hp-bar-container">
+                    <div id="combat-player-hp-fill" class="hp-fill"></div>
+                </div>
+                <div class="status-texts" id="player-combat-status"></div>
+            </div>
+
+            <!-- VS Icon / Middle Ground -->
+            <div class="combat-vs">VS</div>
+
+            <!-- Enemy Side -->
+            <div class="combat-entity enemy-entity">
+                <h2 id="combat-enemy-name">Enemy</h2>
+                <div class="hp-bar-container">
+                    <div id="combat-enemy-hp-fill" class="hp-fill"></div>
+                </div>
+                <div class="status-texts" id="enemy-combat-status"></div>
+            </div>
+        </div>
+
+        <div class="combat-lower">
+            <!-- Action Log -->
+            <div id="combat-log" class="panel combat-log">
+                <p class="text-dim">Combat started...</p>
+            </div>
+
+            <!-- Action Buttons Dynamically Populated by Skills System -->
+            <div id="combat-actions-container" class="combat-actions">
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Dev Tools Overlay -->
+    <div id="devtools-overlay" class="overlay panel hidden">
+        <div class="panel-header" style="color: var(--crimson-red);">Dev Tools</div>
+        <button id="btn-close-devtools" class="btn"
+            style="width: auto; position: absolute; right: 10px; top: 10px;">X</button>
+
+        <div style="flex: 1; overflow-y: auto;">
+
+            <!-- Dev Actions List -->
+            <div id="dev-actions-list" style="display:flex; flex-direction:column; gap:10px;">
+                <h4 style="color:var(--text-dim); margin-bottom:-5px;">Content Editor</h4>
+                <button id="dev-action-npc" class="btn" style="color: #d4af37; border-color: #d4af37;">Create
+                    NPC</button>
+                <button id="dev-action-quest" class="btn" style="color: #66b3ff;">Create Quest</button>
+                <button id="dev-action-dialogue" class="btn" style="color: #ffb3b3;">Create Dialogue Node</button>
+                <button id="dev-action-linker" class="btn"
+                    style="color: #ffb3b3; border-color: #ffb3b3; font-style: italic;">The Linker</button>
+                <hr style="border-color:var(--border-dim); width:100%;">
+
+                <h4 style="color:var(--text-dim); margin-bottom:-5px;">World Design</h4>
+                <button id="dev-action-worldbuilder" class="btn wb-btn-worldbuilder"
+                    style="color: #4CAF50; border-color: #4CAF50; background: linear-gradient(135deg, rgba(76,175,80,0.08) 0%, transparent 100%); font-weight:bold; text-align:center;">
+                    🗺️ World Builder
+                </button>
+                <button id="dev-action-location" class="btn" style="color: #4CAF50; border-color: #4CAF50;">Create
+                    Location</button>
+                <button id="dev-action-enemy" class="btn" style="color: #ff6b6b; border-color: #ff6b6b;">Create
+                    Enemy</button>
+                <button id="dev-action-currency" class="btn" style="color: #ffd700; border-color: #ffd700;">Create
+                    Currency</button>
+                <button id="dev-action-skill" class="btn" style="color: #9c27b0; border-color: #9c27b0;">Create
+                    Skill</button>
+                <button id="dev-action-recipe" class="btn text-dim">Create Crafting Recipe</button>
+                <button id="dev-action-item" class="btn text-dim">Create Base Item</button>
+
+                <h4 style="color:var(--text-dim); margin-top:10px; margin-bottom:-5px;">Database Management</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                    <button id="dev-manage-npc" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage NPCs</button>
+                    <button id="dev-manage-quest" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Quests</button>
+                    <button id="dev-manage-dialogue" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Dialogues</button>
+                    <button id="dev-manage-location" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Locations</button>
+                    <button id="dev-manage-enemy" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Enemies</button>
+                    <button id="dev-manage-currency" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Currencies</button>
+                    <button id="dev-manage-skill" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Skills</button>
+                    <button id="dev-manage-recipe" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Recipes</button>
+                    <button id="dev-manage-item" class="btn"
+                        style="font-size:0.8rem; border-color:var(--border-dim);">Manage Items</button>
+                </div>
+            </div>
+
+            <!-- Specific Forms Container: Database Manager -->
+            <div id="dev-manager-container" class="hidden">
+                <h3 id="dev-manager-title" style="margin-bottom: 10px; color:var(--text-main);">Database Manager</h3>
+                <div id="dev-manager-list" style="display:flex; flex-direction:column; gap:5px;">
+                    <!-- Javascript injects DB rows here -->
+                </div>
+                <button id="btn-dev-back-manager" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+            </div>
+
+            <!-- Specific Forms Container: NPC -->
+            <div id="dev-npc-container" class="hidden">
+                <h3 style="margin-bottom: 10px;">NPC Editor</h3>
+                <form id="dev-npc-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-npc-id" placeholder="NPC ID (e.g. blacksmith)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-npc-name" placeholder="Display Name (e.g. Bob the Smith)" class="btn"
+                        required style="cursor: text;">
+                    <input type="text" id="dev-npc-sprite" placeholder="Sprite/Icon Ref (e.g. icon-smith.png)"
+                        class="btn" required style="cursor: text;">
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">Vendor
+                        Settings</h4>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <input type="checkbox" id="dev-npc-isvendor" style="width:20px; height:20px;">
+                        <label style="color:var(--text-main);">Is a Vendor?</label>
+                    </div>
+                    <input type="text" id="dev-npc-vendoritems" placeholder="Item IDs they sell (comma separated)"
+                        class="btn" style="cursor: text;">
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color:#d4af37;">Save NPC</button>
+                </form>
+                <button id="btn-dev-back-npc" class="btn" style="margin-top: 15px; border-color: var(--text-dim);">Back
+                    to list</button>
+                <div id="dev-status-msg-npc" style="margin-top: 10px; color: #d4af37;"></div>
+            </div>
+
+            <!-- Specific Forms Container: QUEST -->
+            <div id="dev-quest-container" class="hidden">
+                <h3 style="margin-bottom: 10px;">Create Quest</h3>
+                <form id="dev-quest-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-qst-id" placeholder="Quest ID (e.g., fetch_sword)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-qst-title" placeholder="Quest Title" class="btn" required
+                        style="cursor: text;">
+                    <textarea id="dev-qst-desc" placeholder="Quest Description..." class="btn" required
+                        style="cursor: text; min-height: 40px;"></textarea>
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">
+                        Requirements</h4>
+                    <input type="number" id="dev-qst-reqlevel" placeholder="Required Level" value="1" class="btn"
+                        style="cursor:text;">
+                    <input type="text" id="dev-qst-reqquest" placeholder="Required Previous Quest ID (optional)"
+                        class="btn" style="cursor:text;">
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">Objective
+                    </h4>
+                    <select id="dev-qst-objtype" class="btn" style="cursor:pointer;" required>
+                        <option value="kill">Kill Enemy</option>
+                        <option value="fetch">Fetch Item</option>
+                        <option value="talk">Talk to NPC</option>
+                    </select>
+                    <input type="text" id="dev-qst-objtarget" placeholder="Target ID (Enemy/Item/NPC)" class="btn"
+                        required style="cursor:text;">
+                    <input type="number" id="dev-qst-objamount" placeholder="Amount Required" value="1" class="btn"
+                        required style="cursor:text;">
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">Rewards
+                    </h4>
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-qst-rewexp" placeholder="EXP Reward" value="50" class="btn"
+                            style="flex:1; cursor:text;">
+                        <input type="number" id="dev-qst-rewgold" placeholder="Gold Reward" value="0" class="btn"
+                            style="flex:1; cursor:text;">
+                    </div>
+                    <input type="text" id="dev-qst-rewitemid" placeholder="Item Reward ID (optional)" class="btn"
+                        style="cursor:text;">
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color: #66b3ff;">Save Formatted Quest</button>
+                </form>
+                <button id="btn-dev-back-quest" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-quest" style="margin-top: 10px; color: #66b3ff;"></div>
+            </div>
+
+            <!-- Specific Forms Container: DIALOGUE NODE -->
+            <div id="dev-dial-container" class="hidden">
+                <h3 style="margin-bottom: 10px;">Create Dialogue Node</h3>
+                <form id="dev-dial-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-dial-id" placeholder="Node ID (e.g., mayor_intro)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-dial-npc" placeholder="NPC Name" class="btn" required
+                        style="cursor: text;">
+                    <textarea id="dev-dial-text" placeholder="Speech text..." class="btn" required
+                        style="cursor: text; min-height: 40px; font-family: var(--font-terminal);"></textarea>
+                    <textarea id="dev-dial-resps"
+                        placeholder='Responses JSON: [{"text": "I will.", "nextNodeId": "mayor_thanks", "conditions": null, "actions": [{"type":"START_QUEST", "target":"rat_problem"}]}]'
+                        class="btn" required
+                        style="cursor: text; min-height: 80px; font-family: var(--font-terminal);"></textarea>
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color: #ffb3b3;">Save Node</button>
+                </form>
+                <button id="btn-dev-back-dialogue" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-dial" style="margin-top: 10px; color: #ffb3b3;"></div>
+            </div>
+
+            <!-- Specific Forms Container: THE LINKER -->
+            <div id="dev-linker-container" class="hidden">
+                <h3 style="margin-bottom: 10px; color:#ffb3b3; font-style:italic;">The Linker</h3>
+                <form id="dev-linker-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <p class="text-dim" style="font-size:0.9rem;">Bind an NPC to a Dialogue Tree and optionally a Quest.
+                    </p>
+
+                    <label style="color:var(--border-dim); font-size:0.9rem;">Select NPC</label>
+                    <select id="dev-link-npc" class="btn" style="cursor:pointer;" required></select>
+
+                    <label style="color:var(--border-dim); font-size:0.9rem;">Select Dialogue Tree (Root Node)</label>
+                    <select id="dev-link-dial" class="btn" style="cursor:pointer;" required></select>
+
+                    <label style="color:var(--border-dim); font-size:0.9rem;">Select Quest (Optional)</label>
+                    <select id="dev-link-quest" class="btn" style="cursor:pointer;">
+                        <option value="">-- None --</option>
+                    </select>
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color: #ffb3b3; border-color:#ffb3b3; margin-top: 10px;">Establish
+                        Links</button>
+                </form>
+                <button id="btn-dev-back-linker" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-linker" style="margin-top: 10px; color: #ffb3b3;"></div>
+            </div>
+
+            <!-- Specific Forms Container: LOCATION -->
+            <div id="dev-location-container" class="hidden">
+                <h3 style="margin-bottom: 10px; color:#4CAF50;">Create Location</h3>
+                <form id="dev-location-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-loc-id" placeholder="Location ID (e.g. cellar)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-loc-name" placeholder="Location Name" class="btn" required
+                        style="cursor: text;">
+                    <textarea id="dev-loc-desc" placeholder="Atmospheric Description..." class="btn" required
+                        style="cursor: text; min-height: 40px;"></textarea>
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">
+                        Connections (IDs, comma separated)</h4>
+                    <input type="text" id="dev-loc-conns" placeholder="e.g. sewer,town_square" class="btn"
+                        style="cursor:text;">
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">
+                        Encounters & NPCs</h4>
+                    <input type="text" id="dev-loc-npcs" placeholder="NPC IDs (comma separated)" class="btn"
+                        style="cursor:text;">
+                    <textarea id="dev-loc-encs" placeholder='Encounters JSON (e.g. [{"enemyId": "rat", "chance": 80}])'
+                        class="btn"
+                        style="cursor: text; min-height: 40px; font-family:var(--font-terminal);"></textarea>
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color:#4CAF50;">Save Location to DB</button>
+                </form>
+                <button id="btn-dev-back-location" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-location" style="margin-top: 10px; color: #4CAF50;"></div>
+            </div>
+
+            <!-- Specific Forms Container: ENEMY -->
+            <div id="dev-enemy-container" class="hidden">
+                <h3 style="margin-bottom: 10px; color:#ff6b6b;">Create Enemy</h3>
+                <form id="dev-enemy-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-eny-id" placeholder="Enemy ID (e.g. giant_spider)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-eny-name" placeholder="Display Name (e.g. Giant Cave Spider)" class="btn"
+                        required style="cursor: text;">
+
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-eny-hp" placeholder="Base HP" value="10" class="btn" required
+                            style="flex:1; cursor:text;">
+                        <input type="number" id="dev-eny-str" placeholder="Strength (Damage)" value="2" class="btn"
+                            required style="flex:1; cursor:text;">
+                        <input type="number" id="dev-eny-exp" placeholder="EXP Yield" value="15" class="btn" required
+                            style="flex:1; cursor:text;">
+                    </div>
+
+                    <textarea id="dev-eny-drops"
+                        placeholder='Drops JSON: [{"id": "spider_silk", "name": "Spider Silk", "chance": 50, "qty": 1}]'
+                        class="btn" required
+                        style="cursor: text; min-height: 80px; font-family: var(--font-terminal);"></textarea>
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color:#ff6b6b;">Save Enemy to DB</button>
+                </form>
+                <button id="btn-dev-back-enemy" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-enemy" style="margin-top: 10px; color: #ff6b6b;"></div>
+            </div>
+
+            <!-- Specific Forms Container: SKILL -->
+            <div id="dev-skill-container" class="hidden">
+                <h3 style="margin-bottom: 10px; color:#9c27b0;">Create Skill</h3>
+                <form id="dev-skill-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-skl-id" placeholder="Skill ID (e.g. fire_ball)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-skl-name" placeholder="Display Name (e.g. Fireball)" class="btn" required
+                        style="cursor: text;">
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-skl-mpcost" placeholder="MP Cost" value="5" class="btn" required
+                            style="flex:1; cursor:text;">
+                    </div>
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">Damage /
+                        Heal Config</h4>
+                    <select id="dev-skl-scalestat" class="btn" style="cursor:pointer;" required>
+                        <option value="none">No Scaling (Flat)</option>
+                        <option value="str">Scales with Strength</option>
+                        <option value="int" selected>Scales with Intellect</option>
+                        <option value="agi">Scales with Agility</option>
+                    </select>
+
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-skl-dmgmult" placeholder="Damage Multiplier/Base" value="2"
+                            class="btn" required style="flex:1; cursor:text;">
+                        <input type="number" id="dev-skl-healbase" placeholder="Heal Base" value="0" class="btn"
+                            required style="flex:1; cursor:text;">
+                    </div>
+
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color:#9c27b0;">Save Skill to DB</button>
+                </form>
+                <button id="btn-dev-back-skill" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-skill" style="margin-top: 10px; color: #9c27b0;"></div>
+            </div>
+
+            <!-- Specific Forms Container: ITEMS -->
+            <div id="dev-item-container" class="hidden">
+                <h3 style="margin-bottom: 10px;">Create Item</h3>
+                <form id="dev-item-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-item-id" placeholder="Item ID (e.g., healing_potion)" class="btn"
+                        required style="cursor: text;">
+                    <input type="text" id="dev-item-name" placeholder="Item Name" class="btn" required
+                        style="cursor: text;">
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-item-weight" placeholder="Weight" value="1" class="btn" required
+                            style="flex:1; cursor: text;">
+                        <input type="number" id="dev-item-value" placeholder="Value (Copper)" value="10" class="btn"
+                            required style="flex:1; cursor: text;">
+                    </div>
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">Bonus
+                        Core Stats (Equippables)</h4>
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="dev-item-maxhp" placeholder="Max HP Bonus" value="0" class="btn"
+                            style="flex:1; cursor: text;">
+                        <input type="number" id="dev-item-maxmp" placeholder="Max MP Bonus" value="0" class="btn"
+                            style="flex:1; cursor: text;">
+                    </div>
+                    <input type="text" id="dev-item-rarity" placeholder="Rarity (common, rare, epic)" class="btn"
+                        required style="cursor: text;">
+                    <button type="submit" class="btn text-highlight"
+                        style="background-color: var(--bg-panel-hover);">Save Item to DB</button>
+                </form>
+                <button id="btn-dev-back-item" class="btn" style="margin-top: 15px; border-color: var(--text-dim);">Back
+                    to list</button>
+                <div id="dev-status-msg-item" style="margin-top: 10px; color: var(--text-highlight);"></div>
+            </div>
+
+            <!-- Specific Forms Container: CURRENCY -->
+            <div id="dev-currency-container" class="hidden">
+                <h3 style="margin-bottom: 10px; color:#ffd700;">Create Currency</h3>
+                <form id="dev-currency-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-cur-id" placeholder="Currency ID (e.g. halloween_token)" class="btn"
+                        required style="cursor: text;">
+                    <input type="text" id="dev-cur-name" placeholder="Display Name (e.g. Spooky Token)" class="btn"
+                        required style="cursor: text;">
+                    <input type="text" id="dev-cur-icon" placeholder="Icon Text (e.g. 🎃)" class="btn" required
+                        style="cursor: text;">
+                    <input type="color" id="dev-cur-color" value="#ffd700" class="btn"
+                        style="height: 40px; cursor: pointer; padding:0; border:none; width:100%;">
+                    <button type="submit" class="btn"
+                        style="background-color: var(--bg-panel-hover); color:#ffd700;">Save Currency to DB</button>
+                </form>
+                <button id="btn-dev-back-currency" class="btn"
+                    style="margin-top: 15px; border-color: var(--text-dim);">Back to list</button>
+                <div id="dev-status-msg-currency" style="margin-top: 10px; color: #ffd700;"></div>
+            </div>
+
+            <!-- Specific Forms Container: RECIPES -->
+            <div id="dev-recipe-container" class="hidden">
+                <h3 style="margin-bottom: 10px;">Create Recipe</h3>
+                <form id="dev-recipe-form"
+                    style="display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 1px solid var(--border-dim);">
+                    <input type="text" id="dev-rec-id" placeholder="Recipe ID (e.g., iron_sword)" class="btn" required
+                        style="cursor: text;">
+                    <input type="text" id="dev-rec-name" placeholder="Recipe Name (e.g., Iron Sword)" class="btn"
+                        required style="cursor: text;">
+                    <input type="text" id="dev-rec-prof" placeholder="Profession (e.g., smithing)" class="btn" required
+                        style="cursor: text;">
+                    <input type="number" id="dev-rec-level" placeholder="Level Required" value="1" class="btn" required
+                        style="cursor: text;">
+                    <textarea id="dev-rec-mats" placeholder='Materials JSON (e.g. [{"id": "iron_ingot", "qty": 2}])'
+                        class="btn" required
+                        style="cursor: text; min-height: 60px; font-family: var(--font-terminal);"></textarea>
+                    <textarea id="dev-rec-result"
+                        placeholder='Result Item (e.g. {"id": "iron_sword", "name": "Iron Sword", "weight": 5, "rarity": "uncommon"})'
+                        class="btn" required
+                        style="cursor: text; min-height: 60px; font-family: var(--font-terminal);"></textarea>
+                    <button type="submit" class="btn text-highlight"
+                        style="background-color: var(--bg-panel-hover);">Save Recipe to DB</button>
+                </form>
+                <button id="btn-dev-back" class="btn" style="margin-top: 15px; border-color: var(--text-dim);">Back to
+                    list</button>
+                <div id="dev-status-msg" style="margin-top: 10px; color: var(--text-highlight);"></div>
+            </div>
+
+            <!-- World Builder Container -->
+            <div id="dev-worldbuilder-container" class="hidden">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="color:#4CAF50; margin:0;">🗺️ World Builder</h3>
+                    <button id="btn-dev-back-worldbuilder" class="btn" style="width:auto; padding:5px 12px; border-color:var(--text-dim); font-size:0.85rem;">← Back</button>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="wb-tabs">
+                    <button id="wb-tab-map" class="btn wb-tab-btn" style="border-color:var(--text-highlight); color:var(--text-highlight);">Map</button>
+                    <button id="wb-tab-table" class="btn wb-tab-btn">Table</button>
+                    <button id="wb-tab-settings" class="btn wb-tab-btn">Settings</button>
+                </div>
+
+                <!-- Status Message -->
+                <div id="wb-status-msg" style="color:#4CAF50; font-size:0.85rem; min-height:18px; margin-bottom:5px;"></div>
+
+                <!-- Tab 1: Interactive Map -->
+                <div id="wb-panel-map" class="wb-panel-content">
+                    <div class="wb-map-layout">
+                        <div class="wb-canvas-container">
+                            <canvas id="wb-map-canvas" width="700" height="500"></canvas>
+                        </div>
+                        <div id="wb-detail-pane" class="wb-detail-pane">
+                            <p class="text-dim" style="text-align:center; margin-top:20px; font-size:0.9rem;">Click a location on the map to inspect it.</p>
+                            <p class="text-dim" style="text-align:center; font-size:0.8rem; margin-top:5px;">Double-click to teleport.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Location Table -->
+                <div id="wb-panel-table" class="wb-panel-content hidden">
+                    <div class="wb-table-wrapper">
+                        <table class="wb-table">
+                            <thead>
+                                <tr>
+                                    <th id="wb-sort-id">ID ▿</th>
+                                    <th id="wb-sort-name">Name ▿</th>
+                                    <th id="wb-sort-connections">Conns ▿</th>
+                                    <th id="wb-sort-npcs">NPCs ▿</th>
+                                    <th id="wb-sort-encounters">Encs ▿</th>
+                                    <th>Start</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wb-table-body">
+                                <!-- JS Rendered Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab 3: World Settings -->
+                <div id="wb-panel-settings" class="wb-panel-content hidden">
+                    <div class="wb-settings-group">
+                        <h4 style="color:var(--text-highlight); margin-bottom:10px;">Start Location</h4>
+                        <p class="text-dim" style="font-size:0.85rem; margin-bottom:8px;">Select which location new players will spawn in.</p>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <select id="wb-start-location" class="btn" style="flex:1; cursor:pointer;"></select>
+                            <button id="wb-save-start" class="btn" style="width:auto; padding:8px 15px; border-color:#4CAF50; color:#4CAF50; font-weight:bold;">Save</button>
+                        </div>
+                    </div>
+
+                    <div class="wb-settings-group">
+                        <h4 style="color:var(--text-highlight); margin-bottom:10px;">Connection Integrity</h4>
+                        <p class="text-dim" style="font-size:0.85rem; margin-bottom:8px;">Scan for one-way connections and auto-add missing reciprocal links.</p>
+                        <button id="wb-autofix" class="btn" style="border-color:#ff9800; color:#ff9800;">⚡ Auto-Fix One-Way Connections</button>
+                    </div>
+
+                    <div class="wb-settings-group">
+                        <h4 style="color:var(--text-highlight); margin-bottom:10px;">Validation Report</h4>
+                        <p class="text-dim" style="font-size:0.85rem; margin-bottom:8px;">Full integrity check: orphans, broken references, encounter totals.</p>
+                        <button id="wb-validate" class="btn" style="border-color:#66b3ff; color:#66b3ff;">🔍 Run Full Validation</button>
+                        <div id="wb-validation-log" style="margin-top:10px; max-height:250px; overflow-y:auto;"></div>
+                    </div>
+                </div>
+
+            </div> <!-- Closing #dev-worldbuilder-container -->
+
+        </div> <!-- Closing inner scrollable div -->
+    </div> <!-- Closing #devtools-overlay -->
+
+    <!-- Currency Bag Overlay -->
+    <div id="currency-overlay" class="overlay hidden"
+        style="z-index: 2000; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display:flex; justify-content:center; align-items:center;">
+        <div class="panel" style="width: 400px; border-color: #d4af37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);">
+            <div class="panel-header"
+                style="color: #d4af37; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; margin-bottom: 15px;">
+                Wealth & Treasures</div>
+            <div id="currency-list" style="display:flex; flex-direction:column; gap:15px; margin-bottom: 20px;">
+                <!-- JS Injected Currencies -->
+            </div>
+            <button id="btn-close-currency" class="btn" style="border-color: #d4af37; color: #d4af37;">Close
+                Bag</button>
+        </div>
+    </div>
+
+    <!-- Vendor Shop Overlay -->
+    <div id="vendor-overlay" class="overlay hidden" style="z-index: 2000;">
+        <div class="panel" style="width: 80%; max-width: 800px; height: 80%; display:flex; flex-direction:column;">
+            <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <span id="vendor-title">Merchant</span>
+                <button id="btn-close-vendor" class="btn text-dim" style="width:auto; padding:5px 10px;">Leave</button>
+            </div>
+
+            <div
+                style="display:flex; gap:10px; margin-bottom: 15px; border-bottom:1px solid var(--border-dim); padding-bottom:10px;">
+                <button id="btn-vendor-tab-buy" class="btn text-highlight" style="flex:1;">Buy Goods</button>
+                <button id="btn-vendor-tab-sell" class="btn text-dim" style="flex:1;">Sell Items</button>
+            </div>
+
+            <div id="vendor-wallet-display"
+                style="text-align:right; margin-bottom: 10px; color:#d4af37; font-weight:bold;">
+                Wallet: 0 Copper
+            </div>
+
+            <div id="vendor-items-list"
+                style="flex:1; overflow-y:auto; display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:10px; align-content:start;">
+                <!-- JS Injected Shop Items -->
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

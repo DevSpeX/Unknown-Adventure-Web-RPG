@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20. Dev Tools (Admin Panel) - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="20-dev-tools-admin-panel">20. Dev Tools (Admin Panel)</h2>
+            <h3>File: <code>js/ui/DevTools.js</code></h3>
+<p>The Dev Tools panel is a comprehensive content creation suite visible only to admin users.</p>
+<h3>Access</h3>
+<ol>
+<li>User must have <code>admin: true</code> Custom Claim (set via <code>setAdmin.js</code>)</li>
+<li>After login, &quot;Enter Dev Area&quot; button appears in sidebar</li>
+<li>Clicking opens the Dev Tools overlay</li>
+</ol>
+<h3>Content Editors</h3>
+<table>
+<thead>
+<tr>
+<th>Editor</th>
+<th>Creates</th>
+<th>Firestore Collection</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create NPC</td>
+<td>NPC entities</td>
+<td><code>npcs</code></td>
+</tr>
+<tr>
+<td>Create Quest</td>
+<td>Quest templates</td>
+<td><code>quests</code></td>
+</tr>
+<tr>
+<td>Create Dialogue Node</td>
+<td>Dialogue tree nodes</td>
+<td><code>dialogues</code></td>
+</tr>
+<tr>
+<td>The Linker</td>
+<td>NPC ↔ Dialogue ↔ Quest relationships</td>
+<td>Updates <code>npcs</code> + <code>dialogues</code></td>
+</tr>
+<tr>
+<td>Create Location</td>
+<td>World locations</td>
+<td><code>locations</code></td>
+</tr>
+<tr>
+<td>Create Enemy</td>
+<td>Enemy definitions</td>
+<td><code>enemies</code></td>
+</tr>
+<tr>
+<td>Create Currency</td>
+<td>Custom currencies</td>
+<td><code>currencies</code></td>
+</tr>
+<tr>
+<td>Create Skill</td>
+<td>Combat skills</td>
+<td><code>skills</code></td>
+</tr>
+<tr>
+<td>Create Crafting Recipe</td>
+<td>Crafting recipes</td>
+<td><code>recipes</code></td>
+</tr>
+<tr>
+<td>Create Base Item</td>
+<td>Item definitions</td>
+<td><code>items</code></td>
+</tr>
+</tbody></table>
+<h3>Database Managers</h3>
+<p>Each entity type has a &quot;Manage&quot; button that lists all records with:</p>
+<ul>
+<li><strong>Edit</strong>: Pre-fills the creation form with existing data for editing</li>
+<li><strong>Delete</strong>: Removes the record from Firestore (with confirmation)</li>
+</ul>
+<h3>The Linker</h3>
+<p>A special tool for establishing relationships between entities:</p>
+<ol>
+<li><strong>Select NPC</strong>: Choose an NPC from the database</li>
+<li><strong>Select Dialogue Tree</strong>: Choose a dialogue root node</li>
+<li><strong>Select Quest (Optional)</strong>: Choose a quest to auto-inject</li>
+</ol>
+<p>The Linker:</p>
+<ul>
+<li>Sets the NPC&#39;s <code>defaultDialogueId</code> to the selected dialogue</li>
+<li>If a quest is selected, adds an <code>[Accept Quest]</code> response to the dialogue (if not already present)</li>
+</ul>
+<h3>Creating Complete Content Chains</h3>
+<p><strong>Full workflow to add a new questline:</strong></p>
+<ol>
+<li><strong>Create Enemy</strong> (e.g., <code>goblin</code>)</li>
+<li><strong>Create Item</strong> (e.g., <code>goblin_fang</code> for quest rewards/drops)</li>
+<li><strong>Create Quest</strong> (e.g., <code>goblin_hunt</code> — kill 5 goblins, reward 200 EXP)</li>
+<li><strong>Create NPC</strong> (e.g., <code>guard_captain</code>)</li>
+<li><strong>Create Dialogue Nodes</strong>:<ul>
+<li><code>captain_intro</code>: &quot;We need help with goblins...&quot;</li>
+<li><code>captain_thanks</code>: &quot;You did it! Thank you.&quot;</li>
+</ul>
+</li>
+<li><strong>Use The Linker</strong>: Bind <code>guard_captain</code> → <code>captain_intro</code> → <code>goblin_hunt</code></li>
+<li><strong>Create/Edit Location</strong>: Add <code>guard_captain</code> to a location&#39;s NPC list. Add <code>goblin</code> to encounter table.</li>
+</ol>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/19-leveling--progression" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">19. Leveling &amp; Progression</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/21-ui-layer-reference" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">21. UI Layer Reference</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

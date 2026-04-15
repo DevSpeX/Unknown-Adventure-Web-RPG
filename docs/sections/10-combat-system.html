@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10. Combat System - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="10-combat-system">10. Combat System</h2>
+            <h3>Files</h3>
+<ul>
+<li><code>js/modules/combat/CombatEngine.js</code> — Turn-based combat logic</li>
+<li><code>js/ui/CombatUI.js</code> — Fullscreen overlay rendering</li>
+</ul>
+<h3>Combat Flow</h3>
+<pre><code>1. LocationEngine.searchArea() rolls an encounter
+2. CombatEngine.startCombat(enemyObj) starts combat
+3. Player chooses: Strike (base), Use Skill, or Flee
+4. Player attacks → Enemy attacks back (after 800ms delay)
+5. Combat ends on victory or defeat
+6. Control returns to LocationEngine.renderLocation()
+</code></pre>
+<h3>Damage Formulas</h3>
+<h4>Basic Attack (Strike)</h4>
+<pre><code>damage = max(1, player.STR + random(0..2))
+critChance = player.AGI × 2 (percentage)
+if critical: damage = floor(damage × 1.5)
+</code></pre>
+<h4>Skill Attack</h4>
+<pre><code>scaleStatValue = player[skill.scaleStat]  // str, int, or agi
+damage = floor(scaleStatValue × skill.dmgMult + random(0..3))
+damage = max(1, damage)
+Costs: skill.mpCost MP
+</code></pre>
+<h4>Skill Heal</h4>
+<pre><code>healAmount = skill.healBase
+if skill.scaleStat == &#39;int&#39;: healAmount += player.INT × skill.dmgMult
+healAmount = max(1, floor(healAmount))
+Player HP clamped to maxHp
+</code></pre>
+<h4>Enemy Attack</h4>
+<pre><code>damage = max(1, enemy.STR + random(0..1))
+dodgeChance = player.AGI × 1.5 (percentage)
+If dodged: no damage
+</code></pre>
+<h4>Flee</h4>
+<pre><code>escapeChance = 30 + (player.AGI × 5) percentage
+If success: combat ends
+If fail: enemy gets a turn
+</code></pre>
+<h3>Victory Rewards</h3>
+<ul>
+<li>EXP from <code>enemy.exp</code></li>
+<li>Loot drops: Each drop has a <code>chance</code> (percentage). Roll per drop.</li>
+<li>Quest progress: <code>kill_{enemyId}</code> objectives are advanced</li>
+</ul>
+<h3>Defeat Penalty</h3>
+<ul>
+<li>10% EXP loss: <code>exp = floor(exp × 0.9)</code></li>
+<li>HP set to 1 (survival)</li>
+</ul>
+<h3>CombatEngine Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>startCombat(enemyObj)</code></td>
+<td>Clones enemy, opens combat UI</td>
+</tr>
+<tr>
+<td><code>attack()</code></td>
+<td>Player basic attack</td>
+</tr>
+<tr>
+<td><code>useSkill(skill)</code></td>
+<td>Use a learned skill (checks MP)</td>
+</tr>
+<tr>
+<td><code>flee()</code></td>
+<td>Attempt to escape</td>
+</tr>
+<tr>
+<td><code>enemyTurn()</code></td>
+<td>Enemy attacks the player</td>
+</tr>
+<tr>
+<td><code>victory()</code></td>
+<td>Grants EXP, rolls loot, advances quest objectives</td>
+</tr>
+<tr>
+<td><code>defeat()</code></td>
+<td>Applies death penalty</td>
+</tr>
+<tr>
+<td><code>endCombat()</code></td>
+<td>Closes UI, returns to location</td>
+</tr>
+</tbody></table>
+<h3>CombatUI Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>open(enemy)</code></td>
+<td>Shows fullscreen combat overlay</td>
+</tr>
+<tr>
+<td><code>buildActionButtons()</code></td>
+<td>Renders Strike, skill buttons, and Flee</td>
+</tr>
+<tr>
+<td><code>close()</code></td>
+<td>Fades out combat overlay</td>
+</tr>
+<tr>
+<td><code>updatePhase()</code></td>
+<td>Updates HP bar widths and name labels</td>
+</tr>
+<tr>
+<td><code>appendLog(msg)</code></td>
+<td>Adds message to combat log</td>
+</tr>
+<tr>
+<td><code>showFloatingText(target, text, cssClass)</code></td>
+<td>Animated floating damage/heal number</td>
+</tr>
+</tbody></table>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/9-world--location-system" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">9. World &amp; Location System</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/11-quest-system" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">11. Quest System</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

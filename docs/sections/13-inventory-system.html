@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13. Inventory System - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy--run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems--state--database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-world--location-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">10. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-inventory-system" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">13. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-economy--currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-vendor--shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-leveling--progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Complete File Reference</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="13-inventory-system">13. Inventory System</h2>
+            <h3>File: <code>js/modules/inventory/Inventory.js</code></h3>
+<p>A weight-based inventory with item stacking.</p>
+<h3>Item Object Structure</h3>
+<pre><code class="language-javascript">{
+    id: &quot;iron_sword&quot;,       // Unique identifier
+    name: &quot;Iron Sword&quot;,     // Display name
+    weight: 5,              // Weight per unit
+    rarity: &quot;uncommon&quot;,     // common | uncommon | rare | epic | legendary
+    quantity: 1,            // Current stack count
+    type: &quot;main_hand&quot;,      // Equipment slot (null for non-equippables)
+    value: 50,              // Base value in copper
+    stats: {                // Stat bonuses (equippables only)
+        str: 3,
+        maxHp: 10
+    },
+    reqLevel: 5             // Level requirement (optional)
+}
+</code></pre>
+<h3>Inventory Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signature</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getTotalWeight()</code></td>
+<td>—</td>
+<td><code>number</code></td>
+<td>Sum of (weight × quantity) for all items</td>
+</tr>
+<tr>
+<td><code>addItem(itemObj, qty)</code></td>
+<td><code>(Object, number)</code></td>
+<td><code>boolean</code></td>
+<td>Adds item, stacks if exists. Returns false if overweight.</td>
+</tr>
+<tr>
+<td><code>hasItem(itemId, qty)</code></td>
+<td><code>(string, number)</code></td>
+<td><code>boolean</code></td>
+<td>Checks if enough of an item exists</td>
+</tr>
+<tr>
+<td><code>removeItem(itemId, qty)</code></td>
+<td><code>(string, number)</code></td>
+<td><code>boolean</code></td>
+<td>Removes quantity. Deletes entry if quantity reaches 0.</td>
+</tr>
+</tbody></table>
+<h3>Weight System</h3>
+<ul>
+<li>Default max weight: <strong>100 units</strong></li>
+<li>Items exceeding the limit cannot be added</li>
+<li>Weight is displayed in the inventory footer</li>
+</ul>
+<h3>InventoryUI Features</h3>
+<ul>
+<li><strong>Grid layout</strong> with rarity-colored borders</li>
+<li><strong>Context menu</strong> on click:<ul>
+<li><strong>Currency Bag</strong>: Opens Currency overlay</li>
+<li><strong>Equippable items</strong>: &quot;Equip&quot; button</li>
+<li><strong>Consumables</strong>: &quot;Use / Consume&quot; button</li>
+<li><strong>All items</strong>: &quot;Discard&quot; button (removes 1)</li>
+</ul>
+</li>
+</ul>
+<h3>Rarity Visual System</h3>
+<table>
+<thead>
+<tr>
+<th>Rarity</th>
+<th>Border Color</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Common</td>
+<td><code>#b0bec5</code> (gray)</td>
+<td>Solid left border</td>
+</tr>
+<tr>
+<td>Uncommon</td>
+<td><code>#4CAF50</code> (green)</td>
+<td>Green border + subtle glow</td>
+</tr>
+<tr>
+<td>Rare</td>
+<td><code>#66b3ff</code> (blue)</td>
+<td>Blue border + glow</td>
+</tr>
+<tr>
+<td>Epic</td>
+<td><code>#9c27b0</code> (purple)</td>
+<td>Purple border + glow + text shadow</td>
+</tr>
+<tr>
+<td>Legendary</td>
+<td><code>#ffd700</code> (gold)</td>
+<td>Gold border + pulsing glow animation</td>
+</tr>
+</tbody></table>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/12-dialogue-system" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">12. Dialogue System</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/14-equipment-system" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">14. Equipment System</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>
