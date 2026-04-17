@@ -1,6 +1,6 @@
 # Unknown Adventure RPG — Complete Technical Documentation
 
-> **Version**: 1.1.1 · **Last Updated**: April 16, 2026  
+> **Version**: 1.0.1 · **Last Updated**: April 16, 2026  
 > **Platform**: Web (Browser-based) · **Backend**: Firebase (Auth + Firestore)  
 > **Hosted at**: `unknown-adventure-rpg.web.app`
 
@@ -25,8 +25,8 @@
 15. [Equipment System](#15-equipment-system)
 16. [Crafting System](#16-crafting-system)
 17. [Economy & Currency System](#17-economy--currency-system)
-19. [Vendor / Shop System](#18-vendor--shop-system)
-110. [Skill System](#19-skill-system)
+18. [Vendor / Shop System](#18-vendor--shop-system)
+19. [Skill System](#19-skill-system)
 20. [Leveling & Progression](#20-leveling--progression)
 21. [Dev Tools (Admin Panel)](#21-dev-tools-admin-panel)
 22. [UI Layer Reference](#22-ui-layer-reference)
@@ -35,7 +35,7 @@
 25. [Data Schemas (Firestore Collections)](#25-data-schemas-firestore-collections)
 26. [How-To Guides](#26-how-to-guides)
 27. [Extending the Engine](#27-extending-the-engine)
-29. [Complete File Reference](#28-complete-file-reference)
+28. [Complete File Reference](#28-complete-file-reference)
 
 ---
 
@@ -72,6 +72,7 @@ The game uses a dark medieval aesthetic with serif fonts, tarnished gold borders
 | **Admin Scripts** | Node.js | `scripts/setAdmin.js` for Custom Claims |
 
 ### Firebase SDK Version
+
 - Firebase JS SDK: `9.22.1` (loaded via CDN from `gstatic.com`)
 - Firebase Admin SDK: `^13.8.0` (Node.js, for admin scripts)
 
@@ -234,6 +235,7 @@ This deploys all files to `unknown-adventure-rpg.web.app`.
 ### Firebase Configuration
 
 **`firebase.json`** configures:
+
 - `public: "."` — Serves root directory
 - SPA rewrite: All routes redirect to `index.html`
 - Ignores: `firebase.json`, dotfiles, `node_modules`
@@ -243,6 +245,7 @@ This deploys all files to `unknown-adventure-rpg.web.app`.
 ## 6. Authentication System
 
 ### Files
+
 - `js/core/firebase.js` — Firebase app initialization, exports `auth` and `db`
 - `js/core/AuthManager.js` — Login, register, logout, admin detection
 - `js/ui/AuthUI.js` — Form handling for login/register UI
@@ -252,7 +255,7 @@ This deploys all files to `unknown-adventure-rpg.web.app`.
 
 1. **Page Load**: Auth overlay appears (blocks game view)
 2. **Login/Register**: User submits email + password
-3. **Success**: 
+3. **Success**:
    - Auth overlay hides
    - Custom Claims are checked for `admin: true`
    - If admin: Dev Tools button becomes visible + developer powers activate
@@ -274,7 +277,9 @@ class AuthManager {
 ```
 
 ### Persistence (Session vs. Local)
+
 The login form includes a **"Stay Logged In"** checkbox.
+
 - **Checked (Local)**: Uses `browserLocalPersistence`. Session survives browser restart.
 - **Unchecked (Session)**: Uses `browserSessionPersistence`. Session cleared on tab close.
 Explicit restoration is handled via `onAuthStateChanged` in the `AuthManager` constructor.
@@ -413,15 +418,15 @@ Formula: expNext = floor(expNext × 1.5)
 ```
 
 #### Passive Regeneration
+
 The engine includes a passive resource restoration system to sustain gameplay during exploration and downtime.
 
 - **Tick Rate**: Every 5 seconds.
 - **Restoration Amount**: +1 Health Point (HP) and +1 Mana Point (MP) per tick.
-- **Conditions**: 
-    - Regeneration only occurs if the player is alive (HP > 0).
-    - Resources will not exceed the player's `maxHp` or `maxMp`.
+- **Conditions**:
+  - Regeneration only occurs if the player is alive (HP > 0).
+  - Resources will not exceed the player's `maxHp` or `maxMp`.
 - **Implementation**: Managed by the `regenTick()` method in `State.js` and driven by a global `setInterval` in `app.js`.
-
 
 ### Performance & Expansion
 
@@ -509,7 +514,9 @@ Manages the game world as a network of interconnected locations. Each location c
 4. **Search**: Clicking "Search Area" rolls against the encounter table.
 
 ### Movement Data Sync
+
 Entering a new location triggers an automatic state synchronization:
+
 1. `this.state.player.currentLocation` is updated.
 2. A `statsUpdated` event is dispatched globally.
 3. The Engine intercepts the event and calls `triggerCloudSave()`.
@@ -575,6 +582,7 @@ Use the Dev Tools → "Create Location" form:
 ## 11. Combat System
 
 ### Files
+
 - `js/modules/combat/CombatEngine.js` — Turn-based combat logic
 - `js/ui/CombatUI.js` — Fullscreen overlay rendering
 
@@ -590,7 +598,9 @@ Use the Dev Tools → "Create Location" form:
 ```
 
 ### Input & Death Locks
+
 To ensure combat integrity, the engine implements a **hard input lock** when either the player or the enemy reaches 0 HP:
+
 - All action buttons (Strike, Skills, Flee) are disabled.
 - The state is locked into a "Resolving" phase until the victory/defeat logic concludes.
 - This prevents the player from hitting a "dead" enemy or consuming resources post-defeat.
@@ -598,6 +608,7 @@ To ensure combat integrity, the engine implements a **hard input lock** when eit
 ### Damage Formulas
 
 #### Basic Attack (Strike)
+
 ```
 damage = max(1, player.STR + random(0..2))
 critChance = player.AGI × 2 (percentage)
@@ -605,6 +616,7 @@ if critical: damage = floor(damage × 1.5)
 ```
 
 #### Skill Attack
+
 ```
 scaleStatValue = player[skill.scaleStat]  // str, int, or agi
 damage = floor(scaleStatValue × skill.dmgMult + random(0..3))
@@ -613,6 +625,7 @@ Costs: skill.mpCost MP
 ```
 
 #### Skill Heal
+
 ```
 healAmount = skill.healBase
 if skill.scaleStat == 'int': healAmount += player.INT × skill.dmgMult
@@ -621,6 +634,7 @@ Player HP clamped to maxHp
 ```
 
 #### Enemy Attack
+
 ```
 damage = max(1, enemy.STR + random(0..1))
 dodgeChance = player.AGI × 1.5 (percentage)
@@ -628,6 +642,7 @@ If dodged: no damage
 ```
 
 #### Flee
+
 ```
 escapeChance = 30 + (player.AGI × 5) percentage
 If success: combat ends
@@ -635,11 +650,13 @@ If fail: enemy gets a turn
 ```
 
 ### Victory Rewards
+
 - EXP from `enemy.exp`
 - Loot drops: Each drop has a `chance` (percentage). Roll per drop.
 - Quest progress: `kill_{enemyId}` objectives are advanced
 
 ### Defeat Penalty
+
 - 10% EXP loss: `exp = floor(exp × 0.9)`
 - HP set to 1 (survival)
 
@@ -672,6 +689,7 @@ If fail: enemy gets a turn
 ## 12. Quest System
 
 ### Files
+
 - `js/modules/quest/QuestLog.js` — Quest lifecycle management
 - `js/ui/QuestLogUI.js` — Quest journal overlay + quick-view tracker
 
@@ -755,6 +773,7 @@ Players can toggle a "Track" checkbox on any active quest. Tracked quests appear
 ## 13. Dialogue System
 
 ### Files
+
 - `js/modules/narrative/DialogueEngine.js` — Dialogue tree evaluation + action execution
 - `js/ui/DialogueUI.js` — Visual Novel-style dialogue bar
 
@@ -969,6 +988,7 @@ Equipment bonuses can include: `str`, `agi`, `int`, `maxHp`, `maxMp`.
 ## 16. Crafting System
 
 ### Files
+
 - `js/modules/crafting/CraftingEngine.js` — Crafting logic
 - `js/ui/CraftingMenu.js` — Crafting overlay UI
 
@@ -1034,6 +1054,7 @@ Equipment bonuses can include: `str`, `agi`, `int`, `maxHp`, `maxMp`.
 ## 17. Economy & Currency System
 
 ### Files
+
 - `js/core/State.js` — Currency logic in `addCurrency()` and `payCopper()`
 - `js/ui/CurrencyUI.js` — Currency bag overlay
 
@@ -1074,6 +1095,7 @@ NPCs marked as vendors can open a shop interface.
 ### Vendor NPC Setup
 
 An NPC becomes a vendor when:
+
 ```javascript
 {
     id: "shopkeeper",
@@ -1147,6 +1169,7 @@ Healing skills are colored green; attack skills use the "heavy" combat button st
 ### Teaching a Skill to a Player
 
 Currently, skills are assigned via the `player.skills` array. To add a skill:
+
 - Use admin console: modify the player data directly
 - Or extend the code to add skill rewards to quests/dialogue actions
 
@@ -1155,6 +1178,7 @@ Currently, skills are assigned via the `player.skills` array. To add a skill:
 ## 20. Leveling & Progression
 
 ### Files
+
 - `js/core/State.js` — EXP + leveling logic
 - `js/ui/LevelUpUI.js` — Stat point allocation overlay
 
@@ -1172,7 +1196,7 @@ Currently, skills are assigned via the `player.skills` array. To add a skill:
 When `statPoints > 0`, an "UPGRADE STATS" button appears in the sidebar. Clicking it opens the Level Up overlay:
 
 1. Points can be distributed among STR, AGI, INT
-2. + and - buttons to add/remove pending points
+2. - and - buttons to add/remove pending points
 3. "Finalize Upgrades" commits the changes
 4. `Equipment.recalculateStats()` is called to update total stats
 
@@ -1208,6 +1232,7 @@ The Dev Tools panel is a comprehensive content creation suite visible only to ad
 ### Database Managers
 
 Each entity type has a "Manage" button that lists all records with:
+
 - **Edit**: Pre-fills the creation form with existing data for editing
 - **Delete**: Removes the record from Firestore (with confirmation)
 
@@ -1220,6 +1245,7 @@ A special tool for establishing relationships between entities:
 3. **Select Quest (Optional)**: Choose a quest to auto-inject
 
 The Linker:
+
 - Sets the NPC's `defaultDialogueId` to the selected dialogue
 - If a quest is selected, adds an `[Accept Quest]` response to the dialogue (if not already present)
 
@@ -1250,7 +1276,9 @@ Sortable data grid of all locations. Click column headers to sort. Columns: ID, 
 - **Validation Report**: Full integrity scan (orphans, one-way links, missing NPC/enemy references, encounter chance totals).
 
 ### Premium Aesthetics
+
 The Dev Tools UI features a modern, premium design system:
+
 - **Glassmorphism Panels**: Semi-transparent backgrounds with backdrop blur.
 - **Golden Accents**: Tarnished gold borders and highlights consistent with the RPG theme.
 - **Dynamic Feedback**: Success/Error messages use animated status bars and color-coded logging.
@@ -1292,6 +1320,7 @@ Usage: `GlobalLog.log("Message", "type")`
 ### CharacterSelectUI (`js/ui/CharacterSelectUI.js`)
 
 Displays after login. Shows all characters for the current user with:
+
 - **Play**: Loads character and starts gameplay
 - **Delete**: Removes character from Firestore (with confirmation)
 - **Create New Character**: Opens the CharacterCreator
@@ -1299,6 +1328,7 @@ Displays after login. Shows all characters for the current user with:
 ### DialogueUI (`js/ui/DialogueUI.js`)
 
 Bottom-anchored Visual Novel dialogue bar with:
+
 - NPC name header (gold)
 - Speech text
 - Response buttons (grayed out if conditions not met, with tooltip)
@@ -1306,6 +1336,7 @@ Bottom-anchored Visual Novel dialogue bar with:
 ### QuestLogUI (`js/ui/QuestLogUI.js`)
 
 Quest journal overlay with:
+
 - Active quests: Title, description, objectives with checkmarks
 - Completed quests: Grayed out with checkmark
 - Track checkbox: Toggles quest in Quick View
@@ -1352,6 +1383,7 @@ The main layout uses CSS Grid:
 ```
 
 Grid definition:
+
 - Columns: `1fr 300px`
 - Rows: `1fr 200px`
 - Areas: `main sidebar / bottom bottom`
@@ -1359,6 +1391,7 @@ Grid definition:
 ### Overlay System
 
 Overlays use CSS transitions for smooth open/close:
+
 - Default: `visibility: hidden; opacity: 0; transform: translate(-50%, -45%)`
 - Active: `visibility: visible; opacity: 1; transform: translate(-50%, -50%)`
 - Side-by-side mode: `.overlay-left` (25% left) + `.overlay-right` (75% left)
@@ -1366,6 +1399,7 @@ Overlays use CSS transitions for smooth open/close:
 ### Combat UI
 
 Fullscreen overlay with radial gradient background:
+
 - `radial-gradient(circle, #2a1610 0%, #0a0503 100%)`
 - HP bars with animated width transitions
 - Floating damage/heal text with CSS keyframe animation (`floatUp`)
@@ -1691,9 +1725,11 @@ node scripts/setAdmin.js user@example.com --revoke
 ### How to Add a New Profession
 
 1. Add the profession to `State.js` in `player.professions`:
+
    ```javascript
    professions: { smithing: 1, alchemy: 1, enchanting: 1 }
    ```
+
 2. Create recipes with `profession: "enchanting"`
 3. The crafting system automatically checks profession levels
 
@@ -1717,10 +1753,12 @@ node scripts/setAdmin.js user@example.com --revoke
 ### Adding a New Firestore Collection
 
 1. **Add methods** to `database.js`:
+
    ```javascript
    async getMyEntities() { return this._getColl('myentities'); },
    async saveMyEntity(d) { return this._setDoc('myentities', d); }
    ```
+
 2. **Add Dev Tools form** in `index.html` (follow existing pattern)
 3. **Add handler** in `DevTools.js` (follow existing save/manage pattern)
 
@@ -1728,12 +1766,15 @@ node scripts/setAdmin.js user@example.com --revoke
 
 1. Open `DialogueEngine.js`
 2. Add a new case in `executeActions()`:
+
    ```javascript
    case 'MY_ACTION':
        // Your custom logic here
        break;
    ```
+
 3. Use it in dialogue response JSON:
+
    ```javascript
    actions: [{ type: "MY_ACTION", target: "someValue" }]
    ```
@@ -1741,10 +1782,13 @@ node scripts/setAdmin.js user@example.com --revoke
 ### Adding a New Custom Event
 
 1. **Dispatch** from any module:
+
    ```javascript
    window.dispatchEvent(new CustomEvent('myEvent', { detail: data }));
    ```
+
 2. **Listen** in the appropriate UI:
+
    ```javascript
    window.addEventListener('myEvent', (e) => { /* handle e.detail */ });
    ```
@@ -1829,6 +1873,7 @@ To add new stats beyond STR/AGI/INT:
 ## Appendix: Function Index
 
 ### State.js
+
 - `constructor()` — Initializes player defaults
 - `updatePlayer(data)` — Merges player data, recalculates HP/MP
 - `addCurrency(id, amount)` — Adds currency with rollover
@@ -1838,6 +1883,7 @@ To add new stats beyond STR/AGI/INT:
 - `getFlag(key)` → `any` — Gets world flag
 
 ### Engine (app.js)
+
 - `constructor()` — Creates all modules and wires events
 - `triggerCloudSave()` — Debounced Firestore save (1.5s)
 - `bindGlobalEvents()` — Wires character, equipment, dialogue events
@@ -1847,6 +1893,7 @@ To add new stats beyond STR/AGI/INT:
 - `refreshSidebar()` — Updates all sidebar DOM elements
 
 ### CharacterCreator.js
+
 - `constructor(state, updateUICallback)` — Setup
 - `start(user, onComplete)` — Begin wizard
 - `renderStep()` — Route to current step
@@ -1857,6 +1904,7 @@ To add new stats beyond STR/AGI/INT:
 - `updateStateAndReRender()` — Helper for live stat updates
 
 ### CombatEngine.js
+
 - `constructor(state, inventory, questLog)` — Setup
 - `startCombat(enemyObj)` — Clone enemy, start combat
 - `attack()` — Player basic attack
@@ -1868,6 +1916,7 @@ To add new stats beyond STR/AGI/INT:
 - `endCombat()` — Close combat, return to location
 
 ### Equipment.js
+
 - `constructor(state, inventory)` — Initialize 7 slots
 - `equip(itemId)` → `boolean` — Equip item from inventory
 - `unequip(slot, recalc)` → `boolean` — Unequip to inventory
@@ -1875,6 +1924,7 @@ To add new stats beyond STR/AGI/INT:
 - `getSlotForItem(item)` → `string|null` — Get matching slot
 
 ### Inventory.js
+
 - `constructor(maxWeight)` — Initialize with weight limit
 - `getTotalWeight()` → `number` — Current total weight
 - `addItem(itemObj, qty)` → `boolean` — Add with stacking
@@ -1882,6 +1932,7 @@ To add new stats beyond STR/AGI/INT:
 - `removeItem(itemId, qty)` → `boolean` — Remove quantity
 
 ### QuestLog.js
+
 - `constructor(state, inventory, db)` — Setup
 - `init()` — Load quest templates
 - `startQuest(questId)` — Activate quest
@@ -1890,6 +1941,7 @@ To add new stats beyond STR/AGI/INT:
 - `completeQuest(questId)` — Grant rewards, archive
 
 ### DialogueEngine.js
+
 - `constructor(state, inventory, questLog, db)` — Setup
 - `init()` — Load dialogue nodes
 - `getNode(nodeId)` → `Object` — Get cached node
@@ -1897,6 +1949,7 @@ To add new stats beyond STR/AGI/INT:
 - `executeActions(response)` — Run action side effects
 
 ### LocationEngine.js
+
 - `constructor(state, combatEngine)` — Setup
 - `init()` — Load locations + enemies, hook combat end
 - `renderLocation()` — Render current location
@@ -1904,6 +1957,7 @@ To add new stats beyond STR/AGI/INT:
 - `triggerEncounter(enemyId)` — Start combat
 
 ### database.js (mockDatabase)
+
 - `deleteEntity(collName, id)` — Delete document
 - `getCharacters(uid)` / `saveCharacter(uid, data)` / `deleteCharacter(uid, charId)`
 - `getRecipes()` / `saveRecipe(d)` — and all analogous pairs for each collection
