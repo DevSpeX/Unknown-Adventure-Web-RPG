@@ -141,6 +141,10 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" required>
                 </div>
+                <div class="auth-form-group" style="flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px;">
+                    <input type="checkbox" id="login-stay-logged-in" checked style="width: auto;">
+                    <label for="login-stay-logged-in" style="font-size: 0.9rem; color: var(--text-dim); margin: 0;">Stay logged in</label>
+                </div>
                 <button type="submit" class="auth-btn">Log In</button>
                 <div class="auth-toggle">
                     New here? <a id="toggle-to-register">Register an account</a>
@@ -306,12 +310,11 @@
             <!-- Dev Actions List -->
             <div id="dev-actions-list" style="display:flex; flex-direction:column; gap:10px;">
                 <h4 style="color:var(--text-dim); margin-bottom:-5px;">Content Editor</h4>
-                <button id="dev-action-npc" class="btn" style="color: #d4af37; border-color: #d4af37;">Create
-                    NPC</button>
-                <button id="dev-action-quest" class="btn" style="color: #66b3ff;">Create Quest</button>
-                <button id="dev-action-dialogue" class="btn" style="color: #ffb3b3;">Create Dialogue Node</button>
+                <button id="dev-action-npc" class="btn" style="color: #d4af37; border-color: #d4af37; background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, transparent 100%);">🦸 Create NPC</button>
+                <button id="dev-action-quest" class="btn" style="color: #66b3ff; border-color: #66b3ff; background: linear-gradient(135deg, rgba(102,179,255,0.08) 0%, transparent 100%);">📜 Create Quest</button>
+                <button id="dev-action-dialogue" class="btn" style="color: #ffb3b3; border-color: #ffb3b3; background: linear-gradient(135deg, rgba(255,179,179,0.08) 0%, transparent 100%);">💬 Create Dialogue Node</button>
                 <button id="dev-action-linker" class="btn"
-                    style="color: #ffb3b3; border-color: #ffb3b3; font-style: italic;">The Linker</button>
+                    style="color: #ffb3b3; border-color: #ffb3b3; font-style: italic; background: linear-gradient(135deg, rgba(255,179,179,0.08) 0%, transparent 100%);">🔗 The Linker</button>
                 <hr style="border-color:var(--border-dim); width:100%;">
 
                 <h4 style="color:var(--text-dim); margin-bottom:-5px;">World Design</h4>
@@ -319,16 +322,12 @@
                     style="color: #4CAF50; border-color: #4CAF50; background: linear-gradient(135deg, rgba(76,175,80,0.08) 0%, transparent 100%); font-weight:bold; text-align:center;">
                     🗺️ World Builder
                 </button>
-                <button id="dev-action-location" class="btn" style="color: #4CAF50; border-color: #4CAF50;">Create
-                    Location</button>
-                <button id="dev-action-enemy" class="btn" style="color: #ff6b6b; border-color: #ff6b6b;">Create
-                    Enemy</button>
-                <button id="dev-action-currency" class="btn" style="color: #ffd700; border-color: #ffd700;">Create
-                    Currency</button>
-                <button id="dev-action-skill" class="btn" style="color: #9c27b0; border-color: #9c27b0;">Create
-                    Skill</button>
-                <button id="dev-action-recipe" class="btn text-dim">Create Crafting Recipe</button>
-                <button id="dev-action-item" class="btn text-dim">Create Base Item</button>
+                <button id="dev-action-location" class="btn" style="color: #4CAF50; border-color: #4CAF50; background: linear-gradient(135deg, rgba(76,175,80,0.08) 0%, transparent 100%);">📍 Create Location</button>
+                <button id="dev-action-enemy" class="btn" style="color: #ff6b6b; border-color: #ff6b6b; background: linear-gradient(135deg, rgba(255,107,107,0.08) 0%, transparent 100%);">👹 Create Enemy</button>
+                <button id="dev-action-currency" class="btn" style="color: #ffd700; border-color: #ffd700; background: linear-gradient(135deg, rgba(255,215,0,0.08) 0%, transparent 100%);">💰 Create Currency</button>
+                <button id="dev-action-skill" class="btn" style="color: #9c27b0; border-color: #9c27b0; background: linear-gradient(135deg, rgba(156,39,176,0.08) 0%, transparent 100%);">✨ Create Skill</button>
+                <button id="dev-action-recipe" class="btn text-dim">🔨 Create Crafting Recipe</button>
+                <button id="dev-action-item" class="btn text-dim">⚔️ Create Base Item</button>
 
                 <h4 style="color:var(--text-dim); margin-top:10px; margin-bottom:-5px;">Database Management</h4>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">

@@ -85,12 +85,19 @@ Click column headers to sort ascending/descending.
 ### Tab 3 — World Settings
 
 - **Start Location**: Dropdown to select and save the player spawn location. Persisted to Firestore `config/world`.
-- **Auto-Fix Connections**: Scans all locations for one-way connections and automatically adds the missing reciprocal links.
+- **Auto-Fix Connections**: Scans all locations for one-way connections. It intelligently identifies missing reciprocal links and creates them. If a target location ID is invalid, it provides a specific warning in the status log.
 - **Validation Report**: Full integrity scan checking for:
   - Orphan locations (no connections)
   - One-way connections
   - References to non-existent locations, NPCs, or enemies
   - Encounter chance totals exceeding 100%
+
+## Premium Aesthetics
+
+The Dev Tools UI features a modern, premium design system:
+- **Glassmorphism Panels**: Semi-transparent backgrounds with backdrop blur.
+- **Golden Accents**: Tarnished gold borders and highlights consistent with the RPG theme.
+- **Dynamic Feedback**: Success/Error messages use animated status bars and color-coded logging.
 
 ## Creating Complete Content Chains
 

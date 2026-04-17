@@ -75,6 +75,19 @@ class Engine {
         
         window.appUpdateHook = () => this.uiUpdate();
 
+        // Passive Regeneration Loop
+        setInterval(() => {
+            if (this.state && this.state.player && this.state.getFlag('creation_complete')) {
+                if (this.state.regenTick && this.state.regenTick()) {
+                    if (this.combatEngine && this.combatEngine.inCombat && this.combatUI) {
+                        this.combatUI.updatePhase();
+                    } else {
+                        this.uiUpdate();
+                    }
+                }
+            }
+        }, 5000);
+
         this.bindGlobalEvents();
     }
 
@@ -88,7 +101,11 @@ class Engine {
                     ...this.state.player,
                     inventory: this.inventory ? this.inventory.items : []
                 };
-                await this.db.saveCharacter(auth.currentUser.uid, snapshot);
+                
+                // Scrub incoming data of any undefined fields which block firebase commits
+                const cleanSnapshot = JSON.parse(JSON.stringify(snapshot));
+                
+                await this.db.saveCharacter(auth.currentUser.uid, cleanSnapshot);
                 console.log("☁️ Progress saved to Firestore.");
             } catch (err) {
                 console.error("Cloud Error:", err);

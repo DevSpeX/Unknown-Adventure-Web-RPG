@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // A user can access their own nested character documents
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Config path logic: Anyone authenticated can read it
+    // Only admins can write to it. (To bypass locally prior to deploying admin roles, we allow dev environment write, but this should be tightened.)
+    match /config/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.admin == true; 
+    }
+    
+    // Global generic read access for the actual game data
+    match /{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

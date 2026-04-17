@@ -52,6 +52,13 @@ This document is managed through:
 3. **Travel**: Clicking "Move to [Location]" updates `currentLocation` and re-renders.
 4. **Search**: Clicking "Search Area" rolls against the encounter table.
 
+### Movement Data Sync
+Entering a new location triggers an automatic state synchronization:
+1. `this.state.player.currentLocation` is updated.
+2. A `statsUpdated` event is dispatched globally.
+3. The Engine intercepts the event and calls `triggerCloudSave()`.
+4. The user's location is scrubbed of `undefined` fields and persisted to Firestore.
+
 ## Encounter Roll Logic
 
 ```

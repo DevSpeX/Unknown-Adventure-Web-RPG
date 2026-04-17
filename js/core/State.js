@@ -169,4 +169,23 @@ export default class State {
     getFlag(key) {
         return this.flags[key];
     }
+
+    /**
+     * Passive regeneration for HP and MP.
+     * @returns {boolean} True if stats actually changed.
+     */
+    regenTick() {
+        let changed = false;
+        if (this.player.hp > 0) { // Only regen if alive
+            if (this.player.hp < this.player.maxHp) {
+                this.player.hp = Math.min(this.player.maxHp, this.player.hp + 1);
+                changed = true;
+            }
+            if (this.player.mp < this.player.maxMp) {
+                this.player.mp = Math.min(this.player.maxMp, this.player.mp + 1);
+                changed = true;
+            }
+        }
+        return changed;
+    }
 }

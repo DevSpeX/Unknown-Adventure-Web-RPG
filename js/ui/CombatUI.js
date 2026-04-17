@@ -93,6 +93,15 @@ export default class CombatUI {
         const ePct = Math.max(0, (e.hp / e.maxHp) * 100);
         this.enemyHpFill.style.width = ePct + '%';
         document.getElementById('combat-enemy-name').innerText = `${e.name} (${e.hp} HP)`;
+
+        // Disable buttons if combat is ending
+        const isEnded = p.hp <= 0 || e.hp <= 0;
+        const buttons = document.querySelectorAll('.combat-btn');
+        buttons.forEach(b => {
+             b.disabled = isEnded;
+             if (isEnded) b.style.opacity = '0.5';
+             else b.style.opacity = '1';
+        });
     }
 
     appendLog(msg) {

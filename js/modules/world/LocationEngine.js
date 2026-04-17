@@ -118,6 +118,9 @@ export default class LocationEngine {
                 btnMove.innerText = `Move to ${connInfo ? connInfo.name : connId}`;
                 btnMove.onclick = () => {
                     this.state.player.currentLocation = connId;
+                    if (window.dispatchEvent) {
+                        window.dispatchEvent(new Event('statsUpdated'));
+                    }
                     this.renderLocation();
                 };
                 this.choicesDiv.appendChild(btnMove);

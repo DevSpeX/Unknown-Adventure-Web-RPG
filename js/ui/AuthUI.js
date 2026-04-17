@@ -32,6 +32,8 @@ export default class AuthUI {
 
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
+            const stayLoggedInCheckbox = document.getElementById('login-stay-logged-in');
+            const stayLoggedIn = stayLoggedInCheckbox ? stayLoggedInCheckbox.checked : true;
 
             // disable button
             const btn = this.loginForm.querySelector('button');
@@ -39,7 +41,7 @@ export default class AuthUI {
             btn.disabled = true;
 
             try {
-                await this.authManager.login(email, pass);
+                await this.authManager.login(email, pass, stayLoggedIn);
             } catch (err) {
                 this.showError("Invalid email or password.");
                 btn.innerText = "Log In";

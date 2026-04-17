@@ -23,7 +23,7 @@ export default class CombatEngine {
     }
 
     attack() {
-        if (!this.inCombat) return;
+        if (!this.inCombat || this.enemy.hp <= 0 || this.state.player.hp <= 0) return;
 
         // Player attacks
         const pAttrs = this.state.player.attributes;
@@ -53,7 +53,7 @@ export default class CombatEngine {
     }
 
     useSkill(skill) {
-        if (!this.inCombat) return;
+        if (!this.inCombat || this.enemy.hp <= 0 || this.state.player.hp <= 0) return;
 
         // Mana check
         if (this.state.player.mp < skill.mpCost) {

@@ -1,19 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcFile = 'docs/full-manual.html';
+const srcFile = 'docs/temp_content.html';
 const content = fs.readFileSync(srcFile, 'utf8');
 
 // Extract all sections
 const sections = [];
-const h2Regex = /<h2 id="([^"]+)">([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2 id=|$)/g;
+const h2Regex = /<h2>(.*?)<\/h2>([\s\S]*?)(?=<h2>|$)/g;
 
 let match;
 while ((match = h2Regex.exec(content)) !== null) {
+    let title = match[1].trim();
+    let cleanTitle = title.replace(/&amp;/g, 'and').replace(/<[^>]+>/g, '');
+    let id = cleanTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     sections.push({
-        id: match[1],
-        title: match[2].trim(),
-        body: match[3].trim()
+        id: id,
+        title: title,
+        body: match[2].trim()
     });
 }
 
@@ -77,7 +80,7 @@ const getTemplate = (section, prev, next) => `<!DOCTYPE html>
             </nav>
 
             <footer class="footer">
-                <p>Unknown Adventure RPG — Documentation v1.0 · April 2026</p>
+                <p>Unknown Adventure RPG — Documentation v1.1.0 · April 2026</p>
                 <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
             </footer>
         </main>
@@ -95,13 +98,20 @@ sections.forEach((section, index) => {
     
     fs.writeFileSync(fileName, getTemplate(section, prev, next));
     
+    const cleanBody = section.body.replace(/<[^>]+>/g, ' ');
+    const bodyKeywords = cleanBody.toLowerCase().match(/\b[a-z]{4,}\b/g) || [];
+    const uniqueKeywords = [...new Set([
+        ...section.title.toLowerCase().split(/\s+/),
+        ...bodyKeywords // Take ALL significant words as keywords
+    ])];
+
     searchIndex.push({
         title: section.title,
         id: section.id,
         url: `/docs/sections/${section.id}`,
         category: "Manual Section",
-        content: section.body.replace(/<[^>]+>/g, ' ').substring(0, 500).trim(),
-        keywords: [section.title.toLowerCase()]
+        content: cleanBody.substring(0, 2000).trim(), // Increase snippet size for search matching
+        keywords: uniqueKeywords
     });
 });
 

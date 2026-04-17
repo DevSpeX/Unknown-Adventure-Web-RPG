@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unknown Adventure RPG — Documentation Portal</title>
-    <meta name="description" content="Complete technical documentation for the Unknown Adventure RPG engine — architecture, systems, data schemas, and development guides.">
+    <meta name="description"
+        content="Complete technical documentation for the Unknown Adventure RPG engine — architecture, systems, data schemas, and development guides.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0f;
@@ -24,7 +28,11 @@
             --accent4: #ffd93d;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
@@ -38,12 +46,14 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(124,111,255,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0,212,170,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(255,107,107,0.03) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(124, 111, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 212, 170, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(255, 107, 107, 0.03) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -82,10 +92,29 @@
             text-transform: uppercase;
         }
 
-        .badge-purple { background: rgba(124,111,255,0.12); border: 1px solid rgba(124,111,255,0.3); color: var(--accent); }
-        .badge-green { background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3); color: var(--accent2); }
-        .badge-red { background: rgba(255,107,107,0.12); border: 1px solid rgba(255,107,107,0.3); color: var(--accent3); }
-        .badge-yellow { background: rgba(255,217,61,0.12); border: 1px solid rgba(255,217,61,0.3); color: var(--accent4); }
+        .badge-purple {
+            background: rgba(124, 111, 255, 0.12);
+            border: 1px solid rgba(124, 111, 255, 0.3);
+            color: var(--accent);
+        }
+
+        .badge-green {
+            background: rgba(0, 212, 170, 0.12);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            color: var(--accent2);
+        }
+
+        .badge-red {
+            background: rgba(255, 107, 107, 0.12);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: var(--accent3);
+        }
+
+        .badge-yellow {
+            background: rgba(255, 217, 61, 0.12);
+            border: 1px solid rgba(255, 217, 61, 0.3);
+            color: var(--accent4);
+        }
 
         h1 {
             font-size: 3.2rem;
@@ -96,7 +125,9 @@
             margin-bottom: 12px;
         }
 
-        h1 span { color: var(--accent); }
+        h1 span {
+            color: var(--accent);
+        }
 
         .subtitle {
             font-size: 1.15rem;
@@ -133,11 +164,12 @@
         .qa-primary {
             background: var(--accent);
             color: #fff;
-            box-shadow: 0 4px 20px rgba(124,111,255,0.3);
+            box-shadow: 0 4px 20px rgba(124, 111, 255, 0.3);
         }
+
         .qa-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(124,111,255,0.45);
+            box-shadow: 0 8px 30px rgba(124, 111, 255, 0.45);
         }
 
         .qa-secondary {
@@ -145,6 +177,7 @@
             color: var(--text);
             border: 1px solid var(--border);
         }
+
         .qa-secondary:hover {
             border-color: var(--border-hover);
             background: var(--bg-card-hover);
@@ -216,8 +249,10 @@
         .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 3px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
             opacity: 0;
             transition: opacity 0.25s;
         }
@@ -226,15 +261,28 @@
             border-color: var(--border-hover);
             background: var(--bg-card-hover);
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .card:hover::before { opacity: 1; }
+        .card:hover::before {
+            opacity: 1;
+        }
 
-        .card-purple::before { background: linear-gradient(90deg, var(--accent), transparent); }
-        .card-green::before { background: linear-gradient(90deg, var(--accent2), transparent); }
-        .card-red::before { background: linear-gradient(90deg, var(--accent3), transparent); }
-        .card-yellow::before { background: linear-gradient(90deg, var(--accent4), transparent); }
+        .card-purple::before {
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .card-green::before {
+            background: linear-gradient(90deg, var(--accent2), transparent);
+        }
+
+        .card-red::before {
+            background: linear-gradient(90deg, var(--accent3), transparent);
+        }
+
+        .card-yellow::before {
+            background: linear-gradient(90deg, var(--accent4), transparent);
+        }
 
         .card-icon {
             font-size: 1.8rem;
@@ -265,8 +313,14 @@
             font-size: 0.85rem;
         }
 
-        footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
 
         /* Search Results Overlay */
         #search-results {
@@ -279,7 +333,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
             max-height: 400px;
             overflow-y: auto;
             display: none;
@@ -295,10 +349,26 @@
             text-decoration: none;
         }
 
-        .search-item:last-child { border-bottom: none; }
-        .search-item:hover { background: var(--bg-card-hover); }
-        .search-item .item-title { font-weight: 600; color: var(--accent); display: block; }
-        .search-item .item-desc { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; display: block; }
+        .search-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .search-item .item-title {
+            font-weight: 600;
+            color: var(--accent);
+            display: block;
+        }
+
+        .search-item .item-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+            display: block;
+        }
 
         .search-bar-portal {
             position: relative;
@@ -335,57 +405,68 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            header { padding: 50px 0 40px; }
-            .stats-bar { gap: 24px; }
-            .card-grid { grid-template-columns: 1fr; }
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            header {
+                padding: 50px 0 40px;
+            }
+
+            .stats-bar {
+                gap: 24px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
-<div class="container">
+    <div class="container">
 
-    <header>
-        <div class="badge-row">
-            <span class="badge badge-purple">HTML5</span>
-            <span class="badge badge-green">JavaScript ES Modules</span>
-            <span class="badge badge-red">Firebase Auth</span>
-            <span class="badge badge-yellow">Cloud Firestore</span>
-        </div>
-        <h1>Unknown <span>Adventure</span> RPG</h1>
-        <p class="subtitle">Complete technical documentation covering every system, function, data schema, and development guide for the engine.</p>
+        <header>
+            <div class="badge-row">
+                <span class="badge badge-purple">HTML5</span>
+                <span class="badge badge-green">JavaScript ES Modules</span>
+                <span class="badge badge-red">Firebase Auth</span>
+                <span class="badge badge-yellow">Cloud Firestore</span>
+            </div>
+            <h1>Unknown <span>Adventure</span> RPG</h1>
+            <p class="subtitle">Complete technical documentation covering every system, function, data schema, and
+                development guide for the engine.</p>
 
-        <div class="quick-actions">
-            <a href="full-manual.html" class="qa-btn qa-primary">📄 Full Documentation</a>
-            <a href="/" class="qa-btn qa-secondary">🎮 Play the Game</a>
-        </div>
+            <div class="quick-actions">
+                <a href="full-manual.html" class="qa-btn qa-primary">📄 Full Documentation</a>
+                <a href="/" class="qa-btn qa-secondary">🎮 Play the Game</a>
+            </div>
 
-        <div class="search-bar-portal">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
-            <div id="search-results"></div>
+            <div class="search-bar-portal">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+                <div id="search-results"></div>
+            </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-value">31</span>
+                    <span class="stat-label">Sections</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">32</span>
+                    <span class="stat-label">Source Files</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">8,600+</span>
+                    <span class="stat-label">Lines of Code</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">19</span>
+                    <span class="stat-label">Game Systems</span>
+                </div>
+            </div>
         </div>
-    </header>
-
-    <div class="stats-bar">
-        <div class="stat">
-            <span class="stat-value">27</span>
-            <span class="stat-label">Sections</span>
-        </div>
-        <div class="stat">
-            <span class="stat-value">32</span>
-            <span class="stat-label">Source Files</span>
-        </div>
-        <div class="stat">
-            <span class="stat-value">6,300+</span>
-            <span class="stat-label">Lines of Code</span>
-        </div>
-        <div class="stat">
-            <span class="stat-value">16</span>
-            <span class="stat-label">Game Systems</span>
-        </div>
-        </div>
-    </div>
 
     <!-- GETTING STARTED -->
     <div class="section-title">Getting Started</div>
@@ -423,7 +504,12 @@
         <a href="/docs/sections/7-core-systems--state--database" class="card card-yellow">
             <span class="card-icon">💾</span>
             <h3>State & Database</h3>
-            <p>Player data structure, Firestore ORM, auto-save system.</p>
+            <p>Firestore ORM, collection schemas, and the debounced cloud save system.</p>
+        </a>
+        <a href="/docs/sections/8-player-and-attributes" class="card card-purple">
+            <span class="card-icon">👤</span>
+            <h3>Player & Attributes</h3>
+            <p>Detailed breakdown of player stats, regeneration logic, EXP formulas, and expansion guides.</p>
         </a>
     </div>
 
@@ -510,7 +596,7 @@
 </div>
 
 <footer>
-    <p>Unknown Adventure RPG — Documentation v1.1 · April 15, 2026</p>
+    <p>Unknown Adventure RPG — Documentation v1.1.1 · April 16, 2026</p>
     <p style="margin-top:8px"><a href="/">Back to Game</a> · <a href="full-manual.html">Full Documentation (Single Page)</a></p>
 </footer>
 

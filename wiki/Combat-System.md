@@ -10,10 +10,23 @@
 1. LocationEngine.searchArea() rolls an encounter
 2. CombatEngine.startCombat(enemyObj) starts combat
 3. Player chooses: Strike (base), Use Skill, or Flee
-4. Player attacks → Enemy attacks back (after 800ms delay)
-5. Combat ends on victory or defeat
-6. Control returns to LocationEngine.renderLocation()
+4. **Player Turn**:
+   - Player clicks "Attack" or a skill button
+   - Damage calculated based on stats/skills
+   - Target HP updated
+   - Actions restricted natively if HP drops to 0 during calculations
+5. **Enemy Turn**:
+   - Enemy attacks back (after 800ms delay)
+   - Actions restricted natively if HP drops to 0 during calculations
+6. Combat ends on victory or defeat
+7. Control returns to LocationEngine.renderLocation()
 ```
+
+### Input & Death Locks
+To ensure combat integrity, the engine implements a **hard input lock** when either the player or the enemy reaches 0 HP:
+- All action buttons (Strike, Skills, Flee) are disabled.
+- The state is locked into a "Resolving" phase until the victory/defeat logic concludes.
+- This prevents the player from hitting a "dead" enemy or consuming resources post-defeat.
 
 ## Damage Formulas
 

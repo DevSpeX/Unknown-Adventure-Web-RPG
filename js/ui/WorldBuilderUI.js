@@ -911,13 +911,17 @@ export default class WorldBuilderUI {
     async autoFixConnections() {
         this.setStatus('Scanning for one-way connections...');
         let fixCount = 0;
+        let invalidCount = 0;
         const toSave = new Map(); // locId -> updated location data
 
         for (const loc of this.locations) {
             const conns = loc.connections || [];
             for (const connId of conns) {
                 const target = this.locations.find(l => l.id === connId);
-                if (!target) continue; // Target doesn't exist — can't fix
+                if (!target) {
+                    invalidCount++;
+                    continue; // Target doesn't exist — can't fix
+                }
                 const targetConns = target.connections || [];
                 if (!targetConns.includes(loc.id)) {
                     // Missing reciprocal — add it
@@ -935,12 +939,19 @@ export default class WorldBuilderUI {
             await mockDatabase.saveLocation(data);
         }
 
+        let msg = '';
         if (fixCount > 0) {
-            this.setStatus(`Fixed ${fixCount} missing reciprocal connection(s). Reloading...`);
+            msg = `Fixed ${fixCount} missing reciprocal connection(s). `;
             await this.open(); // Reload data
         } else {
-            this.setStatus('All connections are already bidirectional. No fixes needed.');
+            msg = 'All valid connections are already bidirectional. ';
         }
+        
+        if (invalidCount > 0) {
+            msg += `Failed to resolve ${invalidCount} connection(s) pointing to non-existent locations.`;
+        }
+        
+        this.setStatus(msg);
     }
 
     /**
