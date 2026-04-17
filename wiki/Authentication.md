@@ -8,15 +8,16 @@
 
 ## Flow
 
-1. **Page Load**: Auth overlay appears (blocks game view)
-2. **Login/Register**: User submits email + password
+1. **Page Load**: Auth overlay appears (blocks game view).
+2. **Login/Register**: User submits email + password.
 3. **Success**: 
-   - Auth overlay hides
-   - Custom Claims are checked for `admin: true`
-   - If admin: Dev Tools button becomes visible
-   - Logout button appears
-   - Character Select overlay opens
-4. **Logout**: Calls `signOut()` and reloads the page
+   - Auth overlay hides.
+   - Custom Claims are checked for `admin: true`.
+   - If admin: Dev Tools button becomes visible + developer powers activate.
+   - Logout button appears.
+   - Character Select overlay opens.
+4. **Persistence Restoration**: On page reload (F5), the engine implicitly checks for an existing session and auto-logs in the user if "Stay Logged In" was previously selected.
+5. **Logout**: Calls `signOut()` and reloads the page to clear local state.
 
 ## AuthManager Class
 
@@ -24,10 +25,16 @@
 class AuthManager {
     constructor(onAuthSuccess)  // Callback when auth succeeds
     async register(email, password)  // Creates new user
-    async login(email, password)     // Signs in existing user
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, shows logout
+    async login(email, password, stayLoggedIn) // Signs in user with optional persistence
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
 }
 ```
+
+### Persistence (Session vs. Local)
+The login form includes a **"Stay Logged In"** checkbox.
+- **Checked (Local)**: Uses `browserLocalPersistence`. Session survives browser restart.
+- **Unchecked (Session)**: Uses `browserSessionPersistence`. Session cleared on tab close.
+Explicit restoration is handled via `onAuthStateChanged` in the `AuthManager` constructor.
 
 ## Admin Claims
 

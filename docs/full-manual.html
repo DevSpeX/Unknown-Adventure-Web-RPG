@@ -52,7 +52,7 @@ a{color:#0969da!important}
 <h1>Unknown Adventure RPG</h1>
 <div class="sub">Complete Technical Documentation</div>
 <div class="meta">
-<p>Version 1.0 &middot; April 2026</p>
+<p>Version 1.1.1 &middot; April 16, 2026</p>
 <span class="badge">HTML5</span>
 <span class="badge">JavaScript ES Modules</span>
 <span class="badge">Firebase Auth</span>
@@ -63,7 +63,7 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
 </div>
 <h1>Unknown Adventure RPG — Complete Technical Documentation</h1>
 <blockquote>
-<p><strong>Version</strong>: 1.0 · <strong>Last Updated</strong>: April 14, 2026<br><strong>Platform</strong>: Web (Browser-based) · <strong>Backend</strong>: Firebase (Auth + Firestore)<br><strong>Hosted at</strong>: <code>unknown-adventure-rpg.web.app</code></p>
+<p><strong>Version</strong>: 1.1.1 · <strong>Last Updated</strong>: April 16, 2026<br><strong>Platform</strong>: Web (Browser-based) · <strong>Backend</strong>: Firebase (Auth + Firestore)<br><strong>Hosted at</strong>: <code>unknown-adventure-rpg.web.app</code></p>
 </blockquote>
 <hr>
 <h2>Table of Contents</h2>
@@ -75,29 +75,30 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
 <li><a href="#5-build-deploy--run">Build, Deploy &amp; Run</a></li>
 <li><a href="#6-authentication-system">Authentication System</a></li>
 <li><a href="#7-core-systems--state--database">Core Systems — State &amp; Database</a></li>
-<li><a href="#8-character-creation">Character Creation</a></li>
-<li><a href="#9-world--location-system">World &amp; Location System</a></li>
-<li><a href="#10-combat-system">Combat System</a></li>
-<li><a href="#11-quest-system">Quest System</a></li>
-<li><a href="#12-dialogue-system">Dialogue System</a></li>
-<li><a href="#13-inventory-system">Inventory System</a></li>
-<li><a href="#14-equipment-system">Equipment System</a></li>
-<li><a href="#15-crafting-system">Crafting System</a></li>
-<li><a href="#16-economy--currency-system">Economy &amp; Currency System</a></li>
-<li><a href="#17-vendor--shop-system">Vendor / Shop System</a></li>
-<li><a href="#18-skill-system">Skill System</a></li>
-<li><a href="#19-leveling--progression">Leveling &amp; Progression</a></li>
-<li><a href="#20-dev-tools-admin-panel">Dev Tools (Admin Panel)</a></li>
-<li><a href="#21-ui-layer-reference">UI Layer Reference</a></li>
-<li><a href="#22-css-design-system">CSS Design System</a></li>
-<li><a href="#23-admin-console-commands">Admin Console Commands</a></li>
-<li><a href="#24-data-schemas-firestore-collections">Data Schemas (Firestore Collections)</a></li>
-<li><a href="#25-how-to-guides">How-To Guides</a></li>
-<li><a href="#26-extending-the-engine">Extending the Engine</a></li>
-<li><a href="#27-complete-file-reference">Complete File Reference</a></li>
+<li><a href="#8-player-and-attributes">Player and Attributes</a></li>
+<li><a href="#9-character-creation">Character Creation</a></li>
+<li><a href="#10-world--location-system">World &amp; Location System</a></li>
+<li><a href="#11-combat-system">Combat System</a></li>
+<li><a href="#12-quest-system">Quest System</a></li>
+<li><a href="#13-dialogue-system">Dialogue System</a></li>
+<li><a href="#14-inventory-system">Inventory System</a></li>
+<li><a href="#15-equipment-system">Equipment System</a></li>
+<li><a href="#16-crafting-system">Crafting System</a></li>
+<li><a href="#17-economy--currency-system">Economy &amp; Currency System</a></li>
+<li><a href="#18-vendor--shop-system">Vendor / Shop System</a></li>
+<li><a href="#19-skill-system">Skill System</a></li>
+<li><a href="#20-leveling--progression">Leveling &amp; Progression</a></li>
+<li><a href="#21-dev-tools-admin-panel">Dev Tools (Admin Panel)</a></li>
+<li><a href="#22-ui-layer-reference">UI Layer Reference</a></li>
+<li><a href="#23-css-design-system">CSS Design System</a></li>
+<li><a href="#24-admin-console-commands">Admin Console Commands</a></li>
+<li><a href="#25-data-schemas-firestore-collections">Data Schemas (Firestore Collections)</a></li>
+<li><a href="#26-how-to-guides">How-To Guides</a></li>
+<li><a href="#27-extending-the-engine">Extending the Engine</a></li>
+<li><a href="#28-complete-file-reference">Complete File Reference</a></li>
 </ol>
 <hr>
-<h2 id="1-project-overview">1. Project Overview</h2>
+<h2>1. Project Overview</h2>
 <p><strong>Unknown Adventure RPG</strong> is a text-based, browser-rendered RPG engine built with vanilla HTML, CSS, and JavaScript ES Modules. It features:</p>
 <ul>
 <li><strong>Firebase Authentication</strong> for login/register with admin privileges via Custom Claims</li>
@@ -114,7 +115,7 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
 </ul>
 <p>The game uses a dark medieval aesthetic with serif fonts, tarnished gold borders, and parchment-colored text.</p>
 <hr>
-<h2 id="2-technology-stack">2. Technology Stack</h2>
+<h2>2. Technology Stack</h2>
 <table>
 <thead>
 <tr>
@@ -165,7 +166,7 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
 <li>Firebase Admin SDK: <code>^13.8.0</code> (Node.js, for admin scripts)</li>
 </ul>
 <hr>
-<h2 id="3-project-structure">3. Project Structure</h2>
+<h2>3. Project Structure</h2>
 <pre><code>web_rpg_game/
 ├── index.html                  # Main HTML — all overlays, panels, forms
 ├── firebase.json               # Firebase Hosting configuration
@@ -225,7 +226,7 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
     └── setAdmin.js             # Node CLI tool: grant/revoke admin claims
 </code></pre>
 <hr>
-<h2 id="4-architecture-overview">4. Architecture Overview</h2>
+<h2>4. Architecture Overview</h2>
 <h3>Design Principles</h3>
 <ol>
 <li><strong>Separation of Concerns</strong>: Logic modules (<code>modules/</code>) never touch the DOM. UI modules (<code>ui/</code>) handle rendering. Core modules (<code>core/</code>) manage state and persistence.</li>
@@ -307,7 +308,7 @@ Hosted at: <code>unknown-adventure-rpg.web.app</code></p>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="5-build-deploy--run">5. Build, Deploy &amp; Run</h2>
+<h2>5. Build, Deploy &amp; Run</h2>
 <h3>Prerequisites</h3>
 <ul>
 <li><strong>Node.js</strong> (v18+)</li>
@@ -339,7 +340,7 @@ npx serve .
 <li>Ignores: <code>firebase.json</code>, dotfiles, <code>node_modules</code></li>
 </ul>
 <hr>
-<h2 id="6-authentication-system">6. Authentication System</h2>
+<h2>6. Authentication System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/core/firebase.js</code> — Firebase app initialization, exports <code>auth</code> and <code>db</code></li>
@@ -359,17 +360,25 @@ npx serve .
 <li>Character Select overlay opens</li>
 </ul>
 </li>
-<li><strong>Logout</strong>: Calls <code>signOut()</code> and reloads the page</li>
+<li><strong>Persistence Restoration</strong>: On page reload (F5), the engine implicitly checks for an existing session and auto-logs in the user if &quot;Stay Logged In&quot; was previously selected.</li>
+<li><strong>Logout</strong>: Calls <code>signOut()</code> and reloads the page to clear local state.</li>
 </ol>
 <h3>AuthManager Class</h3>
 <pre><code class="language-javascript">class AuthManager {
     constructor(onAuthSuccess)  // Callback when auth succeeds
     
     async register(email, password)  // Creates new user
-    async login(email, password)     // Signs in existing user
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, shows logout
+    async login(email, password, stayLoggedIn) // Signs in user with optional persistence
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
 }
 </code></pre>
+<h3>Persistence (Session vs. Local)</h3>
+<p>The login form includes a <strong>&quot;Stay Logged In&quot;</strong> checkbox.</p>
+<ul>
+<li><strong>Checked (Local)</strong>: Uses <code>browserLocalPersistence</code>. Session survives browser restart.</li>
+<li><strong>Unchecked (Session)</strong>: Uses <code>browserSessionPersistence</code>. Session cleared on tab close.
+Explicit restoration is handled via <code>onAuthStateChanged</code> in the <code>AuthManager</code> constructor.</li>
+</ul>
 <h3>Admin Claims</h3>
 <p>Admin privileges are set server-side via Firebase Custom Claims:</p>
 <pre><code class="language-bash"># Grant admin
@@ -389,94 +398,9 @@ node scripts/setAdmin.js user@example.com --revoke
 }
 </code></pre>
 <hr>
-<h2 id="7-core-systems--state--database">7. Core Systems — State &amp; Database</h2>
+<h2>7. Core Systems — State &amp; Database</h2>
 <h3>State (<code>js/core/State.js</code>)</h3>
 <p>The central data store for the game. Contains the player object, world flags, and quest storage.</p>
-<h4>Player Object Structure</h4>
-<pre><code class="language-javascript">{
-    id: null,                       // Firestore document ID
-    name: &quot;Unknown&quot;,                // Character name
-    origin: &quot;Peasant&quot;,              // Origin class
-    level: 1,
-    exp: 0,
-    expNext: 100,                   // EXP needed for next level
-    hp: 20,
-    maxHp: 20,                      // 20 + (STR × 2) + equipment bonuses
-    mp: 10,
-    maxMp: 10,                      // 10 + (INT × 5) + equipment bonuses
-    statPoints: 0,                  // Unspent stat points (3 per level)
-    skills: [&#39;heavy_slash&#39;],        // Array of skill IDs the player knows
-    attributes: {                   // TOTAL stats (base + equipment)
-        str: 0, agi: 0, int: 0
-    },
-    baseAttributes: {               // NATURAL stats (no equipment)
-        str: 0, agi: 0, int: 0
-    },
-    wallet: {                       // Currency
-        copper: 0, silver: 0, gold: 0
-    },
-    currentLocation: &quot;cellar&quot;,      // Current location ID
-    equipment: {                    // Equipped gear
-        head: null, chest: null,
-        main_hand: null, off_hand: null,
-        legs: null, feet: null, accessory: null
-    },
-    activeQuests: {},               // { questId: questTrackingData }
-    completedQuests: [],            // Array of completed quest IDs
-    professions: {                  // Crafting professions
-        smithing: 1, alchemy: 1
-    },
-    inventory: []                   // Saved with character for persistence
-}
-</code></pre>
-<h4>State Methods</h4>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Signature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>updatePlayer</code></td>
-<td><code>(data: Object)</code></td>
-<td>Merges partial data into player. Recalculates HP/MP if <code>baseAttributes</code> changes.</td>
-</tr>
-<tr>
-<td><code>addCurrency</code></td>
-<td><code>(id: string, amount: number)</code></td>
-<td>Adds currency with auto-rollover (100 copper → 1 silver → 1 gold). Caps gold at 999.</td>
-</tr>
-<tr>
-<td><code>payCopper</code></td>
-<td><code>(amount: number) → boolean</code></td>
-<td>Deducts copper with auto-conversion from silver/gold. Returns false if too poor.</td>
-</tr>
-<tr>
-<td><code>gainExp</code></td>
-<td><code>(amount: number) → boolean</code></td>
-<td>Adds EXP, handles leveling. Grants 3 stat points and full heal per level. EXP scaling: <code>expNext × 1.5</code>.</td>
-</tr>
-<tr>
-<td><code>setFlag</code></td>
-<td><code>(key: string, value: any)</code></td>
-<td>Sets a world flag (for narrative branching).</td>
-</tr>
-<tr>
-<td><code>getFlag</code></td>
-<td><code>(key: string) → any</code></td>
-<td>Gets a world flag value.</td>
-</tr>
-</tbody></table>
-<h4>EXP Scaling Formula</h4>
-<pre><code>Level 1 → 2:  100 EXP
-Level 2 → 3:  150 EXP
-Level 3 → 4:  225 EXP
-Level 4 → 5:  337 EXP
-...
-Formula: expNext = floor(expNext × 1.5)
-</code></pre>
 <h3>Database (<code>js/core/database.js</code>)</h3>
 <p>A Firestore ORM wrapping all CRUD operations. Exported as <code>mockDatabase</code>.</p>
 <h4>Generic Methods</h4>
@@ -559,11 +483,123 @@ Formula: expNext = floor(expNext × 1.5)
 <td><code>getSkills()</code></td>
 <td><code>saveSkill(data)</code></td>
 </tr>
+<tr>
+<td><code>config/world</code></td>
+<td><code>getWorldConfig()</code></td>
+<td><code>saveWorldConfig(data)</code></td>
+</tr>
 </tbody></table>
 <h4>Auto-Save System</h4>
 <p>The Engine runs a debounced cloud save (<code>triggerCloudSave()</code>) 1.5 seconds after any state change. It saves the full player object + inventory to Firestore under <code>users/{uid}/characters/{charId}</code>.</p>
 <hr>
-<h2 id="8-character-creation">8. Character Creation</h2>
+<h2>8. Player and Attributes</h2>
+<h4>Player Object Structure</h4>
+<pre><code class="language-javascript">{
+    id: null,                       // Firestore document ID
+    name: &quot;Unknown&quot;,                // Character name
+    origin: &quot;Peasant&quot;,              // Origin class
+    level: 1,
+    exp: 0,
+    expNext: 100,                   // EXP needed for next level
+    hp: 20,
+    maxHp: 20,                      // 20 + (STR × 2) + equipment bonuses
+    mp: 10,
+    maxMp: 10,                      // 10 + (INT × 5) + equipment bonuses
+    statPoints: 0,                  // Unspent stat points (3 per level)
+    skills: [&#39;heavy_slash&#39;],        // Array of skill IDs the player knows
+    attributes: {                   // TOTAL stats (base + equipment)
+        str: 0, agi: 0, int: 0
+    },
+    baseAttributes: {               // NATURAL stats (no equipment)
+        str: 0, agi: 0, int: 0
+    },
+    wallet: {                       // Currency
+        copper: 0, silver: 0, gold: 0
+    },
+    currentLocation: null,          // Current location ID (resolved from world config)
+    equipment: {                    // Equipped gear
+        head: null, chest: null,
+        main_hand: null, off_hand: null,
+        legs: null, feet: null, accessory: null
+    },
+    activeQuests: {},               // { questId: questTrackingData }
+    completedQuests: [],            // Array of completed quest IDs
+    professions: {                  // Crafting professions
+        smithing: 1, alchemy: 1
+    },
+    inventory: []                   // Saved with character for persistence
+}
+</code></pre>
+<h4>State Methods</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>updatePlayer</code></td>
+<td><code>(data: Object)</code></td>
+<td>Merges partial data into player. Recalculates HP/MP if <code>baseAttributes</code> changes.</td>
+</tr>
+<tr>
+<td><code>addCurrency</code></td>
+<td><code>(id: string, amount: number)</code></td>
+<td>Adds currency with auto-rollover (100 copper → 1 silver → 1 gold). Caps gold at 999.</td>
+</tr>
+<tr>
+<td><code>payCopper</code></td>
+<td><code>(amount: number) → boolean</code></td>
+<td>Deducts copper with auto-conversion from silver/gold. Returns false if too poor.</td>
+</tr>
+<tr>
+<td><code>gainExp</code></td>
+<td><code>(amount: number) → boolean</code></td>
+<td>Adds EXP, handles leveling. Grants 3 stat points and full heal per level. EXP scaling: <code>expNext × 1.5</code>.</td>
+</tr>
+<tr>
+<td><code>setFlag</code></td>
+<td><code>(key: string, value: any)</code></td>
+<td>Sets a world flag (for narrative branching).</td>
+</tr>
+<tr>
+<td><code>regenTick</code></td>
+<td><code>() → boolean</code></td>
+<td>Restores 1 HP and 1 MP automatically over time (passive regen system).</td>
+</tr>
+<tr>
+<td><code>getFlag</code></td>
+<td><code>(key: string) → any</code></td>
+<td>Gets a world flag value.</td>
+</tr>
+</tbody></table>
+<h4>EXP Scaling Formula</h4>
+<pre><code>Level 1 → 2:  100 EXP
+Level 2 → 3:  150 EXP
+Level 3 → 4:  225 EXP
+Level 4 → 5:  337 EXP
+...
+Formula: expNext = floor(expNext × 1.5)
+</code></pre>
+<h4>Passive Regeneration</h4>
+<p>The engine includes a passive resource restoration system to sustain gameplay during exploration and downtime.</p>
+<ul>
+<li><strong>Tick Rate</strong>: Every 5 seconds.</li>
+<li><strong>Restoration Amount</strong>: +1 Health Point (HP) and +1 Mana Point (MP) per tick.</li>
+<li><strong>Conditions</strong>: <ul>
+<li>Regeneration only occurs if the player is alive (HP &gt; 0).</li>
+<li>Resources will not exceed the player&#39;s <code>maxHp</code> or <code>maxMp</code>.</li>
+</ul>
+</li>
+<li><strong>Implementation</strong>: Managed by the <code>regenTick()</code> method in <code>State.js</code> and driven by a global <code>setInterval</code> in <code>app.js</code>.</li>
+</ul>
+<h3>Performance &amp; Expansion</h3>
+<p>The Player object is the heart of the engine. Developers can expand it by adding new attributes (e.g., luck: 10) in State.js and updating the updatePlayer() logic to handle secondary stat calculations.</p>
+<p>Key keyword: <strong>Regeneration</strong>. The passive system ensures that downtime is minimal, restoring 1 HP/MP every 5 seconds as long as the player is not dead.</p>
+<hr>
+<h2>9. Character Creation</h2>
 <h3>File: <code>js/core/CharacterCreator.js</code></h3>
 <p>A 3-step wizard for creating new characters.</p>
 <h3>Steps</h3>
@@ -646,42 +682,23 @@ Formula: expNext = floor(expNext × 1.5)
 </tr>
 </tbody></table>
 <hr>
-<h2 id="9-world--location-system">9. World &amp; Location System</h2>
+<h2>10. World &amp; Location System</h2>
 <h3>File: <code>js/modules/world/LocationEngine.js</code></h3>
-<p>The game world is managed as a <strong>Network Graph</strong> of interconnected locations. Each location specifies which other locations it "points" to.</p>
-
-<div class="note-box" style="background: rgba(124, 111, 255, 0.1); border-left: 4px solid var(--accent); padding: 15px; margin: 20px 0; border-radius: 4px;">
-    <strong>🚀 Developer Tool: Teleportation</strong><br>
-    If you create a new location and it doesn't appear in the game yet, use the <strong>Dev Tools -> Manage Locations -> Teleport</strong> button to jump there instantly for testing.
-</div>
-
-<h3 id="location-data-schema">Location Data Schema</h3>
+<p>Manages the game world as a network of interconnected locations. Each location can contain NPCs, travel connections, and random combat encounters.</p>
+<h3>Location Data Schema</h3>
 <pre><code class="language-javascript">{
-    id: "cellar",                        // Unique location ID
-    name: "The Cellar",                  // Display name
-    description: "A dark, musty cellar...", // Atmospheric text
-    connections: ["town_square", "sewer"],   // IDs of connected locations (Move buttons)
-    npcs: ["blacksmith", "mayor"],          // NPCs present here
-    encounters: [                            // Random encounter table (Search action)
-        { enemyId: "rat", chance: 80 },      // 80% chance to find a rat
-        { enemyId: "spider", chance: 20 }    // 20% chance for a spider
+    id: &quot;cellar&quot;,                        // Unique location ID
+    name: &quot;The Cellar&quot;,                  // Display name
+    description: &quot;A dark, musty cellar...&quot;, // Atmospheric text
+    connections: [&quot;town_square&quot;, &quot;sewer&quot;],   // IDs of connected locations
+    npcs: [&quot;blacksmith&quot;, &quot;mayor&quot;],          // NPCs present here
+    encounters: [                            // Random encounter table
+        { enemyId: &quot;rat&quot;, chance: 80 },      // 80% chance to find a rat
+        { enemyId: &quot;spider&quot;, chance: 20 }    // 20% chance for a spider
     ]
 }
 </code></pre>
-
-<h3>Interconnecting the World</h3>
-<p>To create a path between two locations (e.g., from "Town Square" to "The Forest"):</p>
-<ol>
-    <li>Create both locations in the database.</li>
-    <li>Edit "Town Square" and add <code>forest</code> to its <strong>Connections</strong> field.</li>
-    <li>Edit "The Forest" and add <code>town_square</code> to its <strong>Connections</strong> field (for the return path).</li>
-</ol>
-
-<h3>Admin Console Commands</h3>
-<p>You can also teleport and gain power directly via the browser console (F12):</p>
-<pre><code class="language-javascript">admin.teleport('location_id'); // Jump instantly to any ID
-admin.giveExp(1000);           // Gain experience
-admin.giveItem('sword_id');    // Bestow equipment</code></pre>
+<h3>How Locations Work</h3>
 <ol>
 <li><strong>Rendering</strong>: <code>renderLocation()</code> displays the current location&#39;s description, NPC interaction buttons, and travel buttons.</li>
 <li><strong>NPC Spawning</strong>: For each NPC ID in the location, the engine fetches NPC data from Firestore:<ul>
@@ -692,7 +709,15 @@ admin.giveItem('sword_id');    // Bestow equipment</code></pre>
 <li><strong>Travel</strong>: Clicking &quot;Move to [Location]&quot; updates <code>currentLocation</code> and re-renders.</li>
 <li><strong>Search</strong>: Clicking &quot;Search Area&quot; rolls against the encounter table.</li>
 </ol>
-<h3>Encounter Roll Logic</h3>
+<h3>Movement Data Sync</h3>
+<p>Entering a new location triggers an automatic state synchronization:</p>
+<ol>
+<li><code>this.state.player.currentLocation</code> is updated.</li>
+<li>A <code>statsUpdated</code> event is dispatched globally.</li>
+<li>The Engine intercepts the event and calls <code>triggerCloudSave()</code>.</li>
+<li>The user&#39;s location is scrubbed of <code>undefined</code> fields and persisted to Firestore.</li>
+</ol>
+<h3>Encompassed Functions</h3>
 <pre><code>Roll a random number 0–100.
 Iterate through encounters, accumulating their chance values.
 If roll &lt;= cumulative chance: trigger that encounter.
@@ -710,7 +735,7 @@ If no encounter triggers: &quot;You find nothing of interest.&quot;
 <tbody><tr>
 <td><code>init()</code></td>
 <td><code>async</code></td>
-<td>Preloads all locations and enemies from Firestore. Hooks combat end callback.</td>
+<td>Preloads all locations, enemies, and world config from Firestore. Sets start location. Hooks combat end callback.</td>
 </tr>
 <tr>
 <td><code>renderLocation()</code></td>
@@ -728,6 +753,43 @@ If no encounter triggers: &quot;You find nothing of interest.&quot;
 <td>Starts combat with the matched enemy.</td>
 </tr>
 </tbody></table>
+<h3>LocationEngine Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>locations</code></td>
+<td><code>Array</code></td>
+<td>All loaded location objects from Firestore.</td>
+</tr>
+<tr>
+<td><code>enemies</code></td>
+<td><code>Array</code></td>
+<td>All loaded enemy objects from Firestore.</td>
+</tr>
+<tr>
+<td><code>startLocationId</code></td>
+<td><code>string</code></td>
+<td>Configured spawn point, resolved from <code>config/world</code> Firestore document or <code>&quot;cellar&quot;</code> fallback.</td>
+</tr>
+</tbody></table>
+<h3>Start Location System</h3>
+<p>The engine determines the player&#39;s starting location through a configurable system:</p>
+<ol>
+<li><strong>Saved character data</strong> — If the player has a <code>currentLocation</code> saved, they resume there.</li>
+<li><strong>World config</strong> — The <code>config/world</code> Firestore document contains <code>startLocationId</code>, set via the World Builder or <code>admin.setStartLocation()</code>.</li>
+<li><strong>Ultimate fallback</strong> — If no config exists, defaults to <code>&quot;cellar&quot;</code> for backwards compatibility.</li>
+</ol>
+<h4>Config Document: <code>config/world</code></h4>
+<pre><code class="language-javascript">{
+    startLocationId: &quot;town_square&quot;   // Location ID where new characters spawn
+}
+</code></pre>
 <h3>Creating a New Location</h3>
 <p>Use the Dev Tools → &quot;Create Location&quot; form:</p>
 <ol>
@@ -739,10 +801,10 @@ If no encounter triggers: &quot;You find nothing of interest.&quot;
 <li><strong>Encounters</strong>: JSON array of encounter objects</li>
 </ol>
 <blockquote>
-<p>⚠️ <strong>Important</strong>: Connections must be bidirectional! If Location A connects to B, Location B must also list A in its connections.</p>
+<p>⚠️ <strong>Important</strong>: Connections must be bidirectional! If Location A connects to B, Location B must also list A in its connections. Use the World Builder&#39;s &quot;Auto-Fix Connections&quot; to detect and repair one-way links.</p>
 </blockquote>
 <hr>
-<h2 id="10-combat-system">10. Combat System</h2>
+<h2>11. Combat System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/modules/combat/CombatEngine.js</code> — Turn-based combat logic</li>
@@ -756,6 +818,13 @@ If no encounter triggers: &quot;You find nothing of interest.&quot;
 5. Combat ends on victory or defeat
 6. Control returns to LocationEngine.renderLocation()
 </code></pre>
+<h3>Input &amp; Death Locks</h3>
+<p>To ensure combat integrity, the engine implements a <strong>hard input lock</strong> when either the player or the enemy reaches 0 HP:</p>
+<ul>
+<li>All action buttons (Strike, Skills, Flee) are disabled.</li>
+<li>The state is locked into a &quot;Resolving&quot; phase until the victory/defeat logic concludes.</li>
+<li>This prevents the player from hitting a &quot;dead&quot; enemy or consuming resources post-defeat.</li>
+</ul>
 <h3>Damage Formulas</h3>
 <h4>Basic Attack (Strike)</h4>
 <pre><code>damage = max(1, player.STR + random(0..2))
@@ -870,13 +939,13 @@ If fail: enemy gets a turn
 </tr>
 </tbody></table>
 <hr>
-<h2 id="11-quest-system">11. Quest System</h2>
+<h2>12. Quest System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/modules/quest/QuestLog.js</code> — Quest lifecycle management</li>
 <li><code>js/ui/QuestLogUI.js</code> — Quest journal overlay + quick-view tracker</li>
 </ul>
-<h3 id="quest-data-schema">Quest Data Schema</h3>
+<h3>Quest Data Schema</h3>
 <pre><code class="language-javascript">{
     id: &quot;rat_problem&quot;,
     title: &quot;The Rat Problem&quot;,
@@ -972,13 +1041,13 @@ If fail: enemy gets a turn
 <p><strong>Connecting Quests to NPCs</strong>: Use <strong>The Linker</strong> tool (see Dev Tools section) to bind a quest to an NPC&#39;s dialogue tree.</p>
 </blockquote>
 <hr>
-<h2 id="12-dialogue-system">12. Dialogue System</h2>
+<h2>13. Dialogue System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/modules/narrative/DialogueEngine.js</code> — Dialogue tree evaluation + action execution</li>
 <li><code>js/ui/DialogueUI.js</code> — Visual Novel-style dialogue bar</li>
 </ul>
-<h3 id="dialogue-node-schema">Dialogue Node Schema</h3>
+<h3>Dialogue Node Schema</h3>
 <pre><code class="language-javascript">{
     id: &quot;mayor_intro&quot;,
     npc: &quot;Mayor Thomas&quot;,
@@ -1123,7 +1192,7 @@ If fail: enemy gets a turn
 <li>Click &quot;Save Node&quot;</li>
 </ol>
 <hr>
-<h2 id="13-inventory-system">13. Inventory System</h2>
+<h2>14. Inventory System</h2>
 <h3>File: <code>js/modules/inventory/Inventory.js</code></h3>
 <p>A weight-based inventory with item stacking.</p>
 <h3>Item Object Structure</h3>
@@ -1230,7 +1299,7 @@ If fail: enemy gets a turn
 </tr>
 </tbody></table>
 <hr>
-<h2 id="14-equipment-system">14. Equipment System</h2>
+<h2>15. Equipment System</h2>
 <h3>File: <code>js/modules/core/Equipment.js</code></h3>
 <p>Manages 7 equipment slots with stat bonuses.</p>
 <h3>Equipment Slots</h3>
@@ -1314,13 +1383,13 @@ maxMp = 10 + (baseINT × 5) + Σ(equipment.stats.maxMp)
    g. Recalculate all stats
 </code></pre>
 <hr>
-<h2 id="15-crafting-system">15. Crafting System</h2>
+<h2>16. Crafting System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/modules/crafting/CraftingEngine.js</code> — Crafting logic</li>
 <li><code>js/ui/CraftingMenu.js</code> — Crafting overlay UI</li>
 </ul>
-<h3 id="recipe-schema">Recipe Schema</h3>
+<h3>Recipe Schema</h3>
 <pre><code class="language-javascript">{
     id: &quot;iron_sword&quot;,
     name: &quot;Iron Sword&quot;,
@@ -1384,7 +1453,7 @@ maxMp = 10 + (baseINT × 5) + Σ(equipment.stats.maxMp)
 <li>Click &quot;Save Recipe to DB&quot;</li>
 </ol>
 <hr>
-<h2 id="16-economy--currency-system">16. Economy &amp; Currency System</h2>
+<h2>17. Economy &amp; Currency System</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/core/State.js</code> — Currency logic in <code>addCurrency()</code> and <code>payCopper()</code></li>
@@ -1432,7 +1501,7 @@ maxMp = 10 + (baseINT × 5) + Σ(equipment.stats.maxMp)
 <li>Click &quot;Save Currency to DB&quot;</li>
 </ol>
 <hr>
-<h2 id="17-vendor--shop-system">17. Vendor / Shop System</h2>
+<h2>18. Vendor / Shop System</h2>
 <h3>File: <code>js/ui/VendorUI.js</code></h3>
 <p>NPCs marked as vendors can open a shop interface.</p>
 <h3>Vendor NPC Setup</h3>
@@ -1470,8 +1539,8 @@ maxMp = 10 + (baseINT × 5) + Σ(equipment.stats.maxMp)
 <li><strong>Flash Effects</strong>: Green flash on buy, gold flash on sell</li>
 </ul>
 <hr>
-<h2 id="18-skill-system">18. Skill System</h2>
-<h3 id="skill-data-schema">Skill Data Schema</h3>
+<h2>19. Skill System</h2>
+<h3>Skill Data Schema</h3>
 <pre><code class="language-javascript">{
     id: &quot;fire_ball&quot;,
     name: &quot;Fireball&quot;,
@@ -1514,7 +1583,7 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 <li>Or extend the code to add skill rewards to quests/dialogue actions</li>
 </ul>
 <hr>
-<h2 id="19-leveling--progression">19. Leveling &amp; Progression</h2>
+<h2>20. Leveling &amp; Progression</h2>
 <h3>Files</h3>
 <ul>
 <li><code>js/core/State.js</code> — EXP + leveling logic</li>
@@ -1557,7 +1626,7 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 <li><code>Equipment.recalculateStats()</code> is called to update total stats</li>
 </ol>
 <hr>
-<h2 id="20-dev-tools-admin-panel">20. Dev Tools (Admin Panel)</h2>
+<h2>21. Dev Tools (Admin Panel)</h2>
 <h3>File: <code>js/ui/DevTools.js</code></h3>
 <p>The Dev Tools panel is a comprehensive content creation suite visible only to admin users.</p>
 <h3>Access</h3>
@@ -1644,6 +1713,37 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 <li>Sets the NPC&#39;s <code>defaultDialogueId</code> to the selected dialogue</li>
 <li>If a quest is selected, adds an <code>[Accept Quest]</code> response to the dialogue (if not already present)</li>
 </ul>
+<h3>World Builder (<code>js/ui/WorldBuilderUI.js</code>)</h3>
+<p>A dedicated visual tool for managing the game world&#39;s location network. Accessed via the &quot;🗺️ World Builder&quot; button in the Dev Tools action list.</p>
+<h4>Tab 1 — Interactive Map</h4>
+<ul>
+<li>Force-directed canvas graph rendering all locations as <strong>draggable nodes</strong>.</li>
+<li><strong>Connection lines</strong> between linked locations:<ul>
+<li>Solid gold lines = bidirectional (healthy).</li>
+<li>Dashed red lines = one-way (broken — needs reciprocal link).</li>
+</ul>
+</li>
+<li><strong>Color-coded nodes</strong>: green = start location, amber = NPCs, red = encounters, orange = both, gray = empty.</li>
+<li><strong>Click</strong> a node → detail pane shows info + quick actions (Teleport, Edit, Set as Start, Delete).</li>
+<li><strong>Double-click</strong> a node → teleports the player to that location.</li>
+<li><strong>Drag</strong> nodes to rearrange the map layout.</li>
+<li><strong>Warning badge</strong> (⚠) on orphan nodes (no connections).</li>
+</ul>
+<h4>Tab 2 — Location Table</h4>
+<p>Sortable data grid of all locations. Click column headers to sort. Columns: ID, Name, Connections, NPCs, Encounters, Start, Actions.</p>
+<h4>Tab 3 — World Settings</h4>
+<ul>
+<li><strong>Start Location</strong>: Dropdown to select and save the player spawn location. Persisted to <code>config/world</code>.</li>
+<li><strong>Auto-Fix Connections</strong>: Scans all locations for one-way connections. It intelligently identifies missing reciprocal links and creates them. If a target location ID is invalid, it provides a specific warning in the status log.</li>
+<li><strong>Validation Report</strong>: Full integrity scan (orphans, one-way links, missing NPC/enemy references, encounter chance totals).</li>
+</ul>
+<h3>Premium Aesthetics</h3>
+<p>The Dev Tools UI features a modern, premium design system:</p>
+<ul>
+<li><strong>Glassmorphism Panels</strong>: Semi-transparent backgrounds with backdrop blur.</li>
+<li><strong>Golden Accents</strong>: Tarnished gold borders and highlights consistent with the RPG theme.</li>
+<li><strong>Dynamic Feedback</strong>: Success/Error messages use animated status bars and color-coded logging.</li>
+</ul>
 <h3>Creating Complete Content Chains</h3>
 <p><strong>Full workflow to add a new questline:</strong></p>
 <ol>
@@ -1658,9 +1758,10 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 </li>
 <li><strong>Use The Linker</strong>: Bind <code>guard_captain</code> → <code>captain_intro</code> → <code>goblin_hunt</code></li>
 <li><strong>Create/Edit Location</strong>: Add <code>guard_captain</code> to a location&#39;s NPC list. Add <code>goblin</code> to encounter table.</li>
+<li><strong>Use World Builder</strong>: Verify connectivity on the map, run validation, set start location if needed.</li>
 </ol>
 <hr>
-<h2 id="21-ui-layer-reference">21. UI Layer Reference</h2>
+<h2>22. UI Layer Reference</h2>
 <h3>ActionLog (<code>js/ui/ActionLog.js</code>)</h3>
 <p>Color-coded message logger in the footer.</p>
 <table>
@@ -1727,7 +1828,7 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 <h3>UIManager (<code>js/ui/UIManager.js</code>)</h3>
 <p>Placeholder class reserved for a future centralized UI orchestration layer. Currently empty.</p>
 <hr>
-<h2 id="22-css-design-system">22. CSS Design System</h2>
+<h2>23. CSS Design System</h2>
 <h3>File: <code>css/main.css</code></h3>
 <h3>Design Tokens (CSS Variables)</h3>
 <pre><code class="language-css">--bg-dark:       #110e0c      /* Deep dark brown/black background */
@@ -1831,7 +1932,7 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2 id="23-admin-console-commands">23. Admin Console Commands</h2>
+<h2>24. Admin Console Commands</h2>
 <p>When logged in as admin, the browser console exposes <code>window.admin</code>:</p>
 <h3><code>admin.giveItem(id, name, qty, weight, rarity, type, stats)</code></h3>
 <p>Grants an item directly to the player&#39;s inventory.</p>
@@ -1866,8 +1967,20 @@ admin.giveExp(10000); // Power-level
     responses: [{ text: &#39;Bye&#39;, nextNodeId: null, conditions: null, actions: null }]
 });
 </code></pre>
+<h3><code>admin.teleport(locationId)</code></h3>
+<p>Teleports the player to any location.</p>
+<pre><code class="language-javascript">admin.teleport(&#39;town_square&#39;);
+</code></pre>
+<h3><code>admin.setStartLocation(locationId)</code></h3>
+<p>Sets the world-wide spawn point for new characters. Persists to Firestore <code>config/world</code>.</p>
+<pre><code class="language-javascript">admin.setStartLocation(&#39;town_square&#39;);
+</code></pre>
+<h3><code>admin.reloadLocations()</code></h3>
+<p>Hot-reloads all locations from Firestore into the LocationEngine without restarting.</p>
+<pre><code class="language-javascript">admin.reloadLocations();
+</code></pre>
 <hr>
-<h2 id="24-data-schemas-firestore-collections">24. Data Schemas (Firestore Collections)</h2>
+<h2>25. Data Schemas (Firestore Collections)</h2>
 <h3>Collection: <code>users/{uid}/characters</code></h3>
 <pre><code class="language-javascript">{
     id: &quot;abc123&quot;,
@@ -1956,8 +2069,15 @@ admin.giveExp(10000); // Power-level
     color: &quot;#ff6600&quot;
 }
 </code></pre>
+<h3>Document: <code>config/world</code></h3>
+<p>Global world configuration. Single document, not a collection.</p>
+<pre><code class="language-javascript">{
+    startLocationId: &quot;town_square&quot;   // Location ID where new characters spawn
+}
+</code></pre>
+<p>Managed via the World Builder (Settings tab) or <code>admin.setStartLocation()</code>.</p>
 <hr>
-<h2 id="25-how-to-guides">25. How-To Guides</h2>
+<h2>26. How-To Guides</h2>
 <h3>How to Create a New NPC</h3>
 <ol>
 <li><strong>Dev Tools</strong> → &quot;Create NPC&quot;</li>
@@ -2046,7 +2166,7 @@ node scripts/setAdmin.js user@example.com --revoke
 <li>The crafting system automatically checks profession levels</li>
 </ol>
 <hr>
-<h2 id="26-extending-the-engine">26. Extending the Engine</h2>
+<h2>27. Extending the Engine</h2>
 <h3>Adding a New Module</h3>
 <ol>
 <li><strong>Create logic file</strong> in <code>js/modules/{category}/{ModuleName}.js</code><ul>
@@ -2112,7 +2232,7 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 <li>Add scaling option in skill creation (Dev Tools + CombatEngine)</li>
 </ol>
 <hr>
-<h2 id="27-complete-file-reference">27. Complete File Reference</h2>
+<h2>28. Complete File Reference</h2>
 <h3>Core Files</h3>
 <table>
 <thead>
@@ -2144,8 +2264,8 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 </tr>
 <tr>
 <td><code>js/core/database.js</code></td>
-<td>77</td>
-<td>Firestore CRUD for all collections</td>
+<td>97</td>
+<td>Firestore CRUD for all collections + world config</td>
 </tr>
 <tr>
 <td><code>js/core/CharacterCreator.js</code></td>
@@ -2194,8 +2314,8 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 </tr>
 <tr>
 <td><code>js/modules/world/LocationEngine.js</code></td>
-<td>138</td>
-<td>World exploration + encounters</td>
+<td>162</td>
+<td>World exploration + encounters + start location</td>
 </tr>
 </tbody></table>
 <h3>UI Files</h3>
@@ -2239,8 +2359,8 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 </tr>
 <tr>
 <td><code>js/ui/DevTools.js</code></td>
-<td>578</td>
-<td>Admin content editor</td>
+<td>610</td>
+<td>Admin content editor + World Builder integration</td>
 </tr>
 <tr>
 <td><code>js/ui/DialogueUI.js</code></td>
@@ -2276,6 +2396,11 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 <td><code>js/ui/VendorUI.js</code></td>
 <td>178</td>
 <td>Buy/Sell shop</td>
+</tr>
+<tr>
+<td><code>js/ui/WorldBuilderUI.js</code></td>
+<td>640</td>
+<td>Visual world map, location table, settings, validation</td>
 </tr>
 </tbody></table>
 <h3>Other Files</h3>
@@ -2415,10 +2540,5 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 <p><strong>End of Documentation</strong><br>This document covers the complete codebase of Unknown Adventure RPG as of April 2026.<br>For questions or contributions, refer to the specific source files linked throughout this document.</p>
 </blockquote>
 
-<div style="text-align:center;margin-top:60px;padding:30px;border-top:1px solid #d0d7de;color:#57606a;font-size:12px">
-<p><strong>End of Documentation</strong></p>
-<p>Unknown Adventure RPG &mdash; Complete Technical Documentation v1.0</p>
-<p>Generated April 14, 2026</p>
-</div>
 </body>
 </html>

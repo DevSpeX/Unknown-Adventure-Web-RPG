@@ -2,12 +2,27 @@ import { auth } from './firebase.js';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    signOut
+    signOut,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
 export default class AuthManager {
     constructor(onAuthSuccess) {
         this.onAuthSuccess = onAuthSuccess;
+        this.initialAuthHandled = false;
+        
+        // Listen to Auth State implicitly for browser persistence restoration
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user && !this.initialAuthHandled) {
+                this.initialAuthHandled = true;
+                console.log("[AUTH] Session Restored:", user.email);
+                this.handleAuthSuccess(user);
+                unsubscribe(); // Only handle the initial restoration automatically
+            }
+        });
     }
 
     async register(email, password) {
@@ -21,8 +36,11 @@ export default class AuthManager {
         }
     }
 
-    async login(email, password) {
+    async login(email, password, stayLoggedIn = true) {
         try {
+            this.initialAuthHandled = true; // Manual login takes priority
+            const persistenceMode = stayLoggedIn ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistenceMode);
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("Logged in:", userCredential.user);
             this.handleAuthSuccess(userCredential.user);

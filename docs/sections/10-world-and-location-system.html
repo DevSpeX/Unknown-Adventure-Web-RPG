@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10. World &amp; Location System - Unknown Adventure RPG</title>
+    <link rel="stylesheet" href="/docs/docs.css?v=1.0.1">
+</head>
+<body>
+    <header class="global-header">
+        <div class="header-left">
+            <a href="/docs/" class="logo">Unknown Adventure Documentation</a>
+        </div>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search documentation... (Press / to focus)">
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="doc-container">
+        <aside class="sidebar">
+            <div class="sidebar-group">
+                <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 15px;">Sections</h3>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/table-of-contents" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">Table of Contents</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/1-project-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">1. Project Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/2-technology-stack" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">2. Technology Stack</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/3-project-structure" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">3. Project Structure</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/4-architecture-overview" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">4. Architecture Overview</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/5-build-deploy-and-run" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">5. Build, Deploy &amp; Run</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/6-authentication-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">6. Authentication System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/7-core-systems-state-and-database" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">7. Core Systems — State &amp; Database</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/8-player-and-attributes" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">8. Player and Attributes</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/9-character-creation" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">9. Character Creation</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/10-world-and-location-system" style="font-size: 0.9rem; color: var(--accent); font-weight: 600">10. World &amp; Location System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/11-combat-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">11. Combat System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/12-quest-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">12. Quest System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/13-dialogue-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">13. Dialogue System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/14-inventory-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">14. Inventory System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/15-equipment-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">15. Equipment System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/16-crafting-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">16. Crafting System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/17-economy-and-currency-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">17. Economy &amp; Currency System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/18-vendor-shop-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">18. Vendor / Shop System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/19-skill-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">19. Skill System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/20-leveling-and-progression" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">20. Leveling &amp; Progression</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/21-dev-tools-admin-panel" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">21. Dev Tools (Admin Panel)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/22-ui-layer-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">22. UI Layer Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/23-css-design-system" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">23. CSS Design System</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/24-admin-console-commands" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">24. Admin Console Commands</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/25-data-schemas-firestore-collections" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">25. Data Schemas (Firestore Collections)</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/26-how-to-guides" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">26. How-To Guides</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/27-extending-the-engine" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">27. Extending the Engine</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/28-complete-file-reference" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">28. Complete File Reference</a>
+                        </li>
+                    
+                        <li style="margin-bottom: 8px;">
+                            <a href="/docs/sections/appendix-function-index" style="font-size: 0.9rem; color: var(--text-main); font-weight: 400">Appendix: Function Index</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 id="10-world-and-location-system">10. World &amp; Location System</h2>
+            <h3>File: <code>js/modules/world/LocationEngine.js</code></h3>
+<p>Manages the game world as a network of interconnected locations. Each location can contain NPCs, travel connections, and random combat encounters.</p>
+<h3>Location Data Schema</h3>
+<pre><code class="language-javascript">{
+    id: &quot;cellar&quot;,                        // Unique location ID
+    name: &quot;The Cellar&quot;,                  // Display name
+    description: &quot;A dark, musty cellar...&quot;, // Atmospheric text
+    connections: [&quot;town_square&quot;, &quot;sewer&quot;],   // IDs of connected locations
+    npcs: [&quot;blacksmith&quot;, &quot;mayor&quot;],          // NPCs present here
+    encounters: [                            // Random encounter table
+        { enemyId: &quot;rat&quot;, chance: 80 },      // 80% chance to find a rat
+        { enemyId: &quot;spider&quot;, chance: 20 }    // 20% chance for a spider
+    ]
+}
+</code></pre>
+<h3>How Locations Work</h3>
+<ol>
+<li><strong>Rendering</strong>: <code>renderLocation()</code> displays the current location&#39;s description, NPC interaction buttons, and travel buttons.</li>
+<li><strong>NPC Spawning</strong>: For each NPC ID in the location, the engine fetches NPC data from Firestore:<ul>
+<li>If NPC has <code>defaultDialogueId</code> → &quot;Speak to [Name]&quot; button appears</li>
+<li>If NPC has <code>isVendor: true</code> → &quot;Trade with [Name]&quot; button appears</li>
+</ul>
+</li>
+<li><strong>Travel</strong>: Clicking &quot;Move to [Location]&quot; updates <code>currentLocation</code> and re-renders.</li>
+<li><strong>Search</strong>: Clicking &quot;Search Area&quot; rolls against the encounter table.</li>
+</ol>
+<h3>Movement Data Sync</h3>
+<p>Entering a new location triggers an automatic state synchronization:</p>
+<ol>
+<li><code>this.state.player.currentLocation</code> is updated.</li>
+<li>A <code>statsUpdated</code> event is dispatched globally.</li>
+<li>The Engine intercepts the event and calls <code>triggerCloudSave()</code>.</li>
+<li>The user&#39;s location is scrubbed of <code>undefined</code> fields and persisted to Firestore.</li>
+</ol>
+<h3>Encompassed Functions</h3>
+<pre><code>Roll a random number 0–100.
+Iterate through encounters, accumulating their chance values.
+If roll &lt;= cumulative chance: trigger that encounter.
+If no encounter triggers: &quot;You find nothing of interest.&quot;
+</code></pre>
+<h3>LocationEngine Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>init()</code></td>
+<td><code>async</code></td>
+<td>Preloads all locations, enemies, and world config from Firestore. Sets start location. Hooks combat end callback.</td>
+</tr>
+<tr>
+<td><code>renderLocation()</code></td>
+<td>—</td>
+<td>Renders the current location with NPCs, travel, and search buttons.</td>
+</tr>
+<tr>
+<td><code>searchArea(locInfo)</code></td>
+<td><code>(locInfo: Object)</code></td>
+<td>Rolls on the encounter table.</td>
+</tr>
+<tr>
+<td><code>triggerEncounter(enemyId)</code></td>
+<td><code>(enemyId: string)</code></td>
+<td>Starts combat with the matched enemy.</td>
+</tr>
+</tbody></table>
+<h3>LocationEngine Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>locations</code></td>
+<td><code>Array</code></td>
+<td>All loaded location objects from Firestore.</td>
+</tr>
+<tr>
+<td><code>enemies</code></td>
+<td><code>Array</code></td>
+<td>All loaded enemy objects from Firestore.</td>
+</tr>
+<tr>
+<td><code>startLocationId</code></td>
+<td><code>string</code></td>
+<td>Configured spawn point, resolved from <code>config/world</code> Firestore document or <code>&quot;cellar&quot;</code> fallback.</td>
+</tr>
+</tbody></table>
+<h3>Start Location System</h3>
+<p>The engine determines the player&#39;s starting location through a configurable system:</p>
+<ol>
+<li><strong>Saved character data</strong> — If the player has a <code>currentLocation</code> saved, they resume there.</li>
+<li><strong>World config</strong> — The <code>config/world</code> Firestore document contains <code>startLocationId</code>, set via the World Builder or <code>admin.setStartLocation()</code>.</li>
+<li><strong>Ultimate fallback</strong> — If no config exists, defaults to <code>&quot;cellar&quot;</code> for backwards compatibility.</li>
+</ol>
+<h4>Config Document: <code>config/world</code></h4>
+<pre><code class="language-javascript">{
+    startLocationId: &quot;town_square&quot;   // Location ID where new characters spawn
+}
+</code></pre>
+<h3>Creating a New Location</h3>
+<p>Use the Dev Tools → &quot;Create Location&quot; form:</p>
+<ol>
+<li><strong>Location ID</strong>: Unique identifier (e.g., <code>dark_forest</code>)</li>
+<li><strong>Name</strong>: Display name (e.g., <code>The Dark Forest</code>)</li>
+<li><strong>Description</strong>: Atmospheric text shown to the player</li>
+<li><strong>Connections</strong>: Comma-separated location IDs this location connects to</li>
+<li><strong>NPCs</strong>: Comma-separated NPC IDs present here</li>
+<li><strong>Encounters</strong>: JSON array of encounter objects</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Important</strong>: Connections must be bidirectional! If Location A connects to B, Location B must also list A in its connections. Use the World Builder&#39;s &quot;Auto-Fix Connections&quot; to detect and repair one-way links.</p>
+</blockquote>
+<hr>
+
+            <nav class="step-nav">
+                
+                    <a href="/docs/sections/9-character-creation" class="nav-btn prev">
+                        <span class="dir">Previous</span>
+                        <span class="title">9. Character Creation</span>
+                    </a>
+                
+                
+                
+                    <a href="/docs/sections/11-combat-system" class="nav-btn next" style="text-align: right;">
+                        <span class="dir">Next</span>
+                        <span class="title">11. Combat System</span>
+                    </a>
+                
+            </nav>
+
+            <footer class="footer">
+                <p>Unknown Adventure RPG — Documentation v1.1.0 · April 2026</p>
+                <p style="margin-top: 10px;"><a href="/docs/">Back to Portal</a> · <a href="/">Play Game</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/docs/js/search.js"></script>
+</body>
+</html>

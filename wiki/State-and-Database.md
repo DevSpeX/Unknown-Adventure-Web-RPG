@@ -40,6 +40,7 @@ The central data store for the game. Contains the player object, world flags, an
 | `addCurrency` | `(id: string, amount: number)` | Adds currency with auto-rollover (100 copper → 1 silver → 1 gold). Caps gold at 999. |
 | `payCopper` | `(amount: number) → boolean` | Deducts copper with auto-conversion from silver/gold. Returns false if too poor. |
 | `gainExp` | `(amount: number) → boolean` | Adds EXP, handles leveling. Grants 3 stat points and full heal per level. |
+| `regenTick` | `()` | Passively regenerates HP and MP by 1 point per tick up to maximum capacity. |
 | `setFlag` | `(key: string, value: any)` | Sets a world flag (for narrative branching). |
 | `getFlag` | `(key: string) → any` | Gets a world flag value. |
 
@@ -51,6 +52,16 @@ Level 2 → 3:  150 EXP
 Level 3 → 4:  225 EXP
 Formula: expNext = floor(expNext × 1.5)
 ```
+
+### Passive Regeneration
+The engine includes a passive resource restoration system to sustain gameplay during exploration and downtime.
+
+- **Tick Rate**: Executes every 5 seconds.
+- **Restored Resources**: +1 Health Point (HP) and +1 Mana Point (MP) per tick.
+- **Logic**:
+    - Only regenerates if HP > 0 (player is alive).
+    - Capped at `maxHp` and `maxMp`.
+    - Automatically updates the UI and syncs with the Combat Engine if in an active encounter.
 
 ---
 
@@ -84,3 +95,5 @@ A Firestore ORM wrapping all CRUD operations. Exported as `mockDatabase`.
 ### Auto-Save System
 
 The Engine runs a debounced cloud save (`triggerCloudSave()`) 1.5 seconds after any state change. It saves the full player object + inventory to Firestore under `users/{uid}/characters/{charId}`.
+
+**Data Scrubbing**: To prevent Firestore "Invalid data" errors, the state object is scrubbed of all `undefined` fields using `JSON.parse(JSON.stringify(snapshot))` before transmission. This ensures perfect compatibility with the Firebase SDK.

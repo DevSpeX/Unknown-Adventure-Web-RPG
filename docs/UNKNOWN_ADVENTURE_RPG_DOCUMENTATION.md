@@ -1,6 +1,6 @@
 # Unknown Adventure RPG — Complete Technical Documentation
 
-> **Version**: 1.0 · **Last Updated**: April 14, 2026  
+> **Version**: 1.1.1 · **Last Updated**: April 16, 2026  
 > **Platform**: Web (Browser-based) · **Backend**: Firebase (Auth + Firestore)  
 > **Hosted at**: `unknown-adventure-rpg.web.app`
 
@@ -15,26 +15,27 @@
 5. [Build, Deploy & Run](#5-build-deploy--run)
 6. [Authentication System](#6-authentication-system)
 7. [Core Systems — State & Database](#7-core-systems--state--database)
-8. [Character Creation](#8-character-creation)
-9. [World & Location System](#9-world--location-system)
-10. [Combat System](#10-combat-system)
-11. [Quest System](#11-quest-system)
-12. [Dialogue System](#12-dialogue-system)
-13. [Inventory System](#13-inventory-system)
-14. [Equipment System](#14-equipment-system)
-15. [Crafting System](#15-crafting-system)
-16. [Economy & Currency System](#16-economy--currency-system)
-17. [Vendor / Shop System](#17-vendor--shop-system)
-18. [Skill System](#18-skill-system)
-19. [Leveling & Progression](#19-leveling--progression)
-20. [Dev Tools (Admin Panel)](#20-dev-tools-admin-panel)
-21. [UI Layer Reference](#21-ui-layer-reference)
-22. [CSS Design System](#22-css-design-system)
-23. [Admin Console Commands](#23-admin-console-commands)
-24. [Data Schemas (Firestore Collections)](#24-data-schemas-firestore-collections)
-25. [How-To Guides](#25-how-to-guides)
-26. [Extending the Engine](#26-extending-the-engine)
-27. [Complete File Reference](#27-complete-file-reference)
+8. [Player and Attributes](#8-player-and-attributes)
+9. [Character Creation](#9-character-creation)
+10. [World & Location System](#10-world--location-system)
+11. [Combat System](#11-combat-system)
+12. [Quest System](#12-quest-system)
+13. [Dialogue System](#13-dialogue-system)
+14. [Inventory System](#14-inventory-system)
+15. [Equipment System](#15-equipment-system)
+16. [Crafting System](#16-crafting-system)
+17. [Economy & Currency System](#17-economy--currency-system)
+19. [Vendor / Shop System](#18-vendor--shop-system)
+110. [Skill System](#19-skill-system)
+20. [Leveling & Progression](#20-leveling--progression)
+21. [Dev Tools (Admin Panel)](#21-dev-tools-admin-panel)
+22. [UI Layer Reference](#22-ui-layer-reference)
+23. [CSS Design System](#23-css-design-system)
+24. [Admin Console Commands](#24-admin-console-commands)
+25. [Data Schemas (Firestore Collections)](#25-data-schemas-firestore-collections)
+26. [How-To Guides](#26-how-to-guides)
+27. [Extending the Engine](#27-extending-the-engine)
+29. [Complete File Reference](#28-complete-file-reference)
 
 ---
 
@@ -257,7 +258,8 @@ This deploys all files to `unknown-adventure-rpg.web.app`.
    - If admin: Dev Tools button becomes visible + developer powers activate
    - Logout button appears
    - Character Select overlay opens
-4. **Logout**: Calls `signOut()` and reloads the page
+4. **Persistence Restoration**: On page reload (F5), the engine implicitly checks for an existing session and auto-logs in the user if "Stay Logged In" was previously selected.
+5. **Logout**: Calls `signOut()` and reloads the page to clear local state.
 
 ### AuthManager Class
 
@@ -266,10 +268,16 @@ class AuthManager {
     constructor(onAuthSuccess)  // Callback when auth succeeds
     
     async register(email, password)  // Creates new user
-    async login(email, password)     // Signs in existing user
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, shows logout
+    async login(email, password, stayLoggedIn) // Signs in user with optional persistence
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
 }
 ```
+
+### Persistence (Session vs. Local)
+The login form includes a **"Stay Logged In"** checkbox.
+- **Checked (Local)**: Uses `browserLocalPersistence`. Session survives browser restart.
+- **Unchecked (Session)**: Uses `browserSessionPersistence`. Session cleared on tab close.
+Explicit restoration is handled via `onAuthStateChanged` in the `AuthManager` constructor.
 
 ### Admin Claims
 
@@ -304,6 +312,42 @@ class AuthUI {
 ### State (`js/core/State.js`)
 
 The central data store for the game. Contains the player object, world flags, and quest storage.
+
+### Database (`js/core/database.js`)
+
+A Firestore ORM wrapping all CRUD operations. Exported as `mockDatabase`.
+
+#### Generic Methods
+
+| Method | Description |
+|---|---|
+| `_getColl(collName)` | Reads all documents from a Firestore collection |
+| `_setDoc(collName, data)` | Creates or updates a document (auto-generates ID if missing) |
+| `deleteEntity(collName, id)` | Deletes a document by collection name and document ID |
+
+#### Collection-Specific Methods
+
+| Collection | Get Method | Save Method |
+|---|---|---|
+| `users/{uid}/characters` | `getCharacters(uid)` | `saveCharacter(uid, data)` |
+| `recipes` | `getRecipes()` | `saveRecipe(data)` |
+| `items` | `getItems()` | `saveItem(data)` |
+| `currencies` | `getCurrencies()` | `saveCurrency(data)` |
+| `quests` | `getQuests()` | `saveQuest(data)` |
+| `dialogues` | `getDialogues()` | `saveDialogue(data)` |
+| `npcs` | `getNPCs()` | `saveNPC(data)` |
+| `locations` | `getLocations()` | `saveLocation(data)` |
+| `enemies` | `getEnemies()` | `saveEnemy(data)` |
+| `skills` | `getSkills()` | `saveSkill(data)` |
+| `config/world` | `getWorldConfig()` | `saveWorldConfig(data)` |
+
+#### Auto-Save System
+
+The Engine runs a debounced cloud save (`triggerCloudSave()`) 1.5 seconds after any state change. It saves the full player object + inventory to Firestore under `users/{uid}/characters/{charId}`.
+
+---
+
+## 8. Player and Attributes
 
 #### Player Object Structure
 
@@ -354,6 +398,7 @@ The central data store for the game. Contains the player object, world flags, an
 | `payCopper` | `(amount: number) → boolean` | Deducts copper with auto-conversion from silver/gold. Returns false if too poor. |
 | `gainExp` | `(amount: number) → boolean` | Adds EXP, handles leveling. Grants 3 stat points and full heal per level. EXP scaling: `expNext × 1.5`. |
 | `setFlag` | `(key: string, value: any)` | Sets a world flag (for narrative branching). |
+| `regenTick` | `() → boolean` | Restores 1 HP and 1 MP automatically over time (passive regen system). |
 | `getFlag` | `(key: string) → any` | Gets a world flag value. |
 
 #### EXP Scaling Formula
@@ -367,41 +412,26 @@ Level 4 → 5:  337 EXP
 Formula: expNext = floor(expNext × 1.5)
 ```
 
-### Database (`js/core/database.js`)
+#### Passive Regeneration
+The engine includes a passive resource restoration system to sustain gameplay during exploration and downtime.
 
-A Firestore ORM wrapping all CRUD operations. Exported as `mockDatabase`.
+- **Tick Rate**: Every 5 seconds.
+- **Restoration Amount**: +1 Health Point (HP) and +1 Mana Point (MP) per tick.
+- **Conditions**: 
+    - Regeneration only occurs if the player is alive (HP > 0).
+    - Resources will not exceed the player's `maxHp` or `maxMp`.
+- **Implementation**: Managed by the `regenTick()` method in `State.js` and driven by a global `setInterval` in `app.js`.
 
-#### Generic Methods
 
-| Method | Description |
-|---|---|
-| `_getColl(collName)` | Reads all documents from a Firestore collection |
-| `_setDoc(collName, data)` | Creates or updates a document (auto-generates ID if missing) |
-| `deleteEntity(collName, id)` | Deletes a document by collection name and document ID |
+### Performance & Expansion
 
-#### Collection-Specific Methods
+The Player object is the heart of the engine. Developers can expand it by adding new attributes (e.g., luck: 10) in State.js and updating the updatePlayer() logic to handle secondary stat calculations.
 
-| Collection | Get Method | Save Method |
-|---|---|---|
-| `users/{uid}/characters` | `getCharacters(uid)` | `saveCharacter(uid, data)` |
-| `recipes` | `getRecipes()` | `saveRecipe(data)` |
-| `items` | `getItems()` | `saveItem(data)` |
-| `currencies` | `getCurrencies()` | `saveCurrency(data)` |
-| `quests` | `getQuests()` | `saveQuest(data)` |
-| `dialogues` | `getDialogues()` | `saveDialogue(data)` |
-| `npcs` | `getNPCs()` | `saveNPC(data)` |
-| `locations` | `getLocations()` | `saveLocation(data)` |
-| `enemies` | `getEnemies()` | `saveEnemy(data)` |
-| `skills` | `getSkills()` | `saveSkill(data)` |
-| `config/world` | `getWorldConfig()` | `saveWorldConfig(data)` |
-
-#### Auto-Save System
-
-The Engine runs a debounced cloud save (`triggerCloudSave()`) 1.5 seconds after any state change. It saves the full player object + inventory to Firestore under `users/{uid}/characters/{charId}`.
+Key keyword: **Regeneration**. The passive system ensures that downtime is minimal, restoring 1 HP/MP every 5 seconds as long as the player is not dead.
 
 ---
 
-## 8. Character Creation
+## 9. Character Creation
 
 ### File: `js/core/CharacterCreator.js`
 
@@ -447,7 +477,7 @@ The character data is saved to Firestore and gameplay begins.
 
 ---
 
-## 9. World & Location System
+## 10. World & Location System
 
 ### File: `js/modules/world/LocationEngine.js`
 
@@ -478,7 +508,14 @@ Manages the game world as a network of interconnected locations. Each location c
 3. **Travel**: Clicking "Move to [Location]" updates `currentLocation` and re-renders.
 4. **Search**: Clicking "Search Area" rolls against the encounter table.
 
-### Encounter Roll Logic
+### Movement Data Sync
+Entering a new location triggers an automatic state synchronization:
+1. `this.state.player.currentLocation` is updated.
+2. A `statsUpdated` event is dispatched globally.
+3. The Engine intercepts the event and calls `triggerCloudSave()`.
+4. The user's location is scrubbed of `undefined` fields and persisted to Firestore.
+
+### Encompassed Functions
 
 ```
 Roll a random number 0–100.
@@ -535,7 +572,7 @@ Use the Dev Tools → "Create Location" form:
 
 ---
 
-## 10. Combat System
+## 11. Combat System
 
 ### Files
 - `js/modules/combat/CombatEngine.js` — Turn-based combat logic
@@ -551,6 +588,12 @@ Use the Dev Tools → "Create Location" form:
 5. Combat ends on victory or defeat
 6. Control returns to LocationEngine.renderLocation()
 ```
+
+### Input & Death Locks
+To ensure combat integrity, the engine implements a **hard input lock** when either the player or the enemy reaches 0 HP:
+- All action buttons (Strike, Skills, Flee) are disabled.
+- The state is locked into a "Resolving" phase until the victory/defeat logic concludes.
+- This prevents the player from hitting a "dead" enemy or consuming resources post-defeat.
 
 ### Damage Formulas
 
@@ -626,7 +669,7 @@ If fail: enemy gets a turn
 
 ---
 
-## 11. Quest System
+## 12. Quest System
 
 ### Files
 - `js/modules/quest/QuestLog.js` — Quest lifecycle management
@@ -709,7 +752,7 @@ Players can toggle a "Track" checkbox on any active quest. Tracked quests appear
 
 ---
 
-## 12. Dialogue System
+## 13. Dialogue System
 
 ### Files
 - `js/modules/narrative/DialogueEngine.js` — Dialogue tree evaluation + action execution
@@ -808,7 +851,7 @@ mayor_intro (root)
 
 ---
 
-## 13. Inventory System
+## 14. Inventory System
 
 ### File: `js/modules/inventory/Inventory.js`
 
@@ -869,7 +912,7 @@ A weight-based inventory with item stacking.
 
 ---
 
-## 14. Equipment System
+## 15. Equipment System
 
 ### File: `js/modules/core/Equipment.js`
 
@@ -923,7 +966,7 @@ Equipment bonuses can include: `str`, `agi`, `int`, `maxHp`, `maxMp`.
 
 ---
 
-## 15. Crafting System
+## 16. Crafting System
 
 ### Files
 - `js/modules/crafting/CraftingEngine.js` — Crafting logic
@@ -988,7 +1031,7 @@ Equipment bonuses can include: `str`, `agi`, `int`, `maxHp`, `maxMp`.
 
 ---
 
-## 16. Economy & Currency System
+## 17. Economy & Currency System
 
 ### Files
 - `js/core/State.js` — Currency logic in `addCurrency()` and `payCopper()`
@@ -1022,7 +1065,7 @@ The Currency Bag is a special inventory item (`currency_bag`, weight 0, epic rar
 
 ---
 
-## 17. Vendor / Shop System
+## 18. Vendor / Shop System
 
 ### File: `js/ui/VendorUI.js`
 
@@ -1058,7 +1101,7 @@ An NPC becomes a vendor when:
 
 ---
 
-## 18. Skill System
+## 19. Skill System
 
 ### Skill Data Schema
 
@@ -1109,7 +1152,7 @@ Currently, skills are assigned via the `player.skills` array. To add a skill:
 
 ---
 
-## 19. Leveling & Progression
+## 20. Leveling & Progression
 
 ### Files
 - `js/core/State.js` — EXP + leveling logic
@@ -1135,7 +1178,7 @@ When `statPoints > 0`, an "UPGRADE STATS" button appears in the sidebar. Clickin
 
 ---
 
-## 20. Dev Tools (Admin Panel)
+## 21. Dev Tools (Admin Panel)
 
 ### File: `js/ui/DevTools.js`
 
@@ -1203,8 +1246,14 @@ Sortable data grid of all locations. Click column headers to sort. Columns: ID, 
 #### Tab 3 — World Settings
 
 - **Start Location**: Dropdown to select and save the player spawn location. Persisted to `config/world`.
-- **Auto-Fix Connections**: Scans for one-way connections, adds missing reciprocal links automatically.
+- **Auto-Fix Connections**: Scans all locations for one-way connections. It intelligently identifies missing reciprocal links and creates them. If a target location ID is invalid, it provides a specific warning in the status log.
 - **Validation Report**: Full integrity scan (orphans, one-way links, missing NPC/enemy references, encounter chance totals).
+
+### Premium Aesthetics
+The Dev Tools UI features a modern, premium design system:
+- **Glassmorphism Panels**: Semi-transparent backgrounds with backdrop blur.
+- **Golden Accents**: Tarnished gold borders and highlights consistent with the RPG theme.
+- **Dynamic Feedback**: Success/Error messages use animated status bars and color-coded logging.
 
 ### Creating Complete Content Chains
 
@@ -1223,7 +1272,7 @@ Sortable data grid of all locations. Click column headers to sort. Columns: ID, 
 
 ---
 
-## 21. UI Layer Reference
+## 22. UI Layer Reference
 
 ### ActionLog (`js/ui/ActionLog.js`)
 
@@ -1267,7 +1316,7 @@ Placeholder class reserved for a future centralized UI orchestration layer. Curr
 
 ---
 
-## 22. CSS Design System
+## 23. CSS Design System
 
 ### File: `css/main.css`
 
@@ -1340,7 +1389,7 @@ Fullscreen overlay with radial gradient background:
 
 ---
 
-## 23. Admin Console Commands
+## 24. Admin Console Commands
 
 When logged in as admin, the browser console exposes `window.admin`:
 
@@ -1419,7 +1468,7 @@ admin.reloadLocations();
 
 ---
 
-## 24. Data Schemas (Firestore Collections)
+## 25. Data Schemas (Firestore Collections)
 
 ### Collection: `users/{uid}/characters`
 
@@ -1548,7 +1597,7 @@ Managed via the World Builder (Settings tab) or `admin.setStartLocation()`.
 
 ---
 
-## 25. How-To Guides
+## 26. How-To Guides
 
 ### How to Create a New NPC
 
@@ -1650,7 +1699,7 @@ node scripts/setAdmin.js user@example.com --revoke
 
 ---
 
-## 26. Extending the Engine
+## 27. Extending the Engine
 
 ### Adding a New Module
 
@@ -1719,7 +1768,7 @@ To add new stats beyond STR/AGI/INT:
 
 ---
 
-## 27. Complete File Reference
+## 28. Complete File Reference
 
 ### Core Files
 
