@@ -100,10 +100,6 @@ web_rpg_game/
 │   │   ├── State.js            # Central game state (player object, flags, EXP)
 │   │   ├── database.js         # Firestore ORM — CRUD for all collections
 │   │   └── CharacterCreator.js # 3-step character creation wizard
-│   │
-│   ├── data/
-│   │   └── entities.js         # Static legacy entity definitions (unused in prod)
-│   │
 │   ├── modules/                # Game logic (no DOM interaction)
 │   │   ├── combat/
 │   │   │   └── CombatEngine.js # Turn-based combat state machine
@@ -133,7 +129,6 @@ web_rpg_game/
 │       ├── InventoryUI.js      # Grid inventory with context menus
 │       ├── LevelUpUI.js        # Stat point allocation overlay
 │       ├── QuestLogUI.js       # Quest journal + quick-view tracker
-│       ├── UIManager.js        # Placeholder (reserved for future use)
 │       └── VendorUI.js         # Buy/Sell shop interface
 │
 └── scripts/
@@ -1375,10 +1370,6 @@ Quest journal overlay with:
 - Completed quests: Grayed out with checkmark
 - Track checkbox: Toggles quest in Quick View
 
-### UIManager (`js/ui/UIManager.js`)
-
-Placeholder class reserved for a future centralized UI orchestration layer. Currently empty.
-
 ---
 
 ## 23. CSS Design System
@@ -1887,7 +1878,6 @@ To add new stats beyond STR/AGI/INT:
 | `js/ui/InventoryUI.js` | 153 | Grid inventory + context menu |
 | `js/ui/LevelUpUI.js` | 71 | Stat point allocation |
 | `js/ui/QuestLogUI.js` | 138 | Quest journal + tracker |
-| `js/ui/UIManager.js` | 9 | Placeholder |
 | `js/ui/VendorUI.js` | 178 | Buy/Sell shop |
 | `js/ui/WorldBuilderUI.js` | 640 | Visual world map, location table, settings, validation |
 
@@ -1898,7 +1888,6 @@ To add new stats beyond STR/AGI/INT:
 | `index.html` | 560 | Single-page HTML (all overlays) |
 | `css/main.css` | 624 | Complete stylesheet |
 | `scripts/setAdmin.js` | 53 | Node CLI for admin claims |
-| `js/data/entities.js` | 9 | Legacy static entity data |
 | `firebase.json` | 25 | Firebase Hosting config |
 | `package.json` | 7 | Node dependencies |
 

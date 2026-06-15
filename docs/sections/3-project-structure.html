@@ -169,10 +169,6 @@
 │   │   ├── State.js            # Central game state (player object, flags, EXP)
 │   │   ├── database.js         # Firestore ORM — CRUD for all collections
 │   │   └── CharacterCreator.js # 3-step character creation wizard
-│   │
-│   ├── data/
-│   │   └── entities.js         # Static legacy entity definitions (unused in prod)
-│   │
 │   ├── modules/                # Game logic (no DOM interaction)
 │   │   ├── combat/
 │   │   │   └── CombatEngine.js # Turn-based combat state machine
@@ -202,7 +198,6 @@
 │       ├── InventoryUI.js      # Grid inventory with context menus
 │       ├── LevelUpUI.js        # Stat point allocation overlay
 │       ├── QuestLogUI.js       # Quest journal + quick-view tracker
-│       ├── UIManager.js        # Placeholder (reserved for future use)
 │       └── VendorUI.js         # Buy/Sell shop interface
 │
 └── scripts/

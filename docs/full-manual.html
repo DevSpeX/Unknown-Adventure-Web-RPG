@@ -383,10 +383,6 @@
 │   │   ├── State.js            # Central game state (player object, flags, EXP)
 │   │   ├── database.js         # Firestore ORM — CRUD for all collections
 │   │   └── CharacterCreator.js # 3-step character creation wizard
-│   │
-│   ├── data/
-│   │   └── entities.js         # Static legacy entity definitions (unused in prod)
-│   │
 │   ├── modules/                # Game logic (no DOM interaction)
 │   │   ├── combat/
 │   │   │   └── CombatEngine.js # Turn-based combat state machine
@@ -416,7 +412,6 @@
 │       ├── InventoryUI.js      # Grid inventory with context menus
 │       ├── LevelUpUI.js        # Stat point allocation overlay
 │       ├── QuestLogUI.js       # Quest journal + quick-view tracker
-│       ├── UIManager.js        # Placeholder (reserved for future use)
 │       └── VendorUI.js         # Buy/Sell shop interface
 │
 └── scripts/
@@ -2054,8 +2049,6 @@ Example: &quot;Fireball (8 MP) [Int Scaling]&quot;
 <li>Completed quests: Grayed out with checkmark</li>
 <li>Track checkbox: Toggles quest in Quick View</li>
 </ul>
-<h3>UIManager (<code>js/ui/UIManager.js</code>)</h3>
-<p>Placeholder class reserved for a future centralized UI orchestration layer. Currently empty.</p>
 <hr>
 <h2>23. CSS Design System</h2>
 <h3>File: <code>css/main.css</code></h3>
@@ -2628,11 +2621,6 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 <td>Quest journal + tracker</td>
 </tr>
 <tr>
-<td><code>js/ui/UIManager.js</code></td>
-<td>9</td>
-<td>Placeholder</td>
-</tr>
-<tr>
 <td><code>js/ui/VendorUI.js</code></td>
 <td>178</td>
 <td>Buy/Sell shop</td>
@@ -2666,11 +2654,6 @@ async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 <td><code>scripts/setAdmin.js</code></td>
 <td>53</td>
 <td>Node CLI for admin claims</td>
-</tr>
-<tr>
-<td><code>js/data/entities.js</code></td>
-<td>9</td>
-<td>Legacy static entity data</td>
 </tr>
 <tr>
 <td><code>firebase.json</code></td>

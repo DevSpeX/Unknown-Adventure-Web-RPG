@@ -21,9 +21,6 @@ web_rpg_game/
 │   │   ├── database.js         # Firestore ORM — CRUD for all collections
 │   │   └── CharacterCreator.js # 3-step character creation wizard
 │   │
-│   ├── data/
-│   │   └── entities.js         # Static legacy entity definitions (unused)
-│   │
 │   ├── modules/                # Game logic (no DOM interaction)
 │   │   ├── combat/CombatEngine.js
 │   │   ├── core/Equipment.js
@@ -40,8 +37,7 @@ web_rpg_game/
 │       ├── DevTools.js         ├── DialogueUI.js
 │       ├── EquipmentUI.js      ├── InventoryUI.js
 │       ├── LevelUpUI.js        ├── QuestLogUI.js
-│       ├── UIManager.js        ├── VendorUI.js
-│       └── WorldBuilderUI.js
+│       ├── VendorUI.js         └── WorldBuilderUI.js
 │
 ├── docs/                       # Documentation
 │   ├── UNKNOWN_ADVENTURE_RPG_DOCUMENTATION.md   # Full documentation (Markdown)
@@ -94,6 +90,5 @@ web_rpg_game/
 | `js/ui/InventoryUI.js` | 153 | Grid inventory + context menu |
 | `js/ui/LevelUpUI.js` | 71 | Stat point allocation |
 | `js/ui/QuestLogUI.js` | 138 | Quest journal + tracker |
-| `js/ui/UIManager.js` | 9 | Placeholder |
 | `js/ui/VendorUI.js` | 178 | Buy/Sell shop |
 | `js/ui/WorldBuilderUI.js` | 640 | Visual world map, location table, settings, validation |
