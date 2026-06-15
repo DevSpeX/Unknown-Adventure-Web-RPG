@@ -73,10 +73,73 @@ export default class InventoryUI {
                 const useBtn = document.createElement('button');
                 useBtn.innerText = 'Use / Consume';
                 useBtn.onclick = () => {
-                    this.inventory.removeItem(item.id, 1);
-                    GlobalLog.log(`You used ${item.name}.`, 'loot');
-                    this.render(); 
-                    menu.remove(); 
+                    let used = false;
+                    if (window.dispatchEvent) {
+                        const eventData = { itemId: item.id, itemName: item.name, handled: false };
+                        const event = new CustomEvent('useInventoryItem', { 
+                            detail: eventData,
+                            cancelable: true
+                        });
+                        window.dispatchEvent(event);
+                        if (eventData.handled) {
+                            used = true;
+                        }
+                    }
+
+                    if (used) {
+                        this.inventory.removeItem(item.id, 1);
+                        if (window.appUpdateHook) {
+                            window.appUpdateHook(true);
+                        }
+                        this.render();
+                        menu.remove();
+                        // Close inventory overlay so the user sees the main view update immediately
+                        this.overlay.classList.remove('active');
+                        this.overlay.classList.add('hidden');
+                    } else {
+                        // If it's a key/tool/pick item and wasn't handled, prevent consumption and show feedback
+                        const isKeyLike = item.id === 'rusty_lockpick' || 
+                                          item.id.includes('key') || 
+                                          item.id.includes('lock') || 
+                                          item.id.includes('pick') || 
+                                          item.id.includes('pin') || 
+                                          item.type === 'key' || 
+                                          item.type === 'tool';
+                        if (isKeyLike) {
+                            const modal = document.getElementById('game-modal');
+                            if (modal) {
+                                // Close inventory overlay so modal is fully visible and not blocked
+                                this.overlay.classList.remove('active');
+                                this.overlay.classList.add('hidden');
+                                
+                                // Show warning modal
+                                const modalTitle = document.getElementById('game-modal-title');
+                                const modalBody = document.getElementById('game-modal-body');
+                                const modalClose = document.getElementById('game-modal-close');
+                                if (modalTitle && modalBody && modalClose) {
+                                    modalTitle.innerText = "Nothing Happens";
+                                    modalBody.innerText = "There is nothing to use this item on here.";
+                                    modal.classList.remove('hidden');
+                                    modal.classList.add('active');
+                                    modalClose.onclick = () => {
+                                        modal.classList.remove('active');
+                                        modal.classList.add('hidden');
+                                    };
+                                }
+                            } else {
+                                alert("Nothing happens. You cannot use this item here.");
+                            }
+                        } else {
+                            // Standard consumable
+                            this.inventory.removeItem(item.id, 1);
+                            if (window.appUpdateHook) {
+                                window.appUpdateHook(true);
+                            }
+                            GlobalLog.log(`You used ${item.name}.`, 'loot');
+                            this.render();
+                        }
+                        menu.remove();
+                    }
                 };
                 menu.appendChild(useBtn);
             }
@@ -86,6 +149,9 @@ export default class InventoryUI {
             dropBtn.style.color = 'var(--crimson-red)';
             dropBtn.onclick = () => { 
                 this.inventory.removeItem(item.id, 1); 
+                if (window.appUpdateHook) {
+                    window.appUpdateHook(true);
+                }
                 GlobalLog.log(`Discarded ${item.name}.`, 'system');
                 this.render(); 
                 menu.remove(); 

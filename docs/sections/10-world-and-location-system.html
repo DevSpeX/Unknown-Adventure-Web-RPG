@@ -162,26 +162,53 @@
     encounters: [                            // Random encounter table
         { enemyId: &quot;rat&quot;, chance: 80 },      // 80% chance to find a rat
         { enemyId: &quot;spider&quot;, chance: 20 }    // 20% chance for a spider
-    ]
+    ],
+    interactions: [                          // Custom narrative interactions
+        {
+            label: &quot;Search pockets&quot;,
+            text: &quot;Found a lockpick!&quot;,
+            itemId: &quot;rusty_lockpick&quot;,
+            itemQty: 1,
+            onlyOnce: true
+        }
+    ],
+    connectionConditions: {                  // locked travel requirements
+        sewer: {
+            requiredItemId: &quot;rusty_lockpick&quot;,
+            requiredFlag: &quot;cellar_gate_unlocked&quot;,
+            consumeItem: true,
+            lockedText: &quot;The gate is locked.&quot;,
+            unlockText: &quot;Unlocked the gate!&quot;
+        }
+    }
 }
 </code></pre>
 <h3>How Locations Work</h3>
 <ol>
-<li><strong>Rendering</strong>: <code>renderLocation()</code> displays the current location&#39;s description, NPC interaction buttons, and travel buttons.</li>
+<li><strong>Rendering</strong>: <code>renderLocation()</code> displays the current location&#39;s description, NPC interaction buttons, travel buttons, and custom interaction buttons (e.g. &quot;Search pockets&quot;). Choice buttons are disabled instantly on click to prevent spam clicks.</li>
 <li><strong>NPC Spawning</strong>: For each NPC ID in the location, the engine fetches NPC data from Firestore:<ul>
 <li>If NPC has <code>defaultDialogueId</code> → &quot;Speak to [Name]&quot; button appears</li>
 <li>If NPC has <code>isVendor: true</code> → &quot;Trade with [Name]&quot; button appears</li>
 </ul>
 </li>
-<li><strong>Travel</strong>: Clicking &quot;Move to [Location]&quot; updates <code>currentLocation</code> and re-renders.</li>
+<li><strong>Travel</strong>: Clicking &quot;Move to [Location]&quot; evaluates connection conditions. If locked, prompts with a warning popup. If unlocked, performs key consumption/unlocking and moves player.</li>
 <li><strong>Search</strong>: Clicking &quot;Search Area&quot; rolls against the encounter table.</li>
+<li><strong>Custom Interactions</strong>: Clicking custom interaction buttons updates player flags, performs inventory weight checks, rewards items, and shows description text in a premium centered modal dialog.</li>
+<li><strong>Real-time Synchronization</strong>: Saving a location in Dev Tools dispatches a <code>&#39;locationsUpdated&#39;</code> event. The <code>LocationEngine</code> listens for this event to hot-reload locations and items in memory and re-renders immediately.</li>
 </ol>
-<h3>Movement Data Sync</h3>
-<p>Entering a new location triggers an automatic state synchronization:</p>
+<h3>Movement &amp; Key Data Sync</h3>
+<p>Entering a new location or using key items from the inventory triggers state synchronization:</p>
 <ol>
-<li><code>this.state.player.currentLocation</code> is updated.</li>
+<li><strong>Explicit Key Usage</strong>: Keys and tools do not automatically unlock gates/doors by just sitting in the inventory. The player must open their inventory, select the key item, and click <strong>&quot;Use / Consume&quot;</strong> to trigger unlock flags permanently.</li>
+<li>Using a key-like item from the inventory dispatches the <code>&#39;useInventoryItem&#39;</code> event, which:<ul>
+<li>Sets the unlocking flag in the player state.</li>
+<li>Logs the unlock message in the global Action Log.</li>
+<li>Closes the inventory panel overlay.</li>
+<li>Triggers real-time connections unlock (updating the choices UI immediately without a page refresh).</li>
+</ul>
+</li>
 <li>A <code>statsUpdated</code> event is dispatched globally.</li>
-<li>The Engine intercepts the event and calls <code>triggerCloudSave()</code>.</li>
+<li><strong>Immediate Progress Saving</strong>: To prevent progress loss on page refresh (F5), critical actions (like moving locations, using key items, finishing custom interactions, completing combat, or leveling up stats) bypass the 1.5-second debounce and write to Firestore immediately. Passive regeneration ticks still use the debounced save to reduce write frequencies.</li>
 <li>The user&#39;s location is scrubbed of <code>undefined</code> fields and persisted to Firestore.</li>
 </ol>
 <h3>Encompassed Functions</h3>

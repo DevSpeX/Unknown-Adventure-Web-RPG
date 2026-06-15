@@ -161,7 +161,7 @@
 <ol>
 <li><strong>Page Load</strong>: Auth overlay appears (blocks game view)</li>
 <li><strong>Login/Register</strong>: User submits email + password</li>
-<li><strong>Success</strong>: <ul>
+<li><strong>Success</strong>:<ul>
 <li>Auth overlay hides</li>
 <li>Custom Claims are checked for <code>admin: true</code></li>
 <li>If admin: Dev Tools button becomes visible + developer powers activate</li>
@@ -178,9 +178,13 @@
     
     async register(email, password)  // Creates new user
     async login(email, password, stayLoggedIn) // Signs in user with optional persistence
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select (guarded against double execution)
 }
 </code></pre>
+<h3>Double-Execution Guard</h3>
+<p>To prevent duplicate execution of database initialization, character select dialog creation, and session restoration, <code>AuthManager</code> features an internal boolean flag <code>authSuccessCalled</code>. Once <code>handleAuthSuccess</code> successfully executes, future invocations within the same session lifecycle are ignored.</p>
+<h3>Caching and Revalidation</h3>
+<p>To avoid aggressive client-side caching of index files, scripts, and styles, <code>firebase.json</code> is configured to serve HTML, JS, and CSS files with <code>Cache-Control: no-cache, no-store, must-revalidate</code>. This ensures the latest fixes and assets are immediately loaded by the browser on page refresh.</p>
 <h3>Persistence (Session vs. Local)</h3>
 <p>The login form includes a <strong>&quot;Stay Logged In&quot;</strong> checkbox.</p>
 <ul>

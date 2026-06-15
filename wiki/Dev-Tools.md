@@ -25,6 +25,13 @@ The Dev Tools panel is a comprehensive content creation suite visible only to ad
 | Create Crafting Recipe | Crafting recipes | `recipes` |
 | Create Base Item | Item definitions | `items` |
 
+### Create Location Specifications
+The location creation form supports two advanced JSON fields to build rich quest-like choices and padlocked doors:
+- **Custom Interactions JSON**: List of exploration action buttons (e.g., searching drawers). Allows rewarding items and tracking one-off completion flags.
+- **Connection Conditions JSON**: Key item requirements and padlock warning text for travel paths leading out of this location.
+
+Saving a location immediately dispatches a `'locationsUpdated'` event, synchronizing connection structures and quest interactions with active gameplay sessions in real time.
+
 ## Database Managers
 
 Each entity type has a "Manage" button that lists all records with:

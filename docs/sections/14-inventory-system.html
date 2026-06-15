@@ -215,7 +215,7 @@
 <li><strong>Context menu</strong> on click:<ul>
 <li><strong>Currency Bag</strong>: Opens Currency overlay</li>
 <li><strong>Equippable items</strong>: &quot;Equip&quot; button</li>
-<li><strong>Consumables</strong>: &quot;Use / Consume&quot; button</li>
+<li><strong>Consumables</strong>: &quot;Use / Consume&quot; button. Dispatches the global <code>useInventoryItem</code> event, allowing key/tool items to interactively unlock matching door locks in the current location (consuming them only if used successfully, and warning the player if used in the wrong location).</li>
 <li><strong>All items</strong>: &quot;Discard&quot; button (removes 1)</li>
 </ul>
 </li>

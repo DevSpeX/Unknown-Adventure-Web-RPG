@@ -286,6 +286,8 @@ export default class DevTools {
             document.getElementById('dev-loc-conns').value = item.connections ? item.connections.join(',') : '';
             document.getElementById('dev-loc-npcs').value = item.npcs ? item.npcs.join(',') : '';
             document.getElementById('dev-loc-encs').value = item.encounters ? JSON.stringify(item.encounters) : '[]';
+            document.getElementById('dev-loc-ints').value = item.interactions ? JSON.stringify(item.interactions, null, 2) : '[]';
+            document.getElementById('dev-loc-conds').value = item.connectionConditions ? JSON.stringify(item.connectionConditions, null, 2) : '{}';
         }
         else if (collection === 'enemy') {
             document.getElementById('dev-eny-id').value = item.id;
@@ -452,6 +454,8 @@ export default class DevTools {
             const connsRaw = document.getElementById('dev-loc-conns').value.trim();
             const npcsRaw = document.getElementById('dev-loc-npcs').value.trim();
             const encsRaw = document.getElementById('dev-loc-encs').value.trim() || '[]';
+            const intsRaw = document.getElementById('dev-loc-ints').value.trim() || '[]';
+            const condsRaw = document.getElementById('dev-loc-conds').value.trim() || '{}';
             
             const locationData = {
                 id: document.getElementById('dev-loc-id').value,
@@ -459,11 +463,14 @@ export default class DevTools {
                 description: document.getElementById('dev-loc-desc').value,
                 connections: connsRaw ? connsRaw.split(',').map(s => s.trim()) : [],
                 npcs: npcsRaw ? npcsRaw.split(',').map(s => s.trim()) : [],
-                encounters: JSON.parse(encsRaw)
+                encounters: JSON.parse(encsRaw),
+                interactions: JSON.parse(intsRaw),
+                connectionConditions: JSON.parse(condsRaw)
             };
             await mockDatabase.saveLocation(locationData);
             this.areas.location.msg.innerText = `Location "${locationData.name}" saved!`;
             this.areas.location.form.reset();
+            window.dispatchEvent(new CustomEvent('locationsUpdated'));
         } catch (err) {
             this.areas.location.msg.innerText = `Error: ${err.message}`;
         }

@@ -15,7 +15,7 @@ import Equipment from './modules/core/Equipment.js';
 import EquipmentUI from './ui/EquipmentUI.js';
 import CombatEngine from './modules/combat/CombatEngine.js';
 import CombatUI from './ui/CombatUI.js';
-import LocationEngine from './modules/world/LocationEngine.js';
+import LocationEngine from './modules/world/LocationEngine.js?v=2';
 import CurrencyUI from './ui/CurrencyUI.js';
 import VendorUI from './ui/VendorUI.js';
 import LevelUpUI from './ui/LevelUpUI.js';
@@ -34,9 +34,9 @@ class Engine {
         this.saveTimer = null;
         
         // Setup central UI update callback map
-        this.uiUpdate = () => {
+        this.uiUpdate = (immediate = false) => {
             this.refreshSidebar();
-            this.triggerCloudSave();
+            this.triggerCloudSave(immediate);
         };
         
         this.creator = new CharacterCreator(this.state, this.uiUpdate);
@@ -61,7 +61,7 @@ class Engine {
         // Phase 4 Tools
         this.combatEngine = new CombatEngine(this.state, this.inventory, this.questLog);
         this.combatUI = new CombatUI(this.combatEngine);
-        this.locationEngine = new LocationEngine(this.state, this.combatEngine);
+        this.locationEngine = new LocationEngine(this.state, this.combatEngine, this.inventory);
 
         // Supply equipment reference to inventory for equipping
         this.inventoryUI.equipmentRef = this.equipment;
@@ -73,7 +73,7 @@ class Engine {
         // Progression
         this.levelUpUI = new LevelUpUI(this.state, this.equipment);
         
-        window.appUpdateHook = () => this.uiUpdate();
+        window.appUpdateHook = (immediate = false) => this.uiUpdate(immediate);
 
         // Passive Regeneration Loop
         setInterval(() => {
@@ -91,11 +91,10 @@ class Engine {
         this.bindGlobalEvents();
     }
 
-    triggerCloudSave() {
+    triggerCloudSave(immediate = false) {
         if (!auth.currentUser || !this.state.player || !this.state.player.id) return;
         
-        if (this.saveTimer) clearTimeout(this.saveTimer);
-        this.saveTimer = setTimeout(async () => {
+        const saveFn = async () => {
             try {
                 const snapshot = {
                     ...this.state.player,
@@ -110,19 +109,22 @@ class Engine {
             } catch (err) {
                 console.error("Cloud Error:", err);
             }
-        }, 1500); // 1.5s debounce
+        };
+
+        if (this.saveTimer) clearTimeout(this.saveTimer);
+
+        if (immediate) {
+            saveFn();
+        } else {
+            this.saveTimer = setTimeout(saveFn, 1500); // 1.5s debounce
+        }
     }
 
     bindGlobalEvents() {
         const btnChar = document.getElementById('btn-open-char');
         if (btnChar) {
             btnChar.addEventListener('click', () => {
-                // Side by side viewing
-                this.equipmentUI.overlay.classList.add('overlay-left');
-                this.inventoryUI.overlay.classList.add('overlay-right');
-                
                 this.equipmentUI.open();
-                this.inventoryUI.open();
             });
         }
         
@@ -138,7 +140,7 @@ class Engine {
         });
         
         // Listen to stat updates
-        window.addEventListener('statsUpdated', () => this.uiUpdate());
+        window.addEventListener('statsUpdated', () => this.uiUpdate(true));
         
         // Generic dialogue trigger hook from LocationEngine
         window.addEventListener('openNPCDialogue', (e) => {
@@ -263,8 +265,9 @@ class Engine {
                      */
                     reloadLocations: async () => {
                         this.locationEngine.locations = await this.db.getLocations();
+                        this.locationEngine.items = await this.db.getItems();
                         this.locationEngine.renderLocation();
-                        console.log(`%c[ADMIN] Locations reloaded from Firestore.`, "color: #FF6600");
+                        console.log(`%c[ADMIN] Locations & Items reloaded from Firestore.`, "color: #FF6600");
                     }
                 };
                 console.log("%c[SYSTEM] Developer powers activated. Type 'admin' to see available tools.", "color: #ffcc00; font-weight: bold;");

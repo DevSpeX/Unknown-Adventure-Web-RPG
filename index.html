@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPG Engine - Phase 1</title>
     <link rel="stylesheet" href="css/main.css">
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=2"></script>
 </head>
 
 <body>
@@ -517,6 +517,18 @@
                         class="btn"
                         style="cursor: text; min-height: 40px; font-family:var(--font-terminal);"></textarea>
 
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">
+                        Custom Interactions JSON</h4>
+                    <textarea id="dev-loc-ints" placeholder='Interactions JSON (e.g. [{"label": "Search pockets", "text": "Found item!", "itemId": "lockpick", "onlyOnce": true}])'
+                        class="btn"
+                        style="cursor: text; min-height: 50px; font-family:var(--font-terminal);"></textarea>
+
+                    <h4 style="color:var(--border-dim); font-size:0.9rem; margin-top:5px; margin-bottom:-5px;">
+                        Connection Conditions JSON</h4>
+                    <textarea id="dev-loc-conds" placeholder='Connection Conditions JSON (e.g. {"sewer": {"requiredItemId": "lockpick", "lockedText": "It is locked."}})'
+                        class="btn"
+                        style="cursor: text; min-height: 50px; font-family:var(--font-terminal);"></textarea>
+
                     <button type="submit" class="btn"
                         style="background-color: var(--bg-panel-hover); color:#4CAF50;">Save Location to DB</button>
                 </form>
@@ -797,6 +809,15 @@
                 style="flex:1; overflow-y:auto; display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:10px; align-content:start;">
                 <!-- JS Injected Shop Items -->
             </div>
+        </div>
+    </div>
+
+    <!-- Game Modal Popup -->
+    <div id="game-modal" class="modal-overlay hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(17, 14, 12, 0.85); backdrop-filter: blur(5px); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.25s ease, visibility 0.25s ease;">
+        <div class="panel" style="width: 420px; max-width: 90%; height: auto; min-height: 200px; padding: 30px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: rgba(29, 23, 21, 0.98); border: 2px solid var(--border-gold); border-radius: var(--panel-radius); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+            <h3 id="game-modal-title" style="color: var(--text-highlight); margin-bottom: 15px; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase;">Notice</h3>
+            <p id="game-modal-body" style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; color: var(--text-main); font-family: var(--font-content); word-wrap: break-word; overflow-y: auto; max-height: 300px; width: 100%;"></p>
+            <button id="game-modal-close" class="btn text-highlight" style="width: auto; padding: 8px 30px; margin: 0 auto; text-align: center;">OK</button>
         </div>
     </div>
 

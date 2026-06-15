@@ -171,31 +171,39 @@
 </ol>
 <h3>Adding a New Firestore Collection</h3>
 <ol>
-<li><strong>Add methods</strong> to <code>database.js</code>:<pre><code class="language-javascript">async getMyEntities() { return this._getColl(&#39;myentities&#39;); },
+<li><p><strong>Add methods</strong> to <code>database.js</code>:</p>
+<pre><code class="language-javascript">async getMyEntities() { return this._getColl(&#39;myentities&#39;); },
 async saveMyEntity(d) { return this._setDoc(&#39;myentities&#39;, d); }
 </code></pre>
 </li>
-<li><strong>Add Dev Tools form</strong> in <code>index.html</code> (follow existing pattern)</li>
-<li><strong>Add handler</strong> in <code>DevTools.js</code> (follow existing save/manage pattern)</li>
+<li><p><strong>Add Dev Tools form</strong> in <code>index.html</code> (follow existing pattern)</p>
+</li>
+<li><p><strong>Add handler</strong> in <code>DevTools.js</code> (follow existing save/manage pattern)</p>
+</li>
 </ol>
 <h3>Adding a New Dialogue Action</h3>
 <ol>
-<li>Open <code>DialogueEngine.js</code></li>
-<li>Add a new case in <code>executeActions()</code>:<pre><code class="language-javascript">case &#39;MY_ACTION&#39;:
+<li><p>Open <code>DialogueEngine.js</code></p>
+</li>
+<li><p>Add a new case in <code>executeActions()</code>:</p>
+<pre><code class="language-javascript">case &#39;MY_ACTION&#39;:
     // Your custom logic here
     break;
 </code></pre>
 </li>
-<li>Use it in dialogue response JSON:<pre><code class="language-javascript">actions: [{ type: &quot;MY_ACTION&quot;, target: &quot;someValue&quot; }]
+<li><p>Use it in dialogue response JSON:</p>
+<pre><code class="language-javascript">actions: [{ type: &quot;MY_ACTION&quot;, target: &quot;someValue&quot; }]
 </code></pre>
 </li>
 </ol>
 <h3>Adding a New Custom Event</h3>
 <ol>
-<li><strong>Dispatch</strong> from any module:<pre><code class="language-javascript">window.dispatchEvent(new CustomEvent(&#39;myEvent&#39;, { detail: data }));
+<li><p><strong>Dispatch</strong> from any module:</p>
+<pre><code class="language-javascript">window.dispatchEvent(new CustomEvent(&#39;myEvent&#39;, { detail: data }));
 </code></pre>
 </li>
-<li><strong>Listen</strong> in the appropriate UI:<pre><code class="language-javascript">window.addEventListener(&#39;myEvent&#39;, (e) =&gt; { /* handle e.detail */ });
+<li><p><strong>Listen</strong> in the appropriate UI:</p>
+<pre><code class="language-javascript">window.addEventListener(&#39;myEvent&#39;, (e) =&gt; { /* handle e.detail */ });
 </code></pre>
 </li>
 </ol>

@@ -34,13 +34,9 @@ export default class State {
                 int: 0
             },
             wallet: { copper: 0, silver: 0, gold: 0 },
-            currentLocation: null
+            currentLocation: null,
+            flags: {}
         };
-
-        /**
-         * @property {Object} flags - Key-value pairs for world state/progression.
-         */
-        this.flags = {};
 
         /**
          * @property {Object} quests - Active and completed quests.
@@ -63,6 +59,7 @@ export default class State {
         if (data.attributes) {
             this.player.attributes = { ...this.player.attributes, ...data.attributes };
         }
+        if (!this.player.flags) this.player.flags = {};
         if (data.baseAttributes) {
             this.player.baseAttributes = { ...this.player.baseAttributes, ...data.baseAttributes };
             
@@ -158,7 +155,8 @@ export default class State {
      * @param {any} value - The value to set.
      */
     setFlag(key, value) {
-        this.flags[key] = value;
+        if (!this.player.flags) this.player.flags = {};
+        this.player.flags[key] = value;
     }
 
     /**
@@ -167,7 +165,8 @@ export default class State {
      * @returns {any} The flag's value or undefined.
      */
     getFlag(key) {
-        return this.flags[key];
+        if (!this.player.flags) this.player.flags = {};
+        return this.player.flags[key];
     }
 
     /**

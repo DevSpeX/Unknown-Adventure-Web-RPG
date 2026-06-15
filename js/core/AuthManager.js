@@ -13,6 +13,7 @@ export default class AuthManager {
     constructor(onAuthSuccess) {
         this.onAuthSuccess = onAuthSuccess;
         this.initialAuthHandled = false;
+        this.authSuccessCalled = false;
         
         // Listen to Auth State implicitly for browser persistence restoration
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,6 +52,12 @@ export default class AuthManager {
     }
 
     async handleAuthSuccess(user) {
+        if (this.authSuccessCalled) {
+            console.log("[AUTH] handleAuthSuccess ignored (already handled)");
+            return;
+        }
+        this.authSuccessCalled = true;
+
         // Hide overlay securely
         document.getElementById('auth-overlay').classList.add('hidden');
 

@@ -272,9 +272,17 @@ class AuthManager {
     
     async register(email, password)  // Creates new user
     async login(email, password, stayLoggedIn) // Signs in user with optional persistence
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select (guarded against double execution)
 }
 ```
+
+### Double-Execution Guard
+
+To prevent duplicate execution of database initialization, character select dialog creation, and session restoration, `AuthManager` features an internal boolean flag `authSuccessCalled`. Once `handleAuthSuccess` successfully executes, future invocations within the same session lifecycle are ignored.
+
+### Caching and Revalidation
+
+To avoid aggressive client-side caching of index files, scripts, and styles, `firebase.json` is configured to serve HTML, JS, and CSS files with `Cache-Control: no-cache, no-store, must-revalidate`. This ensures the latest fixes and assets are immediately loaded by the browser on page refresh.
 
 ### Persistence (Session vs. Local)
 
@@ -380,6 +388,7 @@ The Engine runs a debounced cloud save (`triggerCloudSave()`) 1.5 seconds after 
         copper: 0, silver: 0, gold: 0
     },
     currentLocation: null,          // Current location ID (resolved from world config)
+    flags: {},                      // Persisted world flags/triggers
     equipment: {                    // Equipped gear
         head: null, chest: null,
         main_hand: null, off_hand: null,
@@ -500,27 +509,52 @@ Manages the game world as a network of interconnected locations. Each location c
     encounters: [                            // Random encounter table
         { enemyId: "rat", chance: 80 },      // 80% chance to find a rat
         { enemyId: "spider", chance: 20 }    // 20% chance for a spider
-    ]
+    ],
+    interactions: [                          // Custom narrative interactions
+        {
+            label: "Search pockets",
+            text: "Found a lockpick!",
+            itemId: "rusty_lockpick",
+            itemQty: 1,
+            onlyOnce: true
+        }
+    ],
+    connectionConditions: {                  // locked travel requirements
+        sewer: {
+            requiredItemId: "rusty_lockpick",
+            requiredFlag: "cellar_gate_unlocked",
+            consumeItem: true,
+            lockedText: "The gate is locked.",
+            unlockText: "Unlocked the gate!"
+        }
+    }
 }
 ```
 
 ### How Locations Work
 
-1. **Rendering**: `renderLocation()` displays the current location's description, NPC interaction buttons, and travel buttons.
+1. **Rendering**: `renderLocation()` displays the current location's description, NPC interaction buttons, travel buttons, and custom interaction buttons (e.g. "Search pockets"). Choice buttons are disabled instantly on click to prevent spam clicks.
 2. **NPC Spawning**: For each NPC ID in the location, the engine fetches NPC data from Firestore:
    - If NPC has `defaultDialogueId` → "Speak to [Name]" button appears
    - If NPC has `isVendor: true` → "Trade with [Name]" button appears
-3. **Travel**: Clicking "Move to [Location]" updates `currentLocation` and re-renders.
+3. **Travel**: Clicking "Move to [Location]" evaluates connection conditions. If locked, prompts with a warning popup. If unlocked, performs key consumption/unlocking and moves player.
 4. **Search**: Clicking "Search Area" rolls against the encounter table.
+5. **Custom Interactions**: Clicking custom interaction buttons updates player flags, performs inventory weight checks, rewards items, and shows description text in a premium centered modal dialog.
+6. **Real-time Synchronization**: Saving a location in Dev Tools dispatches a `'locationsUpdated'` event. The `LocationEngine` listens for this event to hot-reload locations and items in memory and re-renders immediately.
 
-### Movement Data Sync
+### Movement & Key Data Sync
 
-Entering a new location triggers an automatic state synchronization:
+Entering a new location or using key items from the inventory triggers state synchronization:
 
-1. `this.state.player.currentLocation` is updated.
-2. A `statsUpdated` event is dispatched globally.
-3. The Engine intercepts the event and calls `triggerCloudSave()`.
-4. The user's location is scrubbed of `undefined` fields and persisted to Firestore.
+1. **Explicit Key Usage**: Keys and tools do not automatically unlock gates/doors by just sitting in the inventory. The player must open their inventory, select the key item, and click **"Use / Consume"** to trigger unlock flags permanently.
+2. Using a key-like item from the inventory dispatches the `'useInventoryItem'` event, which:
+   - Sets the unlocking flag in the player state.
+   - Logs the unlock message in the global Action Log.
+   - Closes the inventory panel overlay.
+   - Triggers real-time connections unlock (updating the choices UI immediately without a page refresh).
+3. A `statsUpdated` event is dispatched globally.
+4. **Immediate Progress Saving**: To prevent progress loss on page refresh (F5), critical actions (like moving locations, using key items, finishing custom interactions, completing combat, or leveling up stats) bypass the 1.5-second debounce and write to Firestore immediately. Passive regeneration ticks still use the debounced save to reduce write frequencies.
+5. The user's location is scrubbed of `undefined` fields and persisted to Firestore.
 
 ### Encompassed Functions
 
@@ -916,7 +950,7 @@ A weight-based inventory with item stacking.
 - **Context menu** on click:
   - **Currency Bag**: Opens Currency overlay
   - **Equippable items**: "Equip" button
-  - **Consumables**: "Use / Consume" button
+  - **Consumables**: "Use / Consume" button. Dispatches the global `useInventoryItem` event, allowing key/tool items to interactively unlock matching door locks in the current location (consuming them only if used successfully, and warning the player if used in the wrong location).
   - **All items**: "Discard" button (removes 1)
 
 ### Rarity Visual System

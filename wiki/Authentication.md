@@ -26,9 +26,15 @@ class AuthManager {
     constructor(onAuthSuccess)  // Callback when auth succeeds
     async register(email, password)  // Creates new user
     async login(email, password, stayLoggedIn) // Signs in user with optional persistence
-    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select
+    async handleAuthSuccess(user)    // Hides overlay, checks claims, triggers character select (guarded against double execution)
 }
 ```
+
+### Double-Execution Guard
+To prevent duplicate execution of database initialization, character select dialog creation, and session restoration, `AuthManager` features an internal boolean flag `authSuccessCalled`. Once `handleAuthSuccess` successfully executes, future invocations within the same session lifecycle are ignored.
+
+### Caching and Revalidation
+To avoid aggressive client-side caching of index files, scripts, and styles, `firebase.json` is configured to serve HTML, JS, and CSS files with `Cache-Control: no-cache, no-store, must-revalidate`. This ensures the latest fixes and assets are immediately loaded by the browser on page refresh.
 
 ### Persistence (Session vs. Local)
 The login form includes a **"Stay Logged In"** checkbox.
