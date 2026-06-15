@@ -1,6 +1,6 @@
 # Unknown Adventure RPG — Complete Technical Documentation
 
-> **Version**: 1.0.1 · **Last Updated**: April 16, 2026  
+> **Version**: 1.1.1 · **Last Updated**: June 15, 2026  
 > **Platform**: Web (Browser-based) · **Backend**: Firebase (Auth + Firestore)  
 > **Hosted at**: `unknown-adventure-rpg.web.app`
 
